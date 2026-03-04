@@ -9,6 +9,16 @@ export const maxDuration = 60;
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
+const ALLOWED_MIME_TYPES = new Set([
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.ms-excel",
+  "text/csv",
+  "text/plain",
+]);
+
+const ALLOWED_EXTENSIONS = new Set([".pdf", ".xlsx", ".xls", ".csv", ".txt"]);
+
 export async function POST(request: NextRequest) {
   const user = await getAuthenticatedUser(request);
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -27,6 +37,15 @@ export async function POST(request: NextRequest) {
   if (file.size > MAX_FILE_SIZE) {
     return NextResponse.json(
       { error: "File size exceeds 10MB limit" },
+      { status: 400 }
+    );
+  }
+
+  // Validate file type (MIME + extension)
+  const ext = "." + (file.name.split(".").pop() || "").toLowerCase();
+  if (!ALLOWED_MIME_TYPES.has(file.type) && !ALLOWED_EXTENSIONS.has(ext)) {
+    return NextResponse.json(
+      { error: "Unsupported file type. Allowed: PDF, Excel, CSV, TXT" },
       { status: 400 }
     );
   }

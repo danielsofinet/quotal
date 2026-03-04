@@ -24,16 +24,21 @@ interface PostmarkInboundPayload {
   Attachments: PostmarkAttachment[];
 }
 
+const ALLOWED_ATTACHMENT_TYPES = new Set([
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.ms-excel",
+  "text/csv",
+  "text/plain",
+]);
+
+const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
+
 export async function POST(request: NextRequest) {
-  // Optional: verify webhook token
+  // Verify webhook token — reject if not configured or mismatched
   const token = request.headers.get("x-postmark-token");
-  if (
-    process.env.POSTMARK_WEBHOOK_TOKEN &&
-    token !== process.env.POSTMARK_WEBHOOK_TOKEN
-  ) {
-    if (process.env.POSTMARK_WEBHOOK_TOKEN !== "") {
-      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
-    }
+  if (!process.env.POSTMARK_WEBHOOK_TOKEN || token !== process.env.POSTMARK_WEBHOOK_TOKEN) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const payload: PostmarkInboundPayload = await request.json();
@@ -80,6 +85,16 @@ export async function POST(request: NextRequest) {
   // Process attachments
   if (payload.Attachments && payload.Attachments.length > 0) {
     for (const attachment of payload.Attachments) {
+      // Validate attachment type and size
+      if (!ALLOWED_ATTACHMENT_TYPES.has(attachment.ContentType)) {
+        results.push(`Skipped ${attachment.Name}: unsupported file type (${attachment.ContentType})`);
+        continue;
+      }
+      if (attachment.ContentLength > MAX_ATTACHMENT_SIZE) {
+        results.push(`Skipped ${attachment.Name}: exceeds 10MB size limit`);
+        continue;
+      }
+
       const buffer = Buffer.from(attachment.Content, "base64");
 
       const quote = await prisma.quote.create({

@@ -6,6 +6,8 @@ import { extractQuoteData } from "@/lib/extraction";
 
 export const maxDuration = 60;
 
+const MAX_TEXT_LENGTH = 100_000; // ~100KB
+
 export async function POST(request: NextRequest) {
   const user = await getAuthenticatedUser(request);
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -16,6 +18,13 @@ export async function POST(request: NextRequest) {
   if (!text || !projectId) {
     return NextResponse.json(
       { error: "Text and projectId are required" },
+      { status: 400 }
+    );
+  }
+
+  if (text.length > MAX_TEXT_LENGTH) {
+    return NextResponse.json(
+      { error: "Text exceeds maximum length (100,000 characters)" },
       { status: 400 }
     );
   }

@@ -57,12 +57,12 @@ export async function PATCH(
     },
   });
 
-  // Update line items if provided
+  // Update line items if provided (scoped to this quote only)
   if (lineItems && Array.isArray(lineItems)) {
     for (const item of lineItems) {
       if (item.id) {
         await prisma.lineItem.update({
-          where: { id: item.id },
+          where: { id: item.id, quoteId: id },
           data: {
             name: item.name,
             rawName: item.rawName,
@@ -76,12 +76,12 @@ export async function PATCH(
     }
   }
 
-  // Update fees if provided
+  // Update fees if provided (scoped to this quote only)
   if (fees && Array.isArray(fees)) {
     for (const fee of fees) {
       if (fee.id) {
         await prisma.fee.update({
-          where: { id: fee.id },
+          where: { id: fee.id, quoteId: id },
           data: {
             name: fee.name,
             amount: fee.amount,
