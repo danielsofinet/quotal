@@ -42,25 +42,19 @@ const googleProvider = new GoogleAuthProvider();
 
 export async function signInWithGoogle() {
   const auth = getFirebaseAuth();
-  try {
-    // Try popup first (works on localhost and most browsers)
+  const isLocalhost = window.location.hostname === "localhost";
+
+  if (isLocalhost) {
+    // Popup works fine on localhost
     const result = await signInWithPopup(auth, googleProvider);
     const idToken = await result.user.getIdToken();
     await syncSession(idToken);
     return result.user;
-  } catch (err: unknown) {
-    const error = err as { code?: string };
-    // If popup is blocked or COOP policy blocks it, fall back to redirect
-    if (
-      error.code === "auth/popup-blocked" ||
-      error.code === "auth/popup-closed-by-browser" ||
-      error.code === "auth/cancelled-popup-request"
-    ) {
-      await signInWithRedirect(auth, googleProvider);
-      return null;
-    }
-    throw err;
   }
+
+  // Use redirect for production (avoids COOP popup issues)
+  await signInWithRedirect(auth, googleProvider);
+  return null;
 }
 
 // Handle redirect result on page load
