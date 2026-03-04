@@ -16,12 +16,7 @@ import {
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  // Use own domain as authDomain to proxy Firebase auth (avoids COOP popup issues)
-  // Falls back to firebaseapp.com for localhost
-  authDomain:
-    typeof window !== "undefined" && window.location.hostname !== "localhost"
-      ? window.location.hostname
-      : process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
@@ -99,11 +94,15 @@ export async function signOut() {
 }
 
 async function syncSession(idToken: string) {
-  await fetch("/api/auth/session", {
+  const res = await fetch("/api/auth/session", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ idToken }),
   });
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.detail || data.error || "Session creation failed");
+  }
 }
 
 export function onTokenRefresh(callback: (user: User | null) => void) {

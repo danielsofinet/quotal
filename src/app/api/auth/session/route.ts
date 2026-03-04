@@ -31,8 +31,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ status: "ok" });
   } catch (error) {
-    console.error("Session creation failed:", error);
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const err = error instanceof Error ? error.message : String(error);
+    console.error("Session creation failed:", err);
+    return NextResponse.json({ error: "Unauthorized", detail: err }, { status: 401 });
   }
 }
 
