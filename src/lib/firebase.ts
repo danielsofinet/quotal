@@ -16,7 +16,12 @@ import {
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  // Use own domain as authDomain to proxy Firebase auth (avoids COOP popup issues)
+  // Falls back to firebaseapp.com for localhost
+  authDomain:
+    typeof window !== "undefined" && window.location.hostname !== "localhost"
+      ? window.location.hostname
+      : process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
@@ -42,19 +47,10 @@ const googleProvider = new GoogleAuthProvider();
 
 export async function signInWithGoogle() {
   const auth = getFirebaseAuth();
-  const isLocalhost = window.location.hostname === "localhost";
-
-  if (isLocalhost) {
-    // Popup works fine on localhost
-    const result = await signInWithPopup(auth, googleProvider);
-    const idToken = await result.user.getIdToken();
-    await syncSession(idToken);
-    return result.user;
-  }
-
-  // Use redirect for production (avoids COOP popup issues)
-  await signInWithRedirect(auth, googleProvider);
-  return null;
+  const result = await signInWithPopup(auth, googleProvider);
+  const idToken = await result.user.getIdToken();
+  await syncSession(idToken);
+  return result.user;
 }
 
 // Handle redirect result on page load
