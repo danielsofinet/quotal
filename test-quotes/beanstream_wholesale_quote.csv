@@ -1,0 +1,24 @@
+BeanStream Wholesale — Price Quote
+Date: 2026-03-01
+Customer: Café Order
+Currency: EUR
+
+Item,SKU,Unit Price,Qty,Unit,Total
+Premium Oat Milk 1L,BS-OAT-1L,2.1,80,cartons,168
+White Cane Sugar 1kg,BS-SUG-1K,1.45,30,bags,43.5
+Brown Sugar Sachets (box of 500),BS-BSS-500,14.9,6,boxes,89.4
+Paper Napkins 1-ply (pack of 1000),BS-NAP-1K,4.2,15,packs,63
+Biodegradable Stirrers (box of 500),BS-STR-500,3.75,10,boxes,37.5
+Takeaway Cups 350ml (sleeve of 50),BS-CUP-350,5.6,20,sleeves,112
+Cup Lids 350ml (sleeve of 50),BS-LID-350,2.3,20,sleeves,46
+Whole Milk 1L,BS-WML-1L,1.15,60,cartons,69
+Vanilla Syrup 750ml,BS-VAN-750,6.8,8,bottles,54.4
+Chocolate Powder 1kg,BS-CHO-1K,9.5,5,bags,47.5
+
+,,,,Subtotal,730.3
+,,,,Delivery (standard),25
+,,,,TOTAL,755.3
+
+Payment: Net 14 days
+Delivery: 3-5 business days
+"Note: 5% discount available on orders over EUR 1,000"
