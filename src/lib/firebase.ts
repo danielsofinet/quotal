@@ -3,6 +3,8 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   sendSignInLinkToEmail,
   isSignInWithEmailLink,
   signInWithEmailLink,
@@ -40,10 +42,37 @@ const googleProvider = new GoogleAuthProvider();
 
 export async function signInWithGoogle() {
   const auth = getFirebaseAuth();
-  const result = await signInWithPopup(auth, googleProvider);
-  const idToken = await result.user.getIdToken();
-  await syncSession(idToken);
-  return result.user;
+  try {
+    // Try popup first (works on localhost and most browsers)
+    const result = await signInWithPopup(auth, googleProvider);
+    const idToken = await result.user.getIdToken();
+    await syncSession(idToken);
+    return result.user;
+  } catch (err: unknown) {
+    const error = err as { code?: string };
+    // If popup is blocked or COOP policy blocks it, fall back to redirect
+    if (
+      error.code === "auth/popup-blocked" ||
+      error.code === "auth/popup-closed-by-browser" ||
+      error.code === "auth/cancelled-popup-request"
+    ) {
+      await signInWithRedirect(auth, googleProvider);
+      return null;
+    }
+    throw err;
+  }
+}
+
+// Handle redirect result on page load
+export async function handleRedirectResult(): Promise<User | null> {
+  const auth = getFirebaseAuth();
+  const result = await getRedirectResult(auth);
+  if (result?.user) {
+    const idToken = await result.user.getIdToken();
+    await syncSession(idToken);
+    return result.user;
+  }
+  return null;
 }
 
 export async function sendMagicLink(email: string) {

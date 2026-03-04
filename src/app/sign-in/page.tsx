@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   signInWithGoogle,
+  handleRedirectResult,
   sendMagicLink,
   completeMagicLink,
 } from "@/lib/firebase";
@@ -16,8 +17,16 @@ export default function SignInPage() {
   const [magicLinkSent, setMagicLinkSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Handle magic link completion
+  // Handle redirect result (Google sign-in fallback) and magic link completion
   useEffect(() => {
+    // Check for Google redirect result
+    handleRedirectResult()
+      .then((user) => {
+        if (user) router.push("/dashboard");
+      })
+      .catch(() => {});
+
+    // Check for magic link completion
     const params = new URLSearchParams(window.location.search);
     if (params.get("finishSignIn") === "true") {
       completeMagicLink()
