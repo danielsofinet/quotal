@@ -16,7 +16,6 @@ const testimonials: Testimonial[] = [
   },
   {
     text: "The hidden fee detection caught a 4% markup we'd been overlooking for months. Paid for itself on the first comparison.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face",
     name: "James Whitfield",
     role: "VP Supply Chain, Bridgewell Foods",
   },
@@ -28,7 +27,6 @@ const testimonials: Testimonial[] = [
   },
   {
     text: "I showed the comparison table to our CFO and he immediately asked why we hadn't been doing this all along. Clean, clear, and impossible to argue with.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face",
     name: "Thomas Berger",
     role: "Head of Purchasing, Vektor Energy",
   },
@@ -40,7 +38,6 @@ const testimonials: Testimonial[] = [
   },
   {
     text: "The email forwarding feature is a game-changer. Suppliers send quotes, I forward to Quotal, and it's ready to compare by the time I finish my coffee.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face",
     name: "David Chen",
     role: "Operations Lead, Apex Manufacturing",
   },
@@ -52,7 +49,6 @@ const testimonials: Testimonial[] = [
   },
   {
     text: "Line items get matched across vendors automatically. No more manual cross-referencing in spreadsheets. Our team saves 10+ hours a week.",
-    image: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=80&h=80&fit=crop&crop=face",
     name: "Marcus Webb",
     role: "Procurement Analyst, Halcyon Aerospace",
   },

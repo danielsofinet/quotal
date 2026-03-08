@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export interface Testimonial {
   text: string;
-  image: string;
+  image?: string;
   name: string;
   role: string;
 }
@@ -42,13 +42,21 @@ export function TestimonialsColumn({
                   &ldquo;{text}&rdquo;
                 </p>
                 <div className="flex items-center gap-3 mt-5">
-                  <img
-                    width={40}
-                    height={40}
-                    src={image}
-                    alt={name}
-                    className="h-10 w-10 rounded-full object-cover"
-                  />
+                  {image ? (
+                    <img
+                      width={40}
+                      height={40}
+                      src={image}
+                      alt={name}
+                      className="h-10 w-10 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="h-10 w-10 rounded-full bg-accent-dim flex items-center justify-center shrink-0">
+                      <span className="text-sm font-semibold text-accent">
+                        {name.split(" ").map((n) => n[0]).join("")}
+                      </span>
+                    </div>
+                  )}
                   <div className="flex flex-col">
                     <span className="text-sm font-medium text-text-primary leading-5">
                       {name}
