@@ -1,342 +1,342 @@
 {
   "Landing": {
     "nav": {
-      "watchDemo": "Watch Demo",
-      "earlyAccess": "Get Started"
+      "watchDemo": "Voir la démo",
+      "earlyAccess": "Commencer"
     },
     "hero": {
-      "badge": "Now available",
-      "title": "Stop comparing vendor quotes in spreadsheets",
-      "subtitle": "Quotal extracts line items from any document — PDF, Excel, email — and gives you a normalized side-by-side comparison in seconds. Hidden fees flagged automatically.",
-      "cta": "Start Free",
-      "ctaSecondary": "Watch 60s Demo ↓"
+      "badge": "Disponible maintenant",
+      "title": "Arrêtez de comparer vos devis fournisseurs dans des tableurs",
+      "subtitle": "Quotal extrait les lignes de chaque document — PDF, Excel, e-mail — et vous donne un comparatif normalisé côte à côte en quelques secondes. Les frais cachés sont signalés automatiquement.",
+      "cta": "Commencer gratuitement",
+      "ctaSecondary": "Voir la démo de 60s ↓"
     },
     "heroTable": {
-      "lineItem": "Line Item",
+      "lineItem": "Article",
       "vendor1": "PackRight GmbH",
       "vendor2": "Nordic Supplies AB",
       "vendor3": "QuickPack Srl",
-      "item1": "Corrugated Box 10K pcs",
-      "item2": "Bubble Wrap 200 rolls",
-      "item3": "Packing Tape 500 rolls",
-      "item4": "Shipping",
-      "item5": "Fuel Surcharge",
-      "hidden": "Hidden",
-      "grandTotal": "Grand Total",
-      "bestDeal": "Best Deal"
+      "item1": "Carton ondulé 10K pcs",
+      "item2": "Papier bulle 200 rouleaux",
+      "item3": "Ruban adhésif 500 rouleaux",
+      "item4": "Livraison",
+      "item5": "Surcharge carburant",
+      "hidden": "Caché",
+      "grandTotal": "Total général",
+      "bestDeal": "Meilleure offre"
     },
     "problem": {
-      "label": "THE PROBLEM",
-      "title": "You're drowning in mismatched quotes",
+      "label": "LE PROBLÈME",
+      "title": "Vous croulez sous des devis incompatibles",
       "card1": {
         "emoji": "📄",
-        "title": "Every quote is different",
-        "description": "Supplier A sends a PDF. Supplier B sends Excel. Supplier C replies in an email. You spend hours copying numbers into a spreadsheet just to compare them."
+        "title": "Chaque devis est différent",
+        "description": "Le fournisseur A envoie un PDF. Le fournisseur B envoie un Excel. Le fournisseur C répond par e-mail. Vous passez des heures à recopier les chiffres dans un tableur pour les comparer."
       },
       "card2": {
         "emoji": "💸",
-        "title": "Hidden fees slip through",
-        "description": "Fuel surcharges buried in footnotes. Palletization fees on page 3. Minimum order penalties in the fine print. Your team catches them after the PO is signed."
+        "title": "Les frais cachés passent inaperçus",
+        "description": "Surcharges carburant enfouies dans les notes. Frais de palettisation en page 3. Pénalités de commande minimum en petits caractères. Votre équipe les découvre après signature du bon de commande."
       },
       "card3": {
         "emoji": "⏱️",
-        "title": "It takes forever",
-        "description": "A procurement team of 3 spends 15+ hours per week normalizing quotes. That's €40K+ per year in salary spent on copy-paste work."
+        "title": "Ça prend une éternité",
+        "description": "Une équipe achats de 3 personnes passe plus de 15 heures par semaine à normaliser les devis. C'est plus de 40 000 € par an en salaires dépensés en copier-coller."
       }
     },
     "howItWorks": {
-      "label": "HOW IT WORKS",
-      "title": "Three steps. Thirty seconds.",
+      "label": "COMMENT ÇA MARCHE",
+      "title": "Trois étapes. Trente secondes.",
       "step1": {
         "number": "01",
-        "title": "Upload or forward",
-        "description": "Drag and drop any file — PDF, Excel, image, or paste raw text. Or just forward the supplier's email to your unique Quotal inbox."
+        "title": "Importez ou transférez",
+        "description": "Glissez-déposez n'importe quel fichier — PDF, Excel, image — ou collez du texte brut. Ou transférez simplement l'e-mail du fournisseur vers votre boîte Quotal."
       },
       "step2": {
         "number": "02",
-        "title": "AI extracts & normalizes",
-        "description": "Quotal reads every document, extracts line items, converts units and currencies, and maps equivalent products across vendors."
+        "title": "L'IA extrait et normalise",
+        "description": "Quotal lit chaque document, extrait les articles, convertit les unités et devises, et fait correspondre les produits équivalents entre fournisseurs."
       },
       "step3": {
         "number": "03",
-        "title": "Compare & decide",
-        "description": "A clean side-by-side table shows the best price per item, flags hidden fees, and highlights the best overall deal. Done."
+        "title": "Comparez et décidez",
+        "description": "Un tableau comparatif clair affiche le meilleur prix par article, signale les frais cachés et met en évidence la meilleure offre globale. Terminé."
       }
     },
     "demo": {
-      "label": "SEE IT IN ACTION",
-      "title": "From chaos to clarity",
-      "watchDemo": "Watch the demo",
-      "noSignup": "No signup required to watch"
+      "label": "VOIR EN ACTION",
+      "title": "Du chaos à la clarté",
+      "watchDemo": "Regarder la démo",
+      "noSignup": "Aucune inscription requise"
     },
     "features": {
-      "label": "FEATURES",
-      "title": "Built for how procurement actually works",
+      "label": "FONCTIONNALITÉS",
+      "title": "Conçu pour le quotidien des acheteurs",
       "anyFormat": {
-        "title": "Any format, any language",
-        "description": "PDF, Excel, CSV, images, email text. Quotes in English, German, French, Dutch, Spanish — Quotal handles them all."
+        "title": "Tout format, toute langue",
+        "description": "PDF, Excel, CSV, images, texte d'e-mail. Devis en français, anglais, allemand, néerlandais, espagnol — Quotal gère tout."
       },
       "hiddenFees": {
-        "title": "Hidden fee detection",
-        "description": "AI scans footnotes, fine print, and buried line items to surface fees your team might miss."
+        "title": "Détection des frais cachés",
+        "description": "L'IA analyse les notes de bas de page, les petits caractères et les lignes enfouies pour faire apparaître les frais que votre équipe pourrait manquer."
       },
       "email": {
-        "title": "Email forwarding",
-        "description": "Forward supplier emails to your unique Quotal address. Quotes are extracted and added automatically."
+        "title": "Transfert par e-mail",
+        "description": "Transférez les e-mails de vos fournisseurs vers votre adresse Quotal unique. Les devis sont extraits et ajoutés automatiquement."
       },
       "history": {
-        "title": "Historical price tracking",
-        "description": "See how each vendor's prices change over time. Spot trends before your next negotiation."
+        "title": "Suivi historique des prix",
+        "description": "Suivez l'évolution des prix de chaque fournisseur. Repérez les tendances avant votre prochaine négociation."
       },
       "normalization": {
-        "title": "Smart normalization",
-        "description": "\"Corrugated Box 40x30x20cm\" and \"Corr. Box 400×300×200mm\" are recognized as the same product."
+        "title": "Normalisation intelligente",
+        "description": "\"Carton ondulé 40x30x20cm\" et \"Cart. Ond. 400×300×200mm\" sont reconnus comme le même produit."
       },
       "gdpr": {
-        "title": "GDPR compliant",
-        "description": "Hosted in Europe. Your data stays in the EU. No vendor data is shared or used for training."
+        "title": "Conforme au RGPD",
+        "description": "Hébergé en Europe. Vos données restent dans l'UE. Aucune donnée fournisseur n'est partagée ou utilisée pour l'entraînement."
       }
     },
     "socialProof": {
-      "label": "TESTIMONIALS",
-      "title": "Trusted by procurement teams worldwide",
-      "subtitle": "See why teams are switching to Quotal for vendor quote comparison."
+      "label": "TÉMOIGNAGES",
+      "title": "Adopté par les équipes achats du monde entier",
+      "subtitle": "Découvrez pourquoi les équipes passent à Quotal pour comparer leurs devis fournisseurs."
     },
     "pricing": {
-      "label": "PRICING",
-      "title": "Start free. Upgrade when it clicks.",
+      "label": "TARIFS",
+      "title": "Commencez gratuitement. Passez au Pro quand vous êtes convaincu.",
       "free": {
-        "name": "Free",
-        "price": "€0",
-        "subtitle": "Try it out",
+        "name": "Gratuit",
+        "price": "0 €",
+        "subtitle": "Pour essayer",
         "features": {
-          "f1": "2 projects",
-          "f2": "3 quotes per project",
-          "f3": "All AI extraction features",
-          "f4": "Email forwarding"
+          "f1": "2 projets",
+          "f2": "3 devis par projet",
+          "f3": "Toutes les fonctionnalités d'extraction IA",
+          "f4": "Transfert par e-mail"
         },
-        "cta": "Get Started"
+        "cta": "Commencer"
       },
       "pro": {
         "name": "Pro",
-        "price": "$29",
-        "period": "/mo",
-        "yearlyPrice": "$290",
-        "yearlyPeriod": "/yr",
-        "yearlySavings": "Save 2 months",
-        "subtitle": "For procurement teams",
-        "popular": "Popular",
+        "price": "29 $",
+        "period": "/mois",
+        "yearlyPrice": "290 $",
+        "yearlyPeriod": "/an",
+        "yearlySavings": "2 mois offerts",
+        "subtitle": "Pour les équipes achats",
+        "popular": "Populaire",
         "features": {
-          "f1": "Unlimited projects",
-          "f2": "Unlimited quotes",
-          "f3": "Historical price tracking",
-          "f4": "Priority processing",
-          "f5": "CSV/Excel export"
+          "f1": "Projets illimités",
+          "f2": "Devis illimités",
+          "f3": "Suivi historique des prix",
+          "f4": "Traitement prioritaire",
+          "f5": "Export CSV/Excel"
         },
-        "cta": "Start Free"
+        "cta": "Commencer gratuitement"
       },
-      "monthly": "Monthly",
-      "yearly": "Yearly",
-      "note": "Cancel anytime. No long-term commitment."
+      "monthly": "Mensuel",
+      "yearly": "Annuel",
+      "note": "Annulez quand vous voulez. Sans engagement."
     },
     "cta": {
-      "title": "Ready to stop copy-pasting quotes?",
-      "subtitle": "Start comparing vendor quotes in seconds. Free forever.",
-      "button": "Get Started",
-      "note": "Free plan. No credit card needed."
+      "title": "Prêt à arrêter de copier-coller des devis ?",
+      "subtitle": "Comparez vos devis fournisseurs en quelques secondes. Gratuit pour toujours.",
+      "button": "Commencer",
+      "note": "Plan gratuit. Aucune carte bancaire requise."
     },
     "footer": {
       "copyright": "© {year} Quotal",
-      "privacy": "Privacy",
+      "privacy": "Confidentialité",
       "contact": "Contact"
     }
   },
   "Auth": {
-    "signIn": "Sign in to Quotal",
-    "subtitle": "AI-powered vendor quote comparison",
-    "google": "Sign in with Google",
-    "or": "or",
-    "emailPlaceholder": "you@company.com",
-    "sendLink": "Send sign-in link",
-    "checkEmail": "Check your email",
-    "linkSent": "We sent a sign-in link to {email}"
+    "signIn": "Se connecter à Quotal",
+    "subtitle": "Comparaison de devis fournisseurs par IA",
+    "google": "Se connecter avec Google",
+    "or": "ou",
+    "emailPlaceholder": "vous@entreprise.com",
+    "sendLink": "Envoyer le lien de connexion",
+    "checkEmail": "Vérifiez votre e-mail",
+    "linkSent": "Nous avons envoyé un lien de connexion à {email}"
   },
   "Dashboard": {
-    "title": "Projects",
-    "subtitle": "Compare vendor quotes across your procurement projects",
+    "title": "Projets",
+    "subtitle": "Comparez les devis fournisseurs de vos projets achats",
     "empty": {
-      "title": "No projects yet",
-      "description": "Create your first project to start comparing vendor quotes."
+      "title": "Aucun projet pour l'instant",
+      "description": "Créez votre premier projet pour commencer à comparer les devis fournisseurs."
     }
   },
   "Project": {
-    "quotes": "{count, plural, =1 {1 quote} other {# quotes}}",
-    "processing": "{count} processing...",
-    "uploadSection": "Upload Quotes",
-    "comparisonSection": "Comparison",
-    "breadcrumb": "Projects"
+    "quotes": "{count, plural, =1 {1 devis} other {# devis}}",
+    "processing": "{count} en cours de traitement...",
+    "uploadSection": "Importer des devis",
+    "comparisonSection": "Comparaison",
+    "breadcrumb": "Projets"
   },
   "Sidebar": {
-    "dashboard": "Dashboard",
-    "projects": "Projects",
-    "emailInbox": "Email Inbox",
-    "forwardTo": "Forward supplier quotes to:",
-    "settings": "Settings",
-    "signOut": "Sign out"
+    "dashboard": "Tableau de bord",
+    "projects": "Projets",
+    "emailInbox": "Boîte e-mail",
+    "forwardTo": "Transférez vos devis fournisseurs à :",
+    "settings": "Paramètres",
+    "signOut": "Se déconnecter"
   },
   "Comparison": {
-    "cheapestOverall": "Cheapest Overall",
-    "bestPerItem": "Best Per-Item Pricing",
-    "cheapestOn": "Cheapest on {wins} of {total} items",
-    "hiddenFees": "Hidden Fees Detected",
-    "quotesCompared": "Quotes Compared",
-    "itemsMatched": "{count} items matched across vendors",
-    "lessExpensive": "{amount} less than most expensive",
-    "lineItem": "Line Item",
-    "notOffered": "not offered",
-    "selectVendors": "Available from select vendors only",
-    "feesSurcharges": "Fees & Surcharges",
-    "hidden": "Hidden",
-    "grandTotal": "Grand Total",
-    "bestDeal": "Best Deal",
-    "termsComparison": "Terms Comparison",
-    "paymentTerms": "Payment Terms",
-    "delivery": "Delivery",
-    "days": "{count} days",
-    "fastest": "(fastest)",
-    "notesWarnings": "Notes & Warnings",
-    "uploadToCompare": "Upload quotes to see comparisons",
-    "uploadMore": "Upload at least one more quote to compare"
+    "cheapestOverall": "Le moins cher au total",
+    "bestPerItem": "Meilleur prix par article",
+    "cheapestOn": "Le moins cher sur {wins} articles sur {total}",
+    "hiddenFees": "Frais cachés détectés",
+    "quotesCompared": "Devis comparés",
+    "itemsMatched": "{count} articles associés entre fournisseurs",
+    "lessExpensive": "{amount} de moins que le plus cher",
+    "lineItem": "Article",
+    "notOffered": "non proposé",
+    "selectVendors": "Disponible uniquement chez certains fournisseurs",
+    "feesSurcharges": "Frais et surcharges",
+    "hidden": "Caché",
+    "grandTotal": "Total général",
+    "bestDeal": "Meilleure offre",
+    "termsComparison": "Comparaison des conditions",
+    "paymentTerms": "Conditions de paiement",
+    "delivery": "Livraison",
+    "days": "{count} jours",
+    "fastest": "(le plus rapide)",
+    "notesWarnings": "Notes et avertissements",
+    "uploadToCompare": "Importez des devis pour voir la comparaison",
+    "uploadMore": "Importez au moins un devis supplémentaire pour comparer"
   },
   "Upload": {
-    "clickToUpload": "Click to upload",
-    "orDragDrop": "or drag and drop",
-    "formats": "PDF, Excel, CSV, Text, or Images",
-    "pasteText": "Paste text",
-    "pastePlaceholder": "Paste the quote email body or text content here...",
-    "extractAdd": "Extract & Add Quote",
-    "cancel": "Cancel",
-    "uploading": "Uploading...",
-    "extracting": "Extracting data...",
-    "done": "Done",
-    "comparing": "Comparing quotes..."
+    "clickToUpload": "Cliquez pour importer",
+    "orDragDrop": "ou glissez-déposez",
+    "formats": "PDF, Excel, CSV, Texte ou Images",
+    "pasteText": "Coller du texte",
+    "pastePlaceholder": "Collez le corps de l'e-mail ou le contenu texte du devis ici...",
+    "extractAdd": "Extraire et ajouter le devis",
+    "cancel": "Annuler",
+    "uploading": "Import en cours...",
+    "extracting": "Extraction des données...",
+    "done": "Terminé",
+    "comparing": "Comparaison des devis..."
   },
   "QuoteDetail": {
-    "backToComparison": "Back to comparison",
-    "edit": "Edit",
-    "saveChanges": "Save Changes",
-    "cancel": "Cancel",
-    "vendor": "Vendor",
-    "currency": "Currency",
-    "paymentTerms": "Payment Terms",
-    "delivery": "Delivery",
-    "deliveryDays": "{count} days",
-    "unknown": "Unknown",
-    "lineItems": "Line Items",
-    "item": "Item",
-    "originalName": "Original Name",
-    "unitPrice": "Unit Price",
-    "qty": "Qty",
-    "unit": "Unit",
-    "subtotal": "Subtotal",
-    "feesSurcharges": "Fees & Surcharges",
-    "grandTotal": "Grand Total",
-    "aiNotes": "AI Notes",
-    "rawText": "Raw Extracted Text",
-    "downloadOriginal": "Download original"
+    "backToComparison": "Retour à la comparaison",
+    "edit": "Modifier",
+    "saveChanges": "Enregistrer",
+    "cancel": "Annuler",
+    "vendor": "Fournisseur",
+    "currency": "Devise",
+    "paymentTerms": "Conditions de paiement",
+    "delivery": "Livraison",
+    "deliveryDays": "{count} jours",
+    "unknown": "Inconnu",
+    "lineItems": "Articles",
+    "item": "Article",
+    "originalName": "Nom original",
+    "unitPrice": "Prix unitaire",
+    "qty": "Qté",
+    "unit": "Unité",
+    "subtotal": "Sous-total",
+    "feesSurcharges": "Frais et surcharges",
+    "grandTotal": "Total général",
+    "aiNotes": "Notes IA",
+    "rawText": "Texte brut extrait",
+    "downloadOriginal": "Télécharger l'original"
   },
   "Email": {
-    "title": "Email Forwarding",
-    "beta": "Beta",
-    "description": "Forward any supplier quote email to your unique inbox address and we'll extract it automatically.",
-    "copy": "Copy",
-    "copied": "Copied!",
-    "howItWorks": "How it works:",
-    "step1": "Receive a quote email from a supplier",
-    "step2": "Forward the email to your inbox address above",
-    "step3": "We extract all attachments and email body text",
-    "step4": "AI processes the quote and adds it to your latest project",
-    "step5": "You get a confirmation email when it's ready",
-    "webhookNote": "This feature requires a Postmark inbound webhook configuration. For the MVP, the webhook endpoint is ready at {endpoint} and can be tested via curl or Postman."
+    "title": "Transfert par e-mail",
+    "beta": "Bêta",
+    "description": "Transférez n'importe quel e-mail de devis fournisseur vers votre adresse unique et nous l'extrairons automatiquement.",
+    "copy": "Copier",
+    "copied": "Copié !",
+    "howItWorks": "Comment ça marche :",
+    "step1": "Recevez un e-mail de devis d'un fournisseur",
+    "step2": "Transférez l'e-mail vers votre adresse ci-dessus",
+    "step3": "Nous extrayons toutes les pièces jointes et le texte",
+    "step4": "L'IA traite le devis et l'ajoute à votre dernier projet",
+    "step5": "Vous recevez un e-mail de confirmation une fois terminé",
+    "webhookNote": "Cette fonctionnalité nécessite une configuration du webhook Postmark. Pour le MVP, l'endpoint est disponible à {endpoint} et peut être testé via curl ou Postman."
   },
   "Common": {
-    "newProject": "New Project",
-    "createProject": "Create Project",
-    "deleteProject": "Delete Project",
-    "projectName": "Project name",
-    "projectPlaceholder": "e.g. Q2 Packaging Materials",
-    "deleteConfirm": "Are you sure you want to delete {name}?",
-    "deleteWarning": "This will permanently delete all quotes and extracted data in this project. This action cannot be undone.",
-    "cancel": "Cancel",
-    "best": "Best:",
-    "quote": "{count, plural, =1 {1 quote} other {# quotes}}",
+    "newProject": "Nouveau projet",
+    "createProject": "Créer le projet",
+    "deleteProject": "Supprimer le projet",
+    "projectName": "Nom du projet",
+    "projectPlaceholder": "ex. Matériaux d'emballage T2",
+    "deleteConfirm": "Voulez-vous vraiment supprimer {name} ?",
+    "deleteWarning": "Cela supprimera définitivement tous les devis et données extraites de ce projet. Cette action est irréversible.",
+    "cancel": "Annuler",
+    "best": "Meilleur :",
+    "quote": "{count, plural, =1 {1 devis} other {# devis}}",
     "renameProject": "Renommer le projet",
     "rename": "Renommer",
     "projectActions": "Actions du projet"
   },
   "Upgrade": {
-    "title": "Upgrade to Pro",
-    "projectLimit": "You've reached the limit of {max} projects on the Free plan.",
-    "quoteLimit": "You've reached the limit of {max} quotes per project on the Free plan.",
-    "subtitle": "Unlock unlimited projects and quotes with Pro.",
-    "free": "Free",
+    "title": "Passer au Pro",
+    "projectLimit": "Vous avez atteint la limite de {max} projets du plan Gratuit.",
+    "quoteLimit": "Vous avez atteint la limite de {max} devis par projet du plan Gratuit.",
+    "subtitle": "Débloquez des projets et devis illimités avec Pro.",
+    "free": "Gratuit",
     "pro": "Pro",
-    "projects": "projects",
-    "quotesPerProject": "quotes/project",
+    "projects": "projets",
+    "quotesPerProject": "devis/projet",
     "freeProjects": "2",
     "freeQuotes": "3",
-    "proProjects": "Unlimited",
-    "proQuotes": "Unlimited",
-    "features": "Plus historical tracking, CSV export, and priority processing.",
-    "monthly": "Monthly",
-    "yearly": "Yearly",
-    "monthlyPrice": "$29/mo",
-    "yearlyPrice": "$290/yr",
-    "yearlySavings": "Save 2 months",
-    "upgrade": "Upgrade to Pro",
-    "maybeLater": "Maybe later"
+    "proProjects": "Illimités",
+    "proQuotes": "Illimités",
+    "features": "Plus le suivi historique, l'export CSV et le traitement prioritaire.",
+    "monthly": "Mensuel",
+    "yearly": "Annuel",
+    "monthlyPrice": "29 $/mois",
+    "yearlyPrice": "290 $/an",
+    "yearlySavings": "2 mois offerts",
+    "upgrade": "Passer au Pro",
+    "maybeLater": "Peut-être plus tard"
   },
   "Billing": {
     "plan": "Plan",
-    "free": "Free",
+    "free": "Gratuit",
     "pro": "Pro",
-    "upgrade": "Upgrade",
-    "manage": "Manage billing"
+    "upgrade": "Passer au Pro",
+    "manage": "Gérer la facturation"
   },
   "Settings": {
-    "title": "Settings",
+    "title": "Paramètres",
     "profile": {
-      "heading": "Profile",
-      "name": "Name",
-      "namePlaceholder": "Your name",
-      "email": "Email",
-      "save": "Save",
-      "saved": "Saved",
-      "saving": "Saving..."
+      "heading": "Profil",
+      "name": "Nom",
+      "namePlaceholder": "Votre nom",
+      "email": "E-mail",
+      "save": "Enregistrer",
+      "saved": "Enregistré",
+      "saving": "Enregistrement..."
     },
     "preferences": {
-      "heading": "Preferences",
-      "language": "Language",
-      "theme": "Theme"
+      "heading": "Préférences",
+      "language": "Langue",
+      "theme": "Thème"
     },
     "billing": {
-      "heading": "Billing",
-      "currentPlan": "Current plan",
-      "nextBilling": "Next billing date",
-      "upgrade": "Upgrade",
-      "manageSub": "Manage subscription"
+      "heading": "Facturation",
+      "currentPlan": "Plan actuel",
+      "nextBilling": "Prochaine date de facturation",
+      "upgrade": "Passer au Pro",
+      "manageSub": "Gérer l'abonnement"
     },
     "danger": {
-      "heading": "Danger Zone",
-      "deleteAccount": "Delete account",
-      "deleteDescription": "Permanently delete your account, all projects, and all quotes. This cannot be undone.",
-      "deleteConfirmTitle": "Delete your account",
-      "deleteConfirmDescription": "This will permanently delete your account and all associated data. Type your email address to confirm.",
-      "emailLabel": "Your email address",
-      "emailPlaceholder": "you@example.com",
-      "confirmDelete": "Delete my account",
-      "cancel": "Cancel",
-      "deleting": "Deleting..."
+      "heading": "Zone de danger",
+      "deleteAccount": "Supprimer le compte",
+      "deleteDescription": "Supprime définitivement votre compte, tous vos projets et tous vos devis. Cette action est irréversible.",
+      "deleteConfirmTitle": "Supprimer votre compte",
+      "deleteConfirmDescription": "Cela supprimera définitivement votre compte et toutes les données associées. Saisissez votre adresse e-mail pour confirmer.",
+      "emailLabel": "Votre adresse e-mail",
+      "emailPlaceholder": "vous@exemple.com",
+      "confirmDelete": "Supprimer mon compte",
+      "cancel": "Annuler",
+      "deleting": "Suppression..."
     }
   }
 }
