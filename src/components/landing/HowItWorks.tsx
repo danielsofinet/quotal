@@ -43,10 +43,7 @@ export default function HowItWorks() {
           whileInView="show"
           viewport={{ once: true }}
         >
-          {/* Connecting line between steps (from step 1 center to step 3 center) */}
-          <div className="hidden md:block absolute top-16 left-[16.67%] right-[16.67%] h-px border-t-2 border-dashed border-border-light" />
-
-          {steps.map((step) => (
+{steps.map((step) => (
             <motion.div key={step} variants={fadeUp} className="relative text-center md:text-left">
               <div className="relative inline-flex items-center justify-center w-12 h-12 rounded-xl bg-accent-dim border border-accent/15 mb-8 mx-auto md:mx-0">
                 <span className="text-sm font-semibold text-accent-light font-mono">
