@@ -14,13 +14,16 @@ export const metadata = {
 };
 
 export default async function DashboardPage() {
-  const user = await getUserWithProjects();
-  const t = await getTranslations("Dashboard");
+  const [user, t] = await Promise.all([
+    getUserWithProjects(),
+    getTranslations("Dashboard"),
+  ]);
 
   if (!user) {
     redirect("/sign-in");
   }
 
+  // Single query for projects with quote summaries
   const projects = await prisma.project.findMany({
     where: { userId: user.id },
     include: {

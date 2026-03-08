@@ -26,24 +26,26 @@ export default async function ProjectDetailPage({
 }: PageProps) {
   const { id } = await params;
   const { quote: selectedQuoteId } = await searchParams;
-  const t = await getTranslations("Project");
 
-  const user = await getUserWithProjects();
-  if (!user) redirect("/sign-in");
-
-  const project = await prisma.project.findUnique({
-    where: { id },
-    include: {
-      quotes: {
-        include: {
-          lineItems: true,
-          fees: true,
+  // Parallel fetch: user, project, and translations
+  const [user, project, t] = await Promise.all([
+    getUserWithProjects(),
+    prisma.project.findUnique({
+      where: { id },
+      include: {
+        quotes: {
+          include: {
+            lineItems: true,
+            fees: true,
+          },
+          orderBy: { createdAt: "asc" },
         },
-        orderBy: { createdAt: "asc" },
       },
-    },
-  });
+    }),
+    getTranslations("Project"),
+  ]);
 
+  if (!user) redirect("/sign-in");
   if (!project || project.userId !== user.id) return notFound();
 
   const doneQuotes = project.quotes.filter(

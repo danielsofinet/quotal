@@ -36,22 +36,48 @@ export async function getAuthenticatedUserFromCookies() {
 
 /**
  * Get authenticated user with all projects (for server pages).
+ * Single DB query — avoids the double-fetch from findOrCreateUser + findUnique.
  */
 export async function getUserWithProjects() {
-  const user = await getAuthenticatedUserFromCookies();
-  if (!user) return null;
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("__session")?.value;
+  if (!sessionCookie) return null;
 
-  return prisma.user.findUnique({
-    where: { id: user.id },
-    include: {
-      projects: {
-        include: {
-          _count: { select: { quotes: true } },
+  try {
+    const adminAuth = getAdminAuth();
+    const decoded = await adminAuth.verifySessionCookie(sessionCookie, true);
+
+    // Try to find user with projects in one query
+    let user = await prisma.user.findUnique({
+      where: { firebaseUid: decoded.uid },
+      include: {
+        projects: {
+          include: {
+            _count: { select: { quotes: true } },
+          },
+          orderBy: { createdAt: "desc" },
         },
-        orderBy: { createdAt: "desc" },
       },
-    },
-  });
+    });
+
+    // Auto-create if first sign-in
+    if (!user) {
+      const inboxAddress = `quotes+${uuidv4().slice(0, 8)}@quotal.app`;
+      const created = await prisma.user.create({
+        data: {
+          firebaseUid: decoded.uid,
+          email: decoded.email || `${decoded.uid}@firebase.user`,
+          name: decoded.name || null,
+          inboxAddress,
+        },
+      });
+      user = { ...created, projects: [] };
+    }
+
+    return user;
+  } catch {
+    return null;
+  }
 }
 
 async function verifyAndGetUser(idToken: string) {
