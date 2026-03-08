@@ -67,9 +67,9 @@ export default function SignInClient() {
   }
 
   return (
-    <div className="force-dark contents">
+    <div className="force-dark min-h-screen bg-bg">
     <InfiniteGrid
-      className="min-h-screen bg-bg flex items-center justify-center px-4"
+      className="min-h-screen flex items-center justify-center px-4"
       baseOpacity={0.06}
       revealOpacity={0.3}
       revealRadius={300}
