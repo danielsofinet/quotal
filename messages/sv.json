@@ -107,7 +107,7 @@
       "title": "Börja gratis. Uppgradera när det klickar.",
       "free": {
         "name": "Gratis",
-        "price": "€0",
+        "price": "0 €",
         "subtitle": "Prova",
         "features": {
           "f1": "2 projekt",
@@ -119,9 +119,9 @@
       },
       "pro": {
         "name": "Pro",
-        "price": "$29",
+        "price": "29 €",
         "period": "/mån",
-        "yearlyPrice": "$290",
+        "yearlyPrice": "290 €",
         "yearlyPeriod": "/år",
         "yearlySavings": "Spara 2 månader",
         "subtitle": "För inköpsteam",
@@ -290,8 +290,8 @@
     "features": "Plus historisk spårning, CSV-export och prioriterad bearbetning.",
     "monthly": "Månadsvis",
     "yearly": "Årsvis",
-    "monthlyPrice": "$29/mån",
-    "yearlyPrice": "$290/år",
+    "monthlyPrice": "29 €/mån",
+    "yearlyPrice": "290 €/år",
     "yearlySavings": "Spara 2 månader",
     "upgrade": "Uppgradera till Pro",
     "maybeLater": "Kanske senare"

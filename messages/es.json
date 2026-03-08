@@ -107,7 +107,7 @@
       "title": "Start free. Upgrade when it clicks.",
       "free": {
         "name": "Free",
-        "price": "€0",
+        "price": "0 €",
         "subtitle": "Try it out",
         "features": {
           "f1": "2 projects",
@@ -119,9 +119,9 @@
       },
       "pro": {
         "name": "Pro",
-        "price": "$29",
+        "price": "29 €",
         "period": "/mo",
-        "yearlyPrice": "$290",
+        "yearlyPrice": "290 €",
         "yearlyPeriod": "/yr",
         "yearlySavings": "Save 2 months",
         "subtitle": "For procurement teams",
@@ -290,8 +290,8 @@
     "features": "Plus historical tracking, CSV export, and priority processing.",
     "monthly": "Monthly",
     "yearly": "Yearly",
-    "monthlyPrice": "$29/mo",
-    "yearlyPrice": "$290/yr",
+    "monthlyPrice": "29 €/mo",
+    "yearlyPrice": "290 €/yr",
     "yearlySavings": "Save 2 months",
     "upgrade": "Upgrade to Pro",
     "maybeLater": "Maybe later"

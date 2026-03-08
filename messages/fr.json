@@ -119,9 +119,9 @@
       },
       "pro": {
         "name": "Pro",
-        "price": "29 $",
+        "price": "29 €",
         "period": "/mois",
-        "yearlyPrice": "290 $",
+        "yearlyPrice": "290 €",
         "yearlyPeriod": "/an",
         "yearlySavings": "2 mois offerts",
         "subtitle": "Pour les équipes achats",
@@ -290,8 +290,8 @@
     "features": "Plus le suivi historique, l'export CSV et le traitement prioritaire.",
     "monthly": "Mensuel",
     "yearly": "Annuel",
-    "monthlyPrice": "29 $/mois",
-    "yearlyPrice": "290 $/an",
+    "monthlyPrice": "29 €/mois",
+    "yearlyPrice": "290 €/an",
     "yearlySavings": "2 mois offerts",
     "upgrade": "Passer au Pro",
     "maybeLater": "Peut-être plus tard"
