@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth";
 import { extractQuoteData } from "@/lib/extraction";
@@ -45,28 +44,21 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  after(async () => {
-    await processQuote(quote.id, text);
-  });
-
-  return NextResponse.json(quote);
-}
-
-async function processQuote(quoteId: string, rawText: string) {
+  // Process inline — more reliable than after() on serverless
   try {
     await prisma.quote.update({
-      where: { id: quoteId },
+      where: { id: quote.id },
       data: { processingStatus: "PROCESSING" },
     });
 
-    const extracted = await extractQuoteData(rawText);
+    const extracted = await extractQuoteData(text);
 
     const itemsTotal = extracted.lineItems.reduce((sum, item) => sum + item.subtotal, 0);
     const feesTotal = extracted.fees.reduce((sum, fee) => sum + fee.amount, 0);
     const grandTotal = itemsTotal + feesTotal;
 
     await prisma.quote.update({
-      where: { id: quoteId },
+      where: { id: quote.id },
       data: {
         vendorName: extracted.vendorName,
         currency: extracted.currency,
@@ -80,7 +72,7 @@ async function processQuote(quoteId: string, rawText: string) {
     if (extracted.lineItems.length > 0) {
       await prisma.lineItem.createMany({
         data: extracted.lineItems.map((item) => ({
-          quoteId,
+          quoteId: quote.id,
           name: item.normalizedName,
           rawName: item.rawName,
           unitPrice: item.unitPrice,
@@ -94,7 +86,7 @@ async function processQuote(quoteId: string, rawText: string) {
     if (extracted.fees.length > 0) {
       await prisma.fee.createMany({
         data: extracted.fees.map((fee) => ({
-          quoteId,
+          quoteId: quote.id,
           name: fee.name,
           amount: fee.amount,
           isHidden: fee.isHidden,
@@ -103,14 +95,25 @@ async function processQuote(quoteId: string, rawText: string) {
     }
 
     await prisma.quote.update({
-      where: { id: quoteId },
+      where: { id: quote.id },
       data: { processingStatus: "DONE" },
     });
+
+    const result = await prisma.quote.findUnique({
+      where: { id: quote.id },
+      include: { lineItems: true, fees: true },
+    });
+    return NextResponse.json(result);
   } catch (error) {
-    console.error("Quote processing failed:", error);
+    const errMsg = error instanceof Error ? error.message : String(error);
+    console.error("Quote processing failed:", errMsg);
     await prisma.quote.update({
-      where: { id: quoteId },
+      where: { id: quote.id },
       data: { processingStatus: "FAILED" },
     });
+    return NextResponse.json(
+      { ...quote, processingStatus: "FAILED", error: errMsg },
+      { status: 200 }
+    );
   }
 }

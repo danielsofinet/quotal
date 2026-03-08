@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { extractQuoteData } from "@/lib/extraction";
+import { extractQuoteData, extractQuoteFromFile, isDirectFileType } from "@/lib/extraction";
 import { parseFile } from "@/lib/fileParser";
 
 export const maxDuration = 60;
@@ -105,11 +104,8 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      after(async () => {
-        await processAttachmentQuote(quote.id, buffer, attachment.ContentType);
-      });
-
-      results.push(`Processing attachment: ${attachment.Name}`);
+      await processAttachmentQuote(quote.id, buffer, attachment.ContentType);
+      results.push(`Processed attachment: ${attachment.Name}`);
     }
   }
 
@@ -127,11 +123,8 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    after(async () => {
-      await processTextQuote(quote.id, payload.TextBody);
-    });
-
-    results.push("Processing email body as quote");
+    await processTextQuote(quote.id, payload.TextBody);
+    results.push("Processed email body as quote");
   }
 
   console.log(
@@ -158,7 +151,14 @@ async function processAttachmentQuote(
     });
 
     const rawText = await parseFile(buffer, mimeType);
-    const extracted = await extractQuoteData(rawText);
+    let extracted;
+    if (rawText) {
+      extracted = await extractQuoteData(rawText);
+    } else if (isDirectFileType(mimeType)) {
+      extracted = await extractQuoteFromFile(buffer, mimeType);
+    } else {
+      throw new Error("Could not extract content from attachment");
+    }
 
     const itemsTotal = extracted.lineItems.reduce(
       (sum, i) => sum + i.subtotal,
@@ -170,7 +170,7 @@ async function processAttachmentQuote(
       where: { id: quoteId },
       data: {
         vendorName: extracted.vendorName,
-        rawText,
+        ...(rawText && { rawText }),
         currency: extracted.currency,
         paymentTerms: extracted.paymentTerms,
         deliveryDays: extracted.deliveryDays,

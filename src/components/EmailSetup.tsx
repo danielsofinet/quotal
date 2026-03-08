@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Badge } from "./ui/Badge";
 
 interface EmailSetupProps {
@@ -9,6 +10,7 @@ interface EmailSetupProps {
 
 export default function EmailSetup({ inboxAddress }: EmailSetupProps) {
   const [copied, setCopied] = useState(false);
+  const t = useTranslations("Email");
 
   function handleCopy() {
     navigator.clipboard.writeText(inboxAddress);
@@ -20,14 +22,13 @@ export default function EmailSetup({ inboxAddress }: EmailSetupProps) {
     <div className="border border-border rounded-lg overflow-hidden">
       <div className="px-4 py-2.5 bg-surface border-b border-border flex items-center justify-between">
         <span className="text-[10px] font-semibold uppercase tracking-wider text-text-dim">
-          Email Forwarding
+          {t("title")}
         </span>
-        <Badge>Beta</Badge>
+        <Badge>{t("beta")}</Badge>
       </div>
       <div className="p-4 space-y-4">
         <p className="text-sm text-text-muted leading-relaxed">
-          Forward any supplier quote email to your unique inbox address and
-          we&apos;ll extract it automatically.
+          {t("description")}
         </p>
 
         <div className="flex items-center gap-2">
@@ -38,27 +39,24 @@ export default function EmailSetup({ inboxAddress }: EmailSetupProps) {
             onClick={handleCopy}
             className="shrink-0 px-3 py-2.5 bg-surface border border-border rounded-lg text-sm text-text-muted hover:text-text-primary hover:border-border-light transition-colors"
           >
-            {copied ? "Copied!" : "Copy"}
+            {copied ? t("copied") : t("copy")}
           </button>
         </div>
 
         <div className="space-y-2 text-xs text-text-dim">
-          <p className="font-medium text-text-muted">How it works:</p>
+          <p className="font-medium text-text-muted">{t("howItWorks")}</p>
           <ol className="list-decimal list-inside space-y-1 leading-relaxed">
-            <li>Receive a quote email from a supplier</li>
-            <li>Forward the email to your inbox address above</li>
-            <li>We extract all attachments and email body text</li>
-            <li>AI processes the quote and adds it to your latest project</li>
-            <li>You get a confirmation email when it&apos;s ready</li>
+            <li>{t("step1")}</li>
+            <li>{t("step2")}</li>
+            <li>{t("step3")}</li>
+            <li>{t("step4")}</li>
+            <li>{t("step5")}</li>
           </ol>
         </div>
 
         <div className="p-3 bg-warning-dim border border-warning/20 rounded-lg">
           <p className="text-xs text-warning leading-relaxed">
-            <strong>Note:</strong> This feature requires a Postmark inbound
-            webhook configuration. For the MVP, the webhook endpoint is ready at{" "}
-            <code className="font-mono">/api/inbound-email</code> and can be
-            tested via curl or Postman.
+            <strong>Note:</strong> {t("webhookNote", { endpoint: "/api/inbound-email" })}
           </p>
         </div>
       </div>

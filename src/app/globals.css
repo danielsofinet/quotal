@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
-@theme inline {
+@theme {
+  --animate-aurora: aurora 60s linear infinite;
+
+
   --color-bg: #0A0A0F;
   --color-surface: #12121A;
   --color-surface-hover: #1A1A25;
@@ -21,6 +24,10 @@
   --color-warning-dim: rgba(255,171,0,0.12);
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 * {
@@ -58,6 +65,74 @@ body {
   background: var(--color-text-dim);
 }
 
+/* Aurora animation keyframes */
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
+/* Color variables required by aurora-background component */
+:root {
+  --white: #fff;
+  --black: #000;
+  --transparent: transparent;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --indigo-300: #a5b4fc;
+  --violet-200: #ddd6fe;
+}
+
+/* Stripe-inspired light mode for landing page */
+.landing-light {
+  --color-bg: #FFFFFF;
+  --color-surface: #F6F9FC;
+  --color-surface-hover: #E9EEF4;
+  --color-border: #E3E8EE;
+  --color-border-light: #D3D9E0;
+  --color-text-primary: #0A2540;
+  --color-text-muted: #425466;
+  --color-text-dim: #8898AA;
+  --color-accent: #635BFF;
+  --color-accent-light: #7A73FF;
+  --color-accent-dim: rgba(99,91,255,0.08);
+  --color-success: #00A67E;
+  --color-success-dim: rgba(0,166,126,0.08);
+  --color-danger: #DF1B41;
+  --color-danger-dim: rgba(223,27,65,0.08);
+  --color-warning: #D97706;
+  --color-warning-dim: rgba(217,119,6,0.08);
+}
+
+/* Light-mode scrollbar inside landing */
+.landing-light ::-webkit-scrollbar-thumb {
+  background: #D3D9E0;
+}
+.landing-light ::-webkit-scrollbar-thumb:hover {
+  background: #8898AA;
+}
+.landing-light ::selection {
+  background: #635BFF;
+  color: white;
+}
+
+/* Stripe-style card: shadow instead of heavy borders */
+.landing-card {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.06);
+  border: none !important;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.landing-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
+
+
+/* App UI animations */
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
@@ -80,4 +155,15 @@ body {
 
 .animate-slide-up {
   animation: slide-up 0.2s ease-out;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-slide-up,
+  .animate-pulse-subtle {
+    animation: none;
+  }
 }

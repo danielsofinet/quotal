@@ -1,0 +1,270 @@
+{
+  "Landing": {
+    "nav": {
+      "watchDemo": "Se demo",
+      "earlyAccess": "Tidig åtkomst"
+    },
+    "hero": {
+      "badge": "Nu i tidig åtkomst",
+      "title": "Sluta jämföra leverantörsofferter i kalkylblad",
+      "subtitle": "Quotal extraherar rader ur alla dokument — PDF, Excel, e-post — och ger dig en normaliserad jämförelse sida vid sida på sekunder. Dolda avgifter flaggas automatiskt.",
+      "cta": "Få tidig åtkomst",
+      "ctaSecondary": "Se 60s demo ↓"
+    },
+    "heroTable": {
+      "lineItem": "Artikel",
+      "vendor1": "PackRight GmbH",
+      "vendor2": "Nordic Supplies AB",
+      "vendor3": "QuickPack Srl",
+      "item1": "Wellpapplåda 10K st",
+      "item2": "Bubbelplast 200 rullar",
+      "item3": "Packtejp 500 rullar",
+      "item4": "Frakt",
+      "item5": "Bränsletillägg",
+      "hidden": "Dold",
+      "grandTotal": "Totalsumma",
+      "bestDeal": "Bästa erbjudande"
+    },
+    "problem": {
+      "label": "PROBLEMET",
+      "title": "Du drunknar i ojämna offerter",
+      "card1": {
+        "emoji": "📄",
+        "title": "Varje offert ser annorlunda ut",
+        "description": "Leverantör A skickar PDF. Leverantör B skickar Excel. Leverantör C svarar i ett mejl. Du lägger timmar på att kopiera siffror till ett kalkylblad bara för att jämföra."
+      },
+      "card2": {
+        "emoji": "💸",
+        "title": "Dolda avgifter glider igenom",
+        "description": "Bränsletillägg begravda i fotnoter. Palletavgifter på sida 3. Minimiorderstraffavgifter i det finstilta. Teamet upptäcker dem efter att inköpsordern är signerad."
+      },
+      "card3": {
+        "emoji": "⏱️",
+        "title": "Det tar evigheter",
+        "description": "Ett inköpsteam på 3 personer lägger 15+ timmar per vecka på att normalisera offerter. Det är €40K+ per år i lönekostnader på kopiera-klistra-arbete."
+      }
+    },
+    "howItWorks": {
+      "label": "SÅ FUNGERAR DET",
+      "title": "Tre steg. Trettio sekunder.",
+      "step1": {
+        "number": "01",
+        "title": "Ladda upp eller vidarebefordra",
+        "description": "Dra och släpp valfri fil — PDF, Excel, bild, eller klistra in rå text. Eller vidarebefordra leverantörens mejl till din unika Quotal-inkorg."
+      },
+      "step2": {
+        "number": "02",
+        "title": "AI extraherar & normaliserar",
+        "description": "Quotal läser varje dokument, extraherar artikelrader, konverterar enheter och valutor, och matchar motsvarande produkter mellan leverantörer."
+      },
+      "step3": {
+        "number": "03",
+        "title": "Jämför & besluta",
+        "description": "En ren jämförelsetabell sida vid sida visar bästa pris per artikel, flaggar dolda avgifter och markerar det bästa totala erbjudandet. Klart."
+      }
+    },
+    "demo": {
+      "label": "SE DET I PRAKTIKEN",
+      "title": "60 sekunder från kaos till klarhet",
+      "watchDemo": "Se demon",
+      "noSignup": "Ingen registrering krävs för att titta"
+    },
+    "features": {
+      "label": "FUNKTIONER",
+      "title": "Byggt för hur inköp faktiskt fungerar",
+      "anyFormat": {
+        "title": "Alla format, alla språk",
+        "description": "PDF, Excel, CSV, bilder, e-posttext. Offerter på engelska, tyska, franska, holländska, spanska — Quotal klarar dem alla."
+      },
+      "hiddenFees": {
+        "title": "Upptäckt av dolda avgifter",
+        "description": "AI skannar fotnoter, finstilt och begravda rader för att lyfta fram avgifter ditt team kan missa."
+      },
+      "email": {
+        "title": "E-postvidarebefordran",
+        "description": "Vidarebefordra leverantörsmejl till din unika Quotal-adress. Offerter extraheras och läggs till automatiskt."
+      },
+      "history": {
+        "title": "Historisk prisspårning",
+        "description": "Se hur varje leverantörs priser förändras över tid. Upptäck trender inför nästa förhandling."
+      },
+      "normalization": {
+        "title": "Smart normalisering",
+        "description": "\"Wellpapplåda 40x30x20cm\" och \"Wellp. Låda 400×300×200mm\" identifieras som samma produkt."
+      },
+      "gdpr": {
+        "title": "GDPR-kompatibel",
+        "description": "Hostat i Europa. Din data stannar i EU. Ingen leverantörsdata delas eller används för träning."
+      }
+    },
+    "socialProof": {
+      "quote": "Varje gång du begär offerter får du 3–5 svar i helt olika format. Sedan lägger du timmar på att försöka förstå dem.",
+      "attribution": "— Inköpschef på Reddit",
+      "tagline": "Quotal byggdes för att lösa exakt detta."
+    },
+    "pricing": {
+      "label": "PRISSÄTTNING",
+      "title": "Börja gratis. Uppgradera när det klickar.",
+      "free": {
+        "name": "Gratis",
+        "price": "€0",
+        "subtitle": "Prova",
+        "features": {
+          "f1": "1 projekt",
+          "f2": "3 offerter per projekt",
+          "f3": "Alla AI-extraheringsfunktioner",
+          "f4": "E-postvidarebefordran"
+        },
+        "cta": "Kom igång"
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "€49",
+        "period": "/mån",
+        "subtitle": "För inköpsteam",
+        "popular": "Populär",
+        "features": {
+          "f1": "Obegränsat antal projekt",
+          "f2": "Obegränsat antal offerter",
+          "f3": "Historisk prisspårning",
+          "f4": "Prioriterad bearbetning",
+          "f5": "CSV/Excel-export"
+        },
+        "cta": "Få tidig åtkomst"
+      },
+      "note": "Inget kreditkort krävs. Avsluta när som helst."
+    },
+    "cta": {
+      "title": "Redo att sluta kopiera och klistra offerter?",
+      "subtitle": "Gå med i tidig åtkomst. Gratis för de första 50 användarna.",
+      "placeholder": "Din jobbmail",
+      "button": "Gå med i tidig åtkomst",
+      "note": "Ingen spam. Vi mejlar dig när ditt konto är redo."
+    },
+    "footer": {
+      "copyright": "© {year} Quotal",
+      "privacy": "Integritet",
+      "contact": "Kontakt",
+      "linkedin": "LinkedIn"
+    }
+  },
+  "Auth": {
+    "signIn": "Logga in på Quotal",
+    "subtitle": "AI-driven jämförelse av leverantörsofferter",
+    "google": "Logga in med Google",
+    "or": "eller",
+    "emailPlaceholder": "du@företag.se",
+    "sendLink": "Skicka inloggningslänk",
+    "checkEmail": "Kolla din e-post",
+    "linkSent": "Vi skickade en inloggningslänk till {email}"
+  },
+  "Dashboard": {
+    "title": "Projekt",
+    "subtitle": "Jämför leverantörsofferter för dina inköpsprojekt",
+    "empty": {
+      "title": "Inga projekt ännu",
+      "description": "Skapa ditt första projekt för att börja jämföra leverantörsofferter."
+    }
+  },
+  "Project": {
+    "quotes": "{count, plural, =1 {1 offert} other {# offerter}}",
+    "processing": "{count} bearbetar...",
+    "uploadSection": "Ladda upp offerter",
+    "comparisonSection": "Jämförelse",
+    "breadcrumb": "Projekt"
+  },
+  "Sidebar": {
+    "dashboard": "Översikt",
+    "projects": "Projekt",
+    "emailInbox": "E-postinkorg",
+    "forwardTo": "Vidarebefordra leverantörsofferter till:",
+    "signOut": "Logga ut"
+  },
+  "Comparison": {
+    "cheapestOverall": "Billigast totalt",
+    "bestPerItem": "Bäst per artikel",
+    "cheapestOn": "Billigast på {wins} av {total} artiklar",
+    "hiddenFees": "Dolda avgifter upptäckta",
+    "quotesCompared": "Offerter jämförda",
+    "itemsMatched": "{count} artiklar matchade mellan leverantörer",
+    "lessExpensive": "{amount} billigare än dyraste",
+    "lineItem": "Artikel",
+    "notOffered": "ej erbjudet",
+    "selectVendors": "Tillgängligt från utvalda leverantörer",
+    "feesSurcharges": "Avgifter & tillägg",
+    "hidden": "Dold",
+    "grandTotal": "Totalsumma",
+    "bestDeal": "Bästa erbjudande",
+    "termsComparison": "Villkorsjämförelse",
+    "paymentTerms": "Betalningsvillkor",
+    "delivery": "Leverans",
+    "days": "{count} dagar",
+    "fastest": "(snabbast)",
+    "notesWarnings": "Anteckningar & varningar",
+    "uploadToCompare": "Ladda upp offerter för att se jämförelser",
+    "uploadMore": "Ladda upp minst en offert till för att jämföra"
+  },
+  "Upload": {
+    "clickToUpload": "Klicka för att ladda upp",
+    "orDragDrop": "eller dra och släpp",
+    "formats": "PDF, Excel, CSV, Text eller Bilder",
+    "pasteText": "Klistra in text",
+    "pastePlaceholder": "Klistra in offertmailets brödtext eller textinnehåll här...",
+    "extractAdd": "Extrahera & lägg till offert",
+    "cancel": "Avbryt",
+    "uploading": "Laddar upp...",
+    "extracting": "Extraherar data...",
+    "done": "Klar",
+    "comparing": "Jämför offerter..."
+  },
+  "QuoteDetail": {
+    "backToComparison": "Tillbaka till jämförelse",
+    "edit": "Redigera",
+    "saveChanges": "Spara ändringar",
+    "cancel": "Avbryt",
+    "vendor": "Leverantör",
+    "currency": "Valuta",
+    "paymentTerms": "Betalningsvillkor",
+    "delivery": "Leverans",
+    "deliveryDays": "{count} dagar",
+    "unknown": "Okänd",
+    "lineItems": "Artiklar",
+    "item": "Artikel",
+    "originalName": "Originalnamn",
+    "unitPrice": "Enhetspris",
+    "qty": "Antal",
+    "unit": "Enhet",
+    "subtotal": "Delsumma",
+    "feesSurcharges": "Avgifter & tillägg",
+    "grandTotal": "Totalsumma",
+    "aiNotes": "AI-anteckningar",
+    "rawText": "Rå extraherad text",
+    "downloadOriginal": "Ladda ner original"
+  },
+  "Email": {
+    "title": "E-postvidarebefordran",
+    "beta": "Beta",
+    "description": "Vidarebefordra leverantörsofferter via e-post till din unika inkorgadress så extraherar vi dem automatiskt.",
+    "copy": "Kopiera",
+    "copied": "Kopierat!",
+    "howItWorks": "Så fungerar det:",
+    "step1": "Ta emot en offert via e-post från en leverantör",
+    "step2": "Vidarebefordra mailet till din inkorgadress ovan",
+    "step3": "Vi extraherar alla bilagor och e-posttext",
+    "step4": "AI bearbetar offerten och lägger till den i ditt senaste projekt",
+    "step5": "Du får en bekräftelse via e-post när den är klar",
+    "webhookNote": "Denna funktion kräver konfiguration av en Postmark inbound webhook. För MVP:n är webhook-endpointen klar på {endpoint} och kan testas via curl eller Postman."
+  },
+  "Common": {
+    "newProject": "Nytt projekt",
+    "createProject": "Skapa projekt",
+    "deleteProject": "Radera projekt",
+    "projectName": "Projektnamn",
+    "projectPlaceholder": "t.ex. Q2 Förpackningsmaterial",
+    "deleteConfirm": "Är du säker på att du vill radera {name}?",
+    "deleteWarning": "Detta raderar permanent alla offerter och extraherad data i projektet. Åtgärden kan inte ångras.",
+    "cancel": "Avbryt",
+    "best": "Bäst:",
+    "quote": "{count, plural, =1 {1 offert} other {# offerter}}"
+  }
+}

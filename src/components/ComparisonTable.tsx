@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { Badge } from "./ui/Badge";
 
 interface LineItem {
@@ -46,6 +47,7 @@ function fmt(amount: number, currency?: string | null) {
 }
 
 export default function ComparisonTable({ quotes, projectId }: ComparisonTableProps) {
+  const t = useTranslations("Comparison");
   const processed = quotes.filter((q) => q.processingStatus === "DONE");
 
   if (processed.length < 2) {
@@ -53,8 +55,8 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
       <div className="text-center py-12 border border-border rounded-lg bg-surface">
         <p className="text-text-muted text-sm">
           {processed.length === 0
-            ? "Upload quotes to see comparisons"
-            : "Upload at least one more quote to compare"}
+            ? t("uploadToCompare")
+            : t("uploadMore")}
         </p>
       </div>
     );
@@ -62,7 +64,6 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
 
   const currency = processed[0]?.currency;
 
-  // --- Group items by canonicalName ---
   const groupMap = new Map<string, { quoteId: string; item: LineItem }[]>();
   processed.forEach((q) => {
     q.lineItems.forEach((item) => {
@@ -72,7 +73,6 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
     });
   });
 
-  // Split: items most vendors have vs items only 1-2 have
   const allGroups = Array.from(groupMap.entries());
   const majorGroups = allGroups
     .filter(([, entries]) => entries.length >= Math.ceil(processed.length / 2))
@@ -81,12 +81,10 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
     .filter(([, entries]) => entries.length < Math.ceil(processed.length / 2))
     .sort((a, b) => a[0].localeCompare(b[0]));
 
-  // --- Fee grouping ---
   const allFeeNames = new Set<string>();
   processed.forEach((q) => q.fees.forEach((f) => allFeeNames.add(f.name)));
   const feeNames = Array.from(allFeeNames);
 
-  // --- Totals & winner ---
   const totals = processed
     .filter((q) => q.grandTotal !== null)
     .map((q) => ({ id: q.id, vendor: q.vendorName, total: q.grandTotal! }));
@@ -97,7 +95,6 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
     ? totals.reduce((max, q) => (q.total > max.total ? q : max)).id
     : null;
 
-  // --- Count wins per vendor (cheapest per item row) ---
   const winCount = new Map<string, number>();
   processed.forEach((q) => winCount.set(q.id, 0));
   majorGroups.forEach(([, entries]) => {
@@ -109,7 +106,6 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
   });
   const bestValueId = [...winCount.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
 
-  // --- Hidden fee warnings ---
   const hiddenFees = processed.flatMap((q) =>
     q.fees.filter((f) => f.isHidden).map((f) => ({
       vendor: q.vendorName,
@@ -118,7 +114,6 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
     }))
   );
 
-  // --- Render helpers ---
   function renderItemRow(
     groupName: string,
     entries: { quoteId: string; item: LineItem }[],
@@ -143,7 +138,7 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
           if (!entry) {
             return (
               <td key={q.id} className="px-4 py-3 border-l border-border text-text-dim align-top">
-                <span className="text-[11px]">not offered</span>
+                <span className="text-[11px]">{t("notOffered")}</span>
               </td>
             );
           }
@@ -183,13 +178,12 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
 
   return (
     <div className="space-y-5">
-      {/* ===== Summary Cards ===== */}
+      {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        {/* Cheapest overall */}
         {cheapestId && (
           <div className="p-4 bg-success-dim border border-success/20 rounded-lg">
             <div className="text-[10px] font-semibold uppercase tracking-wider text-success mb-1.5">
-              Cheapest Overall
+              {t("cheapestOverall")}
             </div>
             <div className="font-semibold text-text-primary text-[15px]">
               {processed.find((q) => q.id === cheapestId)?.vendorName}
@@ -199,37 +193,36 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
             </div>
             {cheapestId !== expensiveId && expensiveId && (
               <div className="text-[11px] text-text-dim mt-1">
-                {fmt(
-                  totals.find((t) => t.id === expensiveId)!.total -
-                    totals.find((t) => t.id === cheapestId)!.total,
-                  currency
-                )}{" "}
-                less than most expensive
+                {t("lessExpensive", {
+                  amount: fmt(
+                    totals.find((t) => t.id === expensiveId)!.total -
+                      totals.find((t) => t.id === cheapestId)!.total,
+                    currency
+                  ),
+                })}
               </div>
             )}
           </div>
         )}
 
-        {/* Best value (most item wins) */}
         {bestValueId && (
           <div className="p-4 bg-accent-dim border border-accent/20 rounded-lg">
             <div className="text-[10px] font-semibold uppercase tracking-wider text-accent-light mb-1.5">
-              Best Per-Item Pricing
+              {t("bestPerItem")}
             </div>
             <div className="font-semibold text-text-primary text-[15px]">
               {processed.find((q) => q.id === bestValueId)?.vendorName}
             </div>
             <div className="text-sm text-accent-light mt-0.5">
-              Cheapest on {winCount.get(bestValueId)} of {majorGroups.length} items
+              {t("cheapestOn", { wins: winCount.get(bestValueId) ?? 0, total: majorGroups.length })}
             </div>
           </div>
         )}
 
-        {/* Hidden fees warning */}
         {hiddenFees.length > 0 ? (
           <div className="p-4 bg-warning-dim border border-warning/20 rounded-lg">
             <div className="text-[10px] font-semibold uppercase tracking-wider text-warning mb-1.5">
-              Hidden Fees Detected
+              {t("hiddenFees")}
             </div>
             {hiddenFees.map((hf, i) => (
               <div key={i} className="text-sm text-text-muted">
@@ -242,26 +235,26 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
         ) : (
           <div className="p-4 bg-surface border border-border rounded-lg">
             <div className="text-[10px] font-semibold uppercase tracking-wider text-text-dim mb-1.5">
-              Quotes Compared
+              {t("quotesCompared")}
             </div>
             <div className="font-semibold text-text-primary text-2xl">
               {processed.length}
             </div>
             <div className="text-[11px] text-text-dim mt-1">
-              {majorGroups.length} items matched across vendors
+              {t("itemsMatched", { count: majorGroups.length })}
             </div>
           </div>
         )}
       </div>
 
-      {/* ===== Main Comparison Table ===== */}
+      {/* Main Comparison Table */}
       <div className="border border-border rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-surface">
                 <th className="text-left px-4 py-3 font-medium text-text-muted border-b border-border w-[220px] min-w-[220px]">
-                  <span className="text-[10px] uppercase tracking-wider">Line Item</span>
+                  <span className="text-[10px] uppercase tracking-wider">{t("lineItem")}</span>
                 </th>
                 {processed.map((q) => (
                   <th key={q.id} className="text-left px-4 py-3 border-b border-border border-l min-w-[180px]">
@@ -276,10 +269,8 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
               </tr>
             </thead>
             <tbody>
-              {/* Major items (most vendors have them) */}
               {majorGroups.map(([name, entries], i) => renderItemRow(name, entries, i))}
 
-              {/* Minor items section */}
               {minorGroups.length > 0 && (
                 <>
                   <tr>
@@ -288,7 +279,7 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
                       className="px-4 py-2 bg-surface border-t border-border"
                     >
                       <span className="text-[10px] font-semibold uppercase tracking-wider text-text-dim">
-                        Available from select vendors only
+                        {t("selectVendors")}
                       </span>
                     </td>
                   </tr>
@@ -296,7 +287,6 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
                 </>
               )}
 
-              {/* Fees & Surcharges */}
               {feeNames.length > 0 && (
                 <>
                   <tr>
@@ -305,7 +295,7 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
                       className="px-4 py-2 bg-surface border-t border-border"
                     >
                       <span className="text-[10px] font-semibold uppercase tracking-wider text-text-dim">
-                        Fees & Surcharges
+                        {t("feesSurcharges")}
                       </span>
                     </td>
                   </tr>
@@ -334,7 +324,7 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
                                     <path d="M8 6.5V9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                                     <circle cx="8" cy="11.5" r="0.5" fill="currentColor" />
                                   </svg>
-                                  <span className="text-[10px] font-medium uppercase tracking-wider">Hidden</span>
+                                  <span className="text-[10px] font-medium uppercase tracking-wider">{t("hidden")}</span>
                                 </span>
                               )}
                             </div>
@@ -346,9 +336,8 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
                 </>
               )}
 
-              {/* Grand Total */}
               <tr className="border-t-2 border-border-light bg-surface">
-                <td className="px-4 py-4 font-semibold text-text-primary">Grand Total</td>
+                <td className="px-4 py-4 font-semibold text-text-primary">{t("grandTotal")}</td>
                 {processed.map((q) => {
                   const isCheap = cheapestId === q.id;
                   const isExp = expensiveId === q.id && expensiveId !== cheapestId;
@@ -361,7 +350,7 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
                     >
                       <div className="flex items-center gap-2">
                         {q.grandTotal !== null ? fmt(q.grandTotal, currency) : "—"}
-                        {isCheap && <Badge variant="success">Best Deal</Badge>}
+                        {isCheap && <Badge variant="success">{t("bestDeal")}</Badge>}
                       </div>
                     </td>
                   );
@@ -372,18 +361,18 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
         </div>
       </div>
 
-      {/* ===== Terms Comparison ===== */}
+      {/* Terms Comparison */}
       <div className="border border-border rounded-lg overflow-hidden">
         <div className="px-4 py-2.5 bg-surface border-b border-border">
           <span className="text-[10px] font-semibold uppercase tracking-wider text-text-dim">
-            Terms Comparison
+            {t("termsComparison")}
           </span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <tbody>
               <tr className="bg-bg">
-                <td className="px-4 py-3 text-text-muted w-[220px]">Payment Terms</td>
+                <td className="px-4 py-3 text-text-muted w-[220px]">{t("paymentTerms")}</td>
                 {processed.map((q) => (
                   <td key={q.id} className="px-4 py-3 border-l border-border text-text-primary min-w-[180px]">
                     {q.paymentTerms || "—"}
@@ -391,7 +380,7 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
                 ))}
               </tr>
               <tr className="bg-surface/50">
-                <td className="px-4 py-3 text-text-muted">Delivery</td>
+                <td className="px-4 py-3 text-text-muted">{t("delivery")}</td>
                 {processed.map((q) => {
                   const fastest = Math.min(
                     ...processed.filter((p) => p.deliveryDays).map((p) => p.deliveryDays!)
@@ -399,8 +388,8 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
                   const isFastest = q.deliveryDays === fastest;
                   return (
                     <td key={q.id} className={`px-4 py-3 border-l border-border ${isFastest ? "text-success" : "text-text-primary"}`}>
-                      {q.deliveryDays ? `${q.deliveryDays} days` : "—"}
-                      {isFastest && q.deliveryDays ? " (fastest)" : ""}
+                      {q.deliveryDays ? `${t("days", { count: q.deliveryDays })}` : "—"}
+                      {isFastest && q.deliveryDays ? ` ${t("fastest")}` : ""}
                     </td>
                   );
                 })}
@@ -410,12 +399,12 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
         </div>
       </div>
 
-      {/* ===== Notes & Warnings ===== */}
+      {/* Notes & Warnings */}
       {processed.some((q) => q.notes.length > 0) && (
         <div className="border border-border rounded-lg overflow-hidden">
           <div className="px-4 py-2.5 bg-surface border-b border-border">
             <span className="text-[10px] font-semibold uppercase tracking-wider text-text-dim">
-              Notes & Warnings
+              {t("notesWarnings")}
             </span>
           </div>
           <div className="divide-y divide-border">

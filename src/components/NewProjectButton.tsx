@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { Modal } from "./ui/Modal";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
@@ -12,6 +13,7 @@ export default function NewProjectButton() {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const t = useTranslations("Common");
 
   async function handleCreate() {
     if (!name.trim()) return;
@@ -51,10 +53,10 @@ export default function NewProjectButton() {
             strokeLinecap="round"
           />
         </svg>
-        New Project
+        {t("newProject")}
       </Button>
 
-      <Modal open={open} onClose={() => setOpen(false)} title="New Project">
+      <Modal open={open} onClose={() => setOpen(false)} title={t("newProject")}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -62,8 +64,8 @@ export default function NewProjectButton() {
           }}
         >
           <Input
-            label="Project name"
-            placeholder="e.g. Q2 Packaging Materials"
+            label={t("projectName")}
+            placeholder={t("projectPlaceholder")}
             value={name}
             onChange={(e) => setName(e.target.value)}
             autoFocus
@@ -74,10 +76,10 @@ export default function NewProjectButton() {
               type="button"
               onClick={() => setOpen(false)}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button type="submit" loading={loading} disabled={!name.trim()}>
-              Create Project
+              {t("createProject")}
             </Button>
           </div>
         </form>

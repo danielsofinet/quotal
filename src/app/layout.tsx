@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import AuthProvider from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
-  title: "Quotal — AI-Powered Vendor Quote Comparison",
+  title: "Quotal — Compare vendor quotes in seconds",
   description:
-    "Compare vendor quotes side-by-side with AI-powered extraction and normalization",
+    "AI-powered tool that extracts and compares supplier quotes from any format. Hidden fees flagged. Free to try.",
+  openGraph: {
+    title: "Quotal — Compare vendor quotes in seconds",
+    description:
+      "AI-powered tool that extracts and compares supplier quotes from any format. Hidden fees flagged. Free to try.",
+    type: "website",
+  },
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -14,9 +22,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html className="dark">
       <body className="antialiased bg-bg text-text-primary min-h-screen">
-        <AuthProvider>{children}</AuthProvider>
+        {children}
       </body>
     </html>
   );

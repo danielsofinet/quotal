@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "./ui/Button";
 import { Badge } from "./ui/Badge";
 import { authFetch } from "@/lib/api";
@@ -53,6 +54,7 @@ function formatPrice(amount: number, currency?: string | null) {
 
 export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
   const router = useRouter();
+  const t = useTranslations("QuoteDetail");
   const [editing, setEditing] = useState(false);
   const [vendorName, setVendorName] = useState(quote.vendorName || "");
   const [currency, setCurrency] = useState(quote.currency || "EUR");
@@ -109,7 +111,6 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
 
   return (
     <div className="space-y-6">
-      {/* Back button + actions */}
       <div className="flex items-center justify-between">
         <button
           onClick={() => router.push(`/project/${projectId}`)}
@@ -124,7 +125,7 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
               strokeLinejoin="round"
             />
           </svg>
-          Back to comparison
+          {t("backToComparison")}
         </button>
         <div className="flex gap-2">
           {editing ? (
@@ -138,23 +139,22 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
                   setFees(quote.fees);
                 }}
               >
-                Cancel
+                {t("cancel")}
               </Button>
               <Button size="sm" loading={saving} onClick={handleSave}>
-                Save Changes
+                {t("saveChanges")}
               </Button>
             </>
           ) : (
             <Button variant="secondary" size="sm" onClick={() => setEditing(true)}>
-              Edit
+              {t("edit")}
             </Button>
           )}
         </div>
       </div>
 
-      {/* Vendor info card */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <InfoCard label="Vendor">
+        <InfoCard label={t("vendor")}>
           {editing ? (
             <input
               value={vendorName}
@@ -163,11 +163,11 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
             />
           ) : (
             <span className="font-semibold text-text-primary">
-              {quote.vendorName || "Unknown"}
+              {quote.vendorName || t("unknown")}
             </span>
           )}
         </InfoCard>
-        <InfoCard label="Currency">
+        <InfoCard label={t("currency")}>
           {editing ? (
             <input
               value={currency}
@@ -178,7 +178,7 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
             <span className="font-mono">{quote.currency || "—"}</span>
           )}
         </InfoCard>
-        <InfoCard label="Payment Terms">
+        <InfoCard label={t("paymentTerms")}>
           {editing ? (
             <input
               value={paymentTerms}
@@ -189,7 +189,7 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
             <span>{quote.paymentTerms || "—"}</span>
           )}
         </InfoCard>
-        <InfoCard label="Delivery">
+        <InfoCard label={t("delivery")}>
           {editing ? (
             <input
               value={deliveryDays}
@@ -198,12 +198,11 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
               type="number"
             />
           ) : (
-            <span>{quote.deliveryDays ? `${quote.deliveryDays} days` : "—"}</span>
+            <span>{quote.deliveryDays ? t("deliveryDays", { count: quote.deliveryDays }) : "—"}</span>
           )}
         </InfoCard>
       </div>
 
-      {/* Original file */}
       {quote.fileName && (
         <div className="flex items-center gap-3 p-3 bg-surface border border-border rounded-lg">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-text-dim">
@@ -217,41 +216,28 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
               className="text-xs text-accent hover:text-accent-light transition-colors"
               download
             >
-              Download original
+              {t("downloadOriginal")}
             </a>
           )}
         </div>
       )}
 
-      {/* Line Items */}
       <div className="border border-border rounded-lg overflow-hidden">
         <div className="px-4 py-2.5 bg-surface border-b border-border">
           <span className="text-[10px] font-semibold uppercase tracking-wider text-text-dim">
-            Line Items
+            {t("lineItems")}
           </span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-surface/50">
-                <th className="text-left px-4 py-2 text-text-dim text-xs font-medium">
-                  Item
-                </th>
-                <th className="text-left px-4 py-2 text-text-dim text-xs font-medium">
-                  Original Name
-                </th>
-                <th className="text-right px-4 py-2 text-text-dim text-xs font-medium">
-                  Unit Price
-                </th>
-                <th className="text-right px-4 py-2 text-text-dim text-xs font-medium">
-                  Qty
-                </th>
-                <th className="text-left px-4 py-2 text-text-dim text-xs font-medium">
-                  Unit
-                </th>
-                <th className="text-right px-4 py-2 text-text-dim text-xs font-medium">
-                  Subtotal
-                </th>
+                <th className="text-left px-4 py-2 text-text-dim text-xs font-medium">{t("item")}</th>
+                <th className="text-left px-4 py-2 text-text-dim text-xs font-medium">{t("originalName")}</th>
+                <th className="text-right px-4 py-2 text-text-dim text-xs font-medium">{t("unitPrice")}</th>
+                <th className="text-right px-4 py-2 text-text-dim text-xs font-medium">{t("qty")}</th>
+                <th className="text-left px-4 py-2 text-text-dim text-xs font-medium">{t("unit")}</th>
+                <th className="text-right px-4 py-2 text-text-dim text-xs font-medium">{t("subtotal")}</th>
               </tr>
             </thead>
             <tbody>
@@ -305,12 +291,11 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
         </div>
       </div>
 
-      {/* Fees */}
       {fees.length > 0 && (
         <div className="border border-border rounded-lg overflow-hidden">
           <div className="px-4 py-2.5 bg-surface border-b border-border">
             <span className="text-[10px] font-semibold uppercase tracking-wider text-text-dim">
-              Fees & Surcharges
+              {t("feesSurcharges")}
             </span>
           </div>
           <div className="divide-y divide-border">
@@ -347,9 +332,8 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
         </div>
       )}
 
-      {/* Grand Total */}
       <div className="flex items-center justify-between p-4 bg-surface border border-border rounded-lg">
-        <span className="font-semibold">Grand Total</span>
+        <span className="font-semibold">{t("grandTotal")}</span>
         <span className="font-mono font-semibold text-lg">
           {quote.grandTotal !== null
             ? formatPrice(quote.grandTotal, quote.currency)
@@ -357,12 +341,11 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
         </span>
       </div>
 
-      {/* Notes */}
       {quote.notes.length > 0 && (
         <div className="border border-border rounded-lg overflow-hidden">
           <div className="px-4 py-2.5 bg-surface border-b border-border">
             <span className="text-[10px] font-semibold uppercase tracking-wider text-text-dim">
-              AI Notes
+              {t("aiNotes")}
             </span>
           </div>
           <div className="divide-y divide-border">
@@ -380,11 +363,10 @@ export default function QuoteDetail({ quote, projectId }: QuoteDetailProps) {
         </div>
       )}
 
-      {/* Raw Text */}
       {quote.rawText && (
         <details className="border border-border rounded-lg overflow-hidden">
           <summary className="px-4 py-2.5 bg-surface cursor-pointer text-[10px] font-semibold uppercase tracking-wider text-text-dim hover:text-text-muted transition-colors">
-            Raw Extracted Text
+            {t("rawText")}
           </summary>
           <div className="px-4 py-3 bg-bg">
             <pre className="text-xs text-text-dim font-mono whitespace-pre-wrap leading-relaxed">

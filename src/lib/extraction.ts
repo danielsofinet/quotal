@@ -1,3 +1,4 @@
+import Anthropic from "@anthropic-ai/sdk";
 import { anthropic } from "@/lib/anthropic";
 
 // ---------------------------------------------------------------------------
@@ -33,7 +34,7 @@ export interface ExtractedQuote {
 // System prompt
 // ---------------------------------------------------------------------------
 
-const EXTRACTION_SYSTEM_PROMPT = `You are a procurement data extraction specialist. You will receive the raw text extracted from a vendor/supplier quote document. Your job is to extract structured pricing data from it.
+const EXTRACTION_SYSTEM_PROMPT = `You are a procurement data extraction specialist. You will receive a vendor/supplier quote — either as text, a PDF document, or an image. Your job is to extract structured pricing data from it.
 
 Extract the following and return ONLY valid JSON (no markdown, no explanation):
 
@@ -70,15 +71,16 @@ Important rules:
 - If you cannot determine a field with confidence, use null rather than guessing`;
 
 // ---------------------------------------------------------------------------
-// Main extraction function
+// Media types that Claude can handle natively as documents/images
 // ---------------------------------------------------------------------------
 
-/**
- * Send raw document text to Claude for structured procurement data extraction.
- *
- * Returns a typed `ExtractedQuote` object that mirrors the JSON schema
- * described in the system prompt.
- */
+const DOCUMENT_TYPES = new Set(["application/pdf"]);
+const IMAGE_TYPES = new Set(["image/png", "image/jpeg", "image/gif", "image/webp"]);
+
+// ---------------------------------------------------------------------------
+// Main extraction — text input
+// ---------------------------------------------------------------------------
+
 export async function extractQuoteData(
   rawText: string,
 ): Promise<ExtractedQuote> {
@@ -98,7 +100,75 @@ export async function extractQuoteData(
     ],
   });
 
-  // Extract the text content from the response.
+  return parseExtractionResponse(response);
+}
+
+// ---------------------------------------------------------------------------
+// Main extraction — file input (PDF, images sent directly to Claude)
+// ---------------------------------------------------------------------------
+
+export async function extractQuoteFromFile(
+  buffer: Buffer,
+  mimeType: string,
+): Promise<ExtractedQuote> {
+  const base64 = buffer.toString("base64");
+  const content: Anthropic.Messages.ContentBlockParam[] = [];
+
+  if (DOCUMENT_TYPES.has(mimeType)) {
+    content.push({
+      type: "document",
+      source: {
+        type: "base64",
+        media_type: mimeType as "application/pdf",
+        data: base64,
+      },
+    });
+  } else if (IMAGE_TYPES.has(mimeType)) {
+    content.push({
+      type: "image",
+      source: {
+        type: "base64",
+        media_type: mimeType as "image/png" | "image/jpeg" | "image/gif" | "image/webp",
+        data: base64,
+      },
+    });
+  } else {
+    throw new Error(`Cannot send ${mimeType} directly to Claude`);
+  }
+
+  content.push({
+    type: "text",
+    text: "Extract all pricing data from this quote document.",
+  });
+
+  const response = await anthropic.messages.create({
+    model: "claude-sonnet-4-20250514",
+    max_tokens: 2048,
+    system: EXTRACTION_SYSTEM_PROMPT,
+    messages: [
+      {
+        role: "user",
+        content,
+      },
+    ],
+  });
+
+  return parseExtractionResponse(response);
+}
+
+// ---------------------------------------------------------------------------
+// Check if a MIME type can be sent directly to Claude
+// ---------------------------------------------------------------------------
+
+export function isDirectFileType(mimeType: string): boolean {
+  return DOCUMENT_TYPES.has(mimeType) || IMAGE_TYPES.has(mimeType);
+}
+
+// ---------------------------------------------------------------------------
+// Response parsing
+// ---------------------------------------------------------------------------
+
+function parseExtractionResponse(response: Anthropic.Messages.Message): ExtractedQuote {
   const textBlock = response.content.find((block) => block.type === "text");
 
   if (!textBlock || textBlock.type !== "text") {

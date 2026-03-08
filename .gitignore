@@ -47,3 +47,4 @@ next-env.d.ts
 
 # tesseract trained data (removed in v1)
 eng.traineddata
+Firebase/

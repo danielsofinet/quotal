@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useCallback, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "./ui/Button";
 import { Spinner } from "./ui/Spinner";
 import { authFetch } from "@/lib/api";
@@ -22,11 +23,16 @@ const ACCEPTED_TYPES = [
   "application/vnd.ms-excel",
   "text/csv",
   "text/plain",
+  "image/png",
+  "image/jpeg",
+  "image/gif",
+  "image/webp",
 ];
 
-const ACCEPTED_EXTENSIONS = ".pdf,.xlsx,.xls,.csv,.txt";
+const ACCEPTED_EXTENSIONS = ".pdf,.xlsx,.xls,.csv,.txt,.png,.jpg,.jpeg,.gif,.webp";
 
 export default function DropZone({ projectId }: DropZoneProps) {
+  const t = useTranslations("Upload");
   const [isDragOver, setIsDragOver] = useState(false);
   const [files, setFiles] = useState<UploadingFile[]>([]);
   const [showPaste, setShowPaste] = useState(false);
@@ -62,36 +68,47 @@ export default function DropZone({ projectId }: DropZoneProps) {
           )
         );
 
-        // Poll for completion
         const data = await res.json();
-        const quoteId = data.id;
 
-        const poll = async () => {
-          for (let i = 0; i < 60; i++) {
-            await new Promise((r) => setTimeout(r, 2000));
-            const statusRes = await authFetch(`/api/quotes/${quoteId}`);
-            if (statusRes.ok) {
-              const quote = await statusRes.json();
-              if (quote.processingStatus === "DONE") {
-                setFiles((prev) =>
-                  prev.map((f) =>
-                    f.name === fileName ? { ...f, status: "done" } : f
-                  )
-                );
-                startTransition(() => {
-                  router.refresh();
-                });
-                return;
-              }
-              if (quote.processingStatus === "FAILED") {
-                throw new Error("Processing failed");
-              }
+        if (data.processingStatus === "FAILED") {
+          throw new Error(data.error || "Processing failed");
+        }
+
+        if (data.processingStatus === "DONE") {
+          setFiles((prev) =>
+            prev.map((f) =>
+              f.name === fileName ? { ...f, status: "done" } : f
+            )
+          );
+          startTransition(() => {
+            router.refresh();
+          });
+          return;
+        }
+
+        const quoteId = data.id;
+        for (let i = 0; i < 60; i++) {
+          await new Promise((r) => setTimeout(r, 2000));
+          const statusRes = await authFetch(`/api/quotes/${quoteId}`);
+          if (statusRes.ok) {
+            const quote = await statusRes.json();
+            if (quote.processingStatus === "DONE") {
+              setFiles((prev) =>
+                prev.map((f) =>
+                  f.name === fileName ? { ...f, status: "done" } : f
+                )
+              );
+              startTransition(() => {
+                router.refresh();
+              });
+              return;
+            }
+            if (quote.processingStatus === "FAILED") {
+              throw new Error("Processing failed");
             }
           }
-          throw new Error("Processing timed out");
-        };
-
-        await poll();
+        }
+        throw new Error("Processing timed out");
       } catch (err) {
         setFiles((prev) =>
           prev.map((f) =>
@@ -145,7 +162,6 @@ export default function DropZone({ projectId }: DropZoneProps) {
 
   return (
     <div className="space-y-4">
-      {/* Drop zone */}
       <div
         onDragOver={(e) => {
           e.preventDefault();
@@ -198,54 +214,32 @@ export default function DropZone({ projectId }: DropZoneProps) {
           />
         </svg>
         <p className="text-sm text-text-muted mb-1">
-          <span className="text-accent-light font-medium">Click to upload</span>{" "}
-          or drag and drop
+          <span className="text-accent-light font-medium">{t("clickToUpload")}</span>{" "}
+          {t("orDragDrop")}
         </p>
-        <p className="text-xs text-text-dim">
-          PDF, Excel, CSV, or Text files
-        </p>
+        <p className="text-xs text-text-dim">{t("formats")}</p>
       </div>
 
-      {/* Paste text button */}
       <div className="flex gap-2">
         <Button
           variant="secondary"
           size="sm"
           onClick={() => setShowPaste(!showPaste)}
         >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 16 16"
-            fill="none"
-            className="mr-1.5"
-          >
-            <rect
-              x="4"
-              y="4"
-              width="10"
-              height="10"
-              rx="1.5"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            />
-            <path
-              d="M4 12H3C2.44772 12 2 11.5523 2 11V3C2 2.44772 2.44772 2 3 2H11C11.5523 2 12 2.44772 12 3V4"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            />
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="mr-1.5">
+            <rect x="4" y="4" width="10" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M4 12H3C2.44772 12 2 11.5523 2 11V3C2 2.44772 2.44772 2 3 2H11C11.5523 2 12 2.44772 12 3V4" stroke="currentColor" strokeWidth="1.5" />
           </svg>
-          Paste text
+          {t("pasteText")}
         </Button>
       </div>
 
-      {/* Paste textarea */}
       {showPaste && (
         <div className="border border-border rounded-lg p-4 bg-surface animate-slide-up">
           <textarea
             value={pasteText}
             onChange={(e) => setPasteText(e.target.value)}
-            placeholder="Paste the quote email body or text content here..."
+            placeholder={t("pastePlaceholder")}
             rows={8}
             className="w-full bg-bg border border-border rounded-lg px-3 py-2 text-sm text-text-primary placeholder:text-text-dim focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 resize-none font-mono"
           />
@@ -258,7 +252,7 @@ export default function DropZone({ projectId }: DropZoneProps) {
                 setPasteText("");
               }}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button
               size="sm"
@@ -266,13 +260,12 @@ export default function DropZone({ projectId }: DropZoneProps) {
               disabled={!pasteText.trim()}
               onClick={handlePasteSubmit}
             >
-              Extract & Add Quote
+              {t("extractAdd")}
             </Button>
           </div>
         </div>
       )}
 
-      {/* Upload progress */}
       {files.length > 0 && (
         <div className="space-y-2">
           {files.map((f, i) => (
@@ -283,24 +276,12 @@ export default function DropZone({ projectId }: DropZoneProps) {
               {f.status === "uploading" || f.status === "processing" ? (
                 <Spinner size="sm" />
               ) : f.status === "done" ? (
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  className="text-success"
-                >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-success">
                   <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5" />
                   <path d="M5.5 8L7 9.5L10.5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               ) : (
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  className="text-danger"
-                >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-danger">
                   <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5" />
                   <path d="M5.5 5.5L10.5 10.5M10.5 5.5L5.5 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
@@ -308,11 +289,11 @@ export default function DropZone({ projectId }: DropZoneProps) {
               <span className="text-text-primary truncate flex-1">{f.name}</span>
               <span className="text-xs text-text-dim">
                 {f.status === "uploading"
-                  ? "Uploading..."
+                  ? t("uploading")
                   : f.status === "processing"
-                    ? "Extracting data..."
+                    ? t("extracting")
                     : f.status === "done"
-                      ? "Done"
+                      ? t("done")
                       : f.error || "Error"}
               </span>
             </div>
@@ -320,11 +301,10 @@ export default function DropZone({ projectId }: DropZoneProps) {
         </div>
       )}
 
-      {/* Rendering / comparing indicator */}
       {isRendering && (
         <div className="flex items-center gap-3 px-3 py-2.5 bg-accent-dim border border-accent/20 rounded-lg text-sm animate-slide-up">
           <Spinner size="sm" />
-          <span className="text-accent-light font-medium">Comparing quotes...</span>
+          <span className="text-accent-light font-medium">{t("comparing")}</span>
         </div>
       )}
     </div>

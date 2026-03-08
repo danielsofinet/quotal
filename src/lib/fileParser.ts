@@ -1,19 +1,16 @@
-import { PDFParse } from "pdf-parse";
+import { extractText } from "unpdf";
 import ExcelJS from "exceljs";
 import { Readable } from "stream";
 
 /**
  * Parse a file buffer and extract its text content.
- *
- * Supported formats:
- *  - PDF (text-based)
- *  - XLSX / XLS / CSV (via ExcelJS)
- *  - Plain text
+ * Returns the extracted text, or null if the file is image-based
+ * (scanned PDF, etc.) and needs Claude's vision API instead.
  */
 export async function parseFile(
   buffer: Buffer,
   mimeType: string,
-): Promise<string> {
+): Promise<string | null> {
   const mime = mimeType.toLowerCase();
 
   if (mime === "application/pdf") {
@@ -32,33 +29,24 @@ export async function parseFile(
     return buffer.toString("utf-8");
   }
 
-  throw new Error(`Unsupported file type: ${mimeType}`);
-}
-
-/**
- * Identity transform for pasted text — returns the input unchanged.
- * Provided as a symmetric API surface for the paste-text upload flow.
- */
-export function parseText(text: string): string {
-  return text;
+  // Images and unsupported types return null — caller should use Claude's vision
+  return null;
 }
 
 // ---------------------------------------------------------------------------
 // Internal helpers
 // ---------------------------------------------------------------------------
 
-async function parsePdf(buffer: Buffer): Promise<string> {
-  const parser = new PDFParse({ data: new Uint8Array(buffer) });
-  const result = await parser.getText();
-  const text = result.text.trim();
+async function parsePdf(buffer: Buffer): Promise<string | null> {
+  const result = await extractText(new Uint8Array(buffer), { mergePages: true });
+  const content = String(result.text).trim();
 
-  if (text.length === 0) {
-    throw new Error(
-      "PDF appears to be scanned/image-based. Please upload a text-based PDF, or paste the quote text manually.",
-    );
+  // If empty, it's likely a scanned/image-based PDF — return null so caller falls back to Claude vision
+  if (content.length < 20) {
+    return null;
   }
 
-  return text;
+  return content;
 }
 
 async function parseSpreadsheet(
@@ -87,7 +75,7 @@ async function parseSpreadsheet(
       parts.push(`Row ${rowNumber}: ${cells.join(" | ")}`);
     });
 
-    parts.push(""); // blank line between sheets
+    parts.push("");
   });
 
   const result = parts.join("\n").trim();
@@ -104,14 +92,11 @@ function cellToString(cell: ExcelJS.Cell): string {
     return "";
   }
 
-  // ExcelJS can return rich-text objects, dates, formulas, etc.
   if (typeof cell.value === "object" && "result" in cell.value) {
-    // Formula cell — use the cached result.
     return String(cell.value.result ?? "");
   }
 
   if (typeof cell.value === "object" && "richText" in cell.value) {
-    // Rich-text cell — concatenate the plain-text fragments.
     return (cell.value.richText as Array<{ text: string }>)
       .map((fragment) => fragment.text)
       .join("");

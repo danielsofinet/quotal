@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "./ui/Button";
 import { Modal } from "./ui/Modal";
 import { authFetch } from "@/lib/api";
@@ -16,6 +17,7 @@ export default function DeleteProjectButton({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const t = useTranslations("Common");
 
   async function handleDelete() {
     setLoading(true);
@@ -37,7 +39,7 @@ export default function DeleteProjectButton({
       <button
         onClick={() => setOpen(true)}
         className="p-1.5 rounded-md text-text-dim hover:text-danger hover:bg-danger-dim transition-colors"
-        title="Delete project"
+        title={t("deleteProject")}
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path
@@ -50,21 +52,19 @@ export default function DeleteProjectButton({
         </svg>
       </button>
 
-      <Modal open={open} onClose={() => setOpen(false)} title="Delete Project">
+      <Modal open={open} onClose={() => setOpen(false)} title={t("deleteProject")}>
         <p className="text-sm text-text-muted mb-1">
-          Are you sure you want to delete{" "}
-          <span className="text-text-primary font-medium">{projectName}</span>?
+          {t("deleteConfirm", { name: projectName })}
         </p>
         <p className="text-xs text-text-dim mb-5">
-          This will permanently delete all quotes and extracted data in this
-          project. This action cannot be undone.
+          {t("deleteWarning")}
         </p>
         <div className="flex justify-end gap-2">
           <Button variant="secondary" onClick={() => setOpen(false)}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button variant="danger" loading={loading} onClick={handleDelete}>
-            Delete Project
+            {t("deleteProject")}
           </Button>
         </div>
       </Modal>

@@ -1,28 +1,62 @@
+import createMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
+import { routing } from "@/i18n/routing";
 
-const PUBLIC_PATHS = ["/sign-in", "/api/auth/session", "/api/inbound-email", "/__/auth"];
+const intlMiddleware = createMiddleware(routing);
+
+const PUBLIC_PATHS = ["/sign-in", "/api/", "/_next", "/__/auth", "/favicon"];
+
+function isPublicPath(pathname: string): boolean {
+  // Root path is public (landing page)
+  if (pathname === "/") return true;
+
+  // Check locale-prefixed root (e.g. /sv, /de)
+  for (const locale of routing.locales) {
+    if (pathname === `/${locale}`) return true;
+  }
+
+  // Check public paths (with or without locale prefix)
+  const strippedPathname = stripLocalePrefix(pathname);
+  return PUBLIC_PATHS.some((p) => strippedPathname.startsWith(p));
+}
+
+function stripLocalePrefix(pathname: string): string {
+  for (const locale of routing.locales) {
+    if (pathname.startsWith(`/${locale}/`)) {
+      return pathname.slice(locale.length + 1);
+    }
+  }
+  return pathname;
+}
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow public paths, static files, and Next.js internals
+  // Skip middleware entirely for static files, Next internals, and API routes
   if (
-    PUBLIC_PATHS.some((p) => pathname.startsWith(p)) ||
     pathname.startsWith("/_next") ||
+    pathname.startsWith("/api/") ||
+    pathname.startsWith("/__/auth") ||
     pathname.startsWith("/favicon")
   ) {
     return NextResponse.next();
   }
 
-  const session = request.cookies.get("__session");
-  if (!session?.value) {
-    const signInUrl = new URL("/sign-in", request.url);
-    return NextResponse.redirect(signInUrl);
+  // Run i18n middleware first (handles locale detection + rewriting)
+  const response = intlMiddleware(request);
+
+  // Check auth for protected paths
+  if (!isPublicPath(pathname)) {
+    const session = request.cookies.get("__session");
+    if (!session?.value) {
+      const signInUrl = new URL("/sign-in", request.url);
+      return NextResponse.redirect(signInUrl);
+    }
   }
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/).*)"],
 };

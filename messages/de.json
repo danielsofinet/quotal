@@ -1,0 +1,270 @@
+{
+  "Landing": {
+    "nav": {
+      "watchDemo": "Watch Demo",
+      "earlyAccess": "Get Early Access"
+    },
+    "hero": {
+      "badge": "Now in early access",
+      "title": "Stop comparing vendor quotes in spreadsheets",
+      "subtitle": "Quotal extracts line items from any document — PDF, Excel, email — and gives you a normalized side-by-side comparison in seconds. Hidden fees flagged automatically.",
+      "cta": "Get Early Access",
+      "ctaSecondary": "Watch 60s Demo ↓"
+    },
+    "heroTable": {
+      "lineItem": "Line Item",
+      "vendor1": "PackRight GmbH",
+      "vendor2": "Nordic Supplies AB",
+      "vendor3": "QuickPack Srl",
+      "item1": "Corrugated Box 10K pcs",
+      "item2": "Bubble Wrap 200 rolls",
+      "item3": "Packing Tape 500 rolls",
+      "item4": "Shipping",
+      "item5": "Fuel Surcharge",
+      "hidden": "Hidden",
+      "grandTotal": "Grand Total",
+      "bestDeal": "Best Deal"
+    },
+    "problem": {
+      "label": "THE PROBLEM",
+      "title": "You're drowning in mismatched quotes",
+      "card1": {
+        "emoji": "📄",
+        "title": "Every quote is different",
+        "description": "Supplier A sends a PDF. Supplier B sends Excel. Supplier C replies in an email. You spend hours copying numbers into a spreadsheet just to compare them."
+      },
+      "card2": {
+        "emoji": "💸",
+        "title": "Hidden fees slip through",
+        "description": "Fuel surcharges buried in footnotes. Palletization fees on page 3. Minimum order penalties in the fine print. Your team catches them after the PO is signed."
+      },
+      "card3": {
+        "emoji": "⏱️",
+        "title": "It takes forever",
+        "description": "A procurement team of 3 spends 15+ hours per week normalizing quotes. That's €40K+ per year in salary spent on copy-paste work."
+      }
+    },
+    "howItWorks": {
+      "label": "HOW IT WORKS",
+      "title": "Three steps. Thirty seconds.",
+      "step1": {
+        "number": "01",
+        "title": "Upload or forward",
+        "description": "Drag and drop any file — PDF, Excel, image, or paste raw text. Or just forward the supplier's email to your unique Quotal inbox."
+      },
+      "step2": {
+        "number": "02",
+        "title": "AI extracts & normalizes",
+        "description": "Quotal reads every document, extracts line items, converts units and currencies, and maps equivalent products across vendors."
+      },
+      "step3": {
+        "number": "03",
+        "title": "Compare & decide",
+        "description": "A clean side-by-side table shows the best price per item, flags hidden fees, and highlights the best overall deal. Done."
+      }
+    },
+    "demo": {
+      "label": "SEE IT IN ACTION",
+      "title": "60 seconds from chaos to clarity",
+      "watchDemo": "Watch the demo",
+      "noSignup": "No signup required to watch"
+    },
+    "features": {
+      "label": "FEATURES",
+      "title": "Built for how procurement actually works",
+      "anyFormat": {
+        "title": "Any format, any language",
+        "description": "PDF, Excel, CSV, images, email text. Quotes in English, German, French, Dutch, Spanish — Quotal handles them all."
+      },
+      "hiddenFees": {
+        "title": "Hidden fee detection",
+        "description": "AI scans footnotes, fine print, and buried line items to surface fees your team might miss."
+      },
+      "email": {
+        "title": "Email forwarding",
+        "description": "Forward supplier emails to your unique Quotal address. Quotes are extracted and added automatically."
+      },
+      "history": {
+        "title": "Historical price tracking",
+        "description": "See how each vendor's prices change over time. Spot trends before your next negotiation."
+      },
+      "normalization": {
+        "title": "Smart normalization",
+        "description": "\"Corrugated Box 40x30x20cm\" and \"Corr. Box 400×300×200mm\" are recognized as the same product."
+      },
+      "gdpr": {
+        "title": "GDPR compliant",
+        "description": "Hosted in Europe. Your data stays in the EU. No vendor data is shared or used for training."
+      }
+    },
+    "socialProof": {
+      "quote": "Every time you request quotes, you get 3–5 responses in completely different formats. Then you spend hours trying to make sense of them.",
+      "attribution": "— Procurement manager on Reddit",
+      "tagline": "Quotal was built to fix exactly this."
+    },
+    "pricing": {
+      "label": "PRICING",
+      "title": "Start free. Upgrade when it clicks.",
+      "free": {
+        "name": "Free",
+        "price": "€0",
+        "subtitle": "Try it out",
+        "features": {
+          "f1": "1 project",
+          "f2": "3 quotes per project",
+          "f3": "All AI extraction features",
+          "f4": "Email forwarding"
+        },
+        "cta": "Get Started"
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "€49",
+        "period": "/mo",
+        "subtitle": "For procurement teams",
+        "popular": "Popular",
+        "features": {
+          "f1": "Unlimited projects",
+          "f2": "Unlimited quotes",
+          "f3": "Historical price tracking",
+          "f4": "Priority processing",
+          "f5": "CSV/Excel export"
+        },
+        "cta": "Get Early Access"
+      },
+      "note": "No credit card required. Cancel anytime."
+    },
+    "cta": {
+      "title": "Ready to stop copy-pasting quotes?",
+      "subtitle": "Join the early access. Free for the first 50 users.",
+      "placeholder": "Your work email",
+      "button": "Join Early Access",
+      "note": "No spam. We'll email you when your account is ready."
+    },
+    "footer": {
+      "copyright": "© {year} Quotal",
+      "privacy": "Privacy",
+      "contact": "Contact",
+      "linkedin": "LinkedIn"
+    }
+  },
+  "Auth": {
+    "signIn": "Sign in to Quotal",
+    "subtitle": "AI-powered vendor quote comparison",
+    "google": "Sign in with Google",
+    "or": "or",
+    "emailPlaceholder": "you@company.com",
+    "sendLink": "Send sign-in link",
+    "checkEmail": "Check your email",
+    "linkSent": "We sent a sign-in link to {email}"
+  },
+  "Dashboard": {
+    "title": "Projects",
+    "subtitle": "Compare vendor quotes across your procurement projects",
+    "empty": {
+      "title": "No projects yet",
+      "description": "Create your first project to start comparing vendor quotes."
+    }
+  },
+  "Project": {
+    "quotes": "{count, plural, =1 {1 quote} other {# quotes}}",
+    "processing": "{count} processing...",
+    "uploadSection": "Upload Quotes",
+    "comparisonSection": "Comparison",
+    "breadcrumb": "Projects"
+  },
+  "Sidebar": {
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "emailInbox": "Email Inbox",
+    "forwardTo": "Forward supplier quotes to:",
+    "signOut": "Sign out"
+  },
+  "Comparison": {
+    "cheapestOverall": "Cheapest Overall",
+    "bestPerItem": "Best Per-Item Pricing",
+    "cheapestOn": "Cheapest on {wins} of {total} items",
+    "hiddenFees": "Hidden Fees Detected",
+    "quotesCompared": "Quotes Compared",
+    "itemsMatched": "{count} items matched across vendors",
+    "lessExpensive": "{amount} less than most expensive",
+    "lineItem": "Line Item",
+    "notOffered": "not offered",
+    "selectVendors": "Available from select vendors only",
+    "feesSurcharges": "Fees & Surcharges",
+    "hidden": "Hidden",
+    "grandTotal": "Grand Total",
+    "bestDeal": "Best Deal",
+    "termsComparison": "Terms Comparison",
+    "paymentTerms": "Payment Terms",
+    "delivery": "Delivery",
+    "days": "{count} days",
+    "fastest": "(fastest)",
+    "notesWarnings": "Notes & Warnings",
+    "uploadToCompare": "Upload quotes to see comparisons",
+    "uploadMore": "Upload at least one more quote to compare"
+  },
+  "Upload": {
+    "clickToUpload": "Click to upload",
+    "orDragDrop": "or drag and drop",
+    "formats": "PDF, Excel, CSV, Text, or Images",
+    "pasteText": "Paste text",
+    "pastePlaceholder": "Paste the quote email body or text content here...",
+    "extractAdd": "Extract & Add Quote",
+    "cancel": "Cancel",
+    "uploading": "Uploading...",
+    "extracting": "Extracting data...",
+    "done": "Done",
+    "comparing": "Comparing quotes..."
+  },
+  "QuoteDetail": {
+    "backToComparison": "Back to comparison",
+    "edit": "Edit",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel",
+    "vendor": "Vendor",
+    "currency": "Currency",
+    "paymentTerms": "Payment Terms",
+    "delivery": "Delivery",
+    "deliveryDays": "{count} days",
+    "unknown": "Unknown",
+    "lineItems": "Line Items",
+    "item": "Item",
+    "originalName": "Original Name",
+    "unitPrice": "Unit Price",
+    "qty": "Qty",
+    "unit": "Unit",
+    "subtotal": "Subtotal",
+    "feesSurcharges": "Fees & Surcharges",
+    "grandTotal": "Grand Total",
+    "aiNotes": "AI Notes",
+    "rawText": "Raw Extracted Text",
+    "downloadOriginal": "Download original"
+  },
+  "Email": {
+    "title": "Email Forwarding",
+    "beta": "Beta",
+    "description": "Forward any supplier quote email to your unique inbox address and we'll extract it automatically.",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "howItWorks": "How it works:",
+    "step1": "Receive a quote email from a supplier",
+    "step2": "Forward the email to your inbox address above",
+    "step3": "We extract all attachments and email body text",
+    "step4": "AI processes the quote and adds it to your latest project",
+    "step5": "You get a confirmation email when it's ready",
+    "webhookNote": "This feature requires a Postmark inbound webhook configuration. For the MVP, the webhook endpoint is ready at {endpoint} and can be tested via curl or Postman."
+  },
+  "Common": {
+    "newProject": "New Project",
+    "createProject": "Create Project",
+    "deleteProject": "Delete Project",
+    "projectName": "Project name",
+    "projectPlaceholder": "e.g. Q2 Packaging Materials",
+    "deleteConfirm": "Are you sure you want to delete {name}?",
+    "deleteWarning": "This will permanently delete all quotes and extracted data in this project. This action cannot be undone.",
+    "cancel": "Cancel",
+    "best": "Best:",
+    "quote": "{count, plural, =1 {1 quote} other {# quotes}}"
+  }
+}

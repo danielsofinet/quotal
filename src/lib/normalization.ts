@@ -7,21 +7,23 @@ export interface NormalizedItem {
   variantNote: string | null;
 }
 
-const NORMALIZATION_SYSTEM_PROMPT = `You are a procurement comparison specialist. You will receive line items extracted from multiple vendor quotes for the same purchasing project.
+const NORMALIZATION_SYSTEM_PROMPT = `You are a procurement comparison specialist. You receive line items from multiple vendor quotes for the SAME purchasing project. Your job: match items across vendors so they can be compared side-by-side.
 
-Your job is to:
-1. MATCH items across vendors that refer to the same product category, even when names differ wildly (different languages, abbreviations, brand names, sizing formats)
-2. Assign each item a shared canonicalName that all matching items will share
-3. When matched items have meaningful differences (e.g. 1-ply vs 2-ply, cubed vs granulated, different brand), add a short variantNote describing that vendor's specific variant
+MATCHING RULES:
+- Two items are the "same product" if a buyer would consider them alternatives for the same need
+- Match aggressively — vendors describe the same product very differently:
+  - Different languages: "Florsocker" = "Icing Sugar", "Kaffekopp" = "Coffee Cup"
+  - Brand vs generic: "Oatly Barista 1L" = "Oat Milk 1L"
+  - Different pack sizes: "Napkins (box of 500)" = "Paper Napkins (pack of 1000)"
+  - Abbreviations: "Choc Pwd 1kg" = "Chocolate Powder 1kg"
+  - Category overlap: "Hot Chocolate Mix" = "Chocolate Powder" (same product category)
+- Use the unit price, quantity, and unit to CONFIRM matches: similar products from different vendors will have comparable (not identical) unit prices
+- When in doubt, MATCH rather than leave unmatched. A false match is less harmful than a missed match in procurement comparison.
 
-Rules:
-- Two items are the "same product" if a procurement buyer would consider them interchangeable alternatives for the same need
-- "White Sugar Cubes 1kg" and "Granulated Sugar 1kg" → SAME category (both are "White Sugar 1kg"), but note the variant (cubed vs granulated)
-- "Oatly Barista 1L" and "Minor Figures Oat Milk 1L" → SAME category ("Oat Milk 1L"), variant is the brand
-- Be aggressive about matching — different pack sizes for the same product should still match (note the pack size difference)
-- canonicalName should be clean, concise English: "Oat Milk 1L", "White Sugar 1kg", "Paper Napkins", "Takeaway Cups 350ml"
-- variantNote should be very short: "Oatly Barista", "cubed", "2-ply", "box of 1000", "Monin brand". null if no notable difference.
-- Items that exist in only one quote should still get a canonicalName (just no matching peers)
+OUTPUT RULES:
+- canonicalName: clean, concise English. E.g. "Oat Milk 1L", "White Sugar 1kg", "Paper Napkins", "Takeaway Cups 350ml"
+- variantNote: short difference note. E.g. "Oatly Barista", "cubed", "2-ply, pack of 1000", "Monin brand, 700ml". null if no notable difference.
+- EVERY item must get a canonicalName, even if it has no match in other quotes
 
 Return ONLY valid JSON array:
 [
@@ -39,18 +41,28 @@ export async function normalizeProjectItems(projectId: string): Promise<void> {
 
   if (quotes.length < 2) return;
 
-  // Build compact input — only send what's needed for matching (id + names)
+  // Clear existing canonical names so we re-evaluate everything
+  const allItemIds = quotes.flatMap((q) => q.lineItems.map((li) => li.id));
+  await prisma.lineItem.updateMany({
+    where: { id: { in: allItemIds } },
+    data: { canonicalName: null, variantNote: null },
+  });
+
+  // Send names + quantities/units/prices for better matching context
   const input = quotes.map((q) => ({
     vendor: q.vendorName,
     items: q.lineItems.map((li) => ({
       id: li.id,
       name: li.name,
       rawName: li.rawName,
+      unitPrice: li.unitPrice,
+      quantity: li.quantity,
+      unit: li.unit,
     })),
   }));
 
   const response = await anthropic.messages.create({
-    model: "claude-haiku-4-5-20251001",
+    model: "claude-sonnet-4-20250514",
     max_tokens: 4096,
     system: NORMALIZATION_SYSTEM_PROMPT,
     messages: [

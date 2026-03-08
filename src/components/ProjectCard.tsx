@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 interface Quote {
   id: string;
@@ -24,6 +25,7 @@ export default function ProjectCard({
   createdAt,
   quotes = [],
 }: ProjectCardProps) {
+  const t = useTranslations("Common");
   const processedQuotes = quotes.filter((q) => q.processingStatus === "DONE");
   const cheapest = processedQuotes.length
     ? processedQuotes.reduce(
@@ -75,7 +77,7 @@ export default function ProjectCard({
             />
           </svg>
           <span className="text-sm text-text-muted">
-            {quoteCount} {quoteCount === 1 ? "quote" : "quotes"}
+            {t("quote", { count: quoteCount })}
           </span>
         </div>
 
@@ -83,7 +85,7 @@ export default function ProjectCard({
           <div className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-success" />
             <span className="text-sm text-text-muted">
-              Best:{" "}
+              {t("best")}{" "}
               <span className="font-mono text-success">
                 €{cheapest.grandTotal.toLocaleString("en-US", { minimumFractionDigits: 2 })}
               </span>{" "}
