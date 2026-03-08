@@ -2,12 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth";
 import { normalizeProjectItems } from "@/lib/normalization";
+import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
   const user = await getAuthenticatedUser(request);
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const body = await request.json();
+  const rl = rateLimit(`normalize:${user.id}`, 5, 60_000);
+  if (!rl.success) return rateLimitResponse(60_000);
+
+  let body;
+  try { body = await request.json(); } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
   const { projectId } = body;
 
   if (!projectId) {

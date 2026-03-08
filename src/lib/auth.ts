@@ -64,6 +64,8 @@ async function verifyAndGetUser(idToken: string) {
   }
 }
 
+export { PLAN_LIMITS, getPlanLimits } from "./plans";
+
 async function findOrCreateUser(
   firebaseUid: string,
   email?: string,

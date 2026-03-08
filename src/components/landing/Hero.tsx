@@ -2,13 +2,21 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import InfiniteGrid from "@/components/ui/InfiniteGrid";
 
 export default function Hero() {
   const t = useTranslations("Landing.hero");
   const ht = useTranslations("Landing.heroTable");
 
   return (
-    <section className="relative pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden">
+    <InfiniteGrid
+      className="pt-32 pb-24 md:pt-40 md:pb-32 px-6"
+      baseOpacity={0.06}
+      revealOpacity={0.25}
+      revealRadius={350}
+      speedX={0.3}
+      speedY={0.2}
+    >
       <div className="relative max-w-6xl mx-auto">
         {/* Text */}
         <motion.div
@@ -32,7 +40,7 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="#signup"
+              href="/sign-in"
               className="inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-white font-medium px-6 py-3 rounded-lg transition-all duration-150 text-base"
             >
               {t("cta")}
@@ -59,7 +67,7 @@ export default function Hero() {
           <HeroTable ht={ht} />
         </motion.div>
       </div>
-    </section>
+    </InfiniteGrid>
   );
 }
 

@@ -2,21 +2,12 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 
 export default function CTA() {
   const t = useTranslations("Landing.cta");
-  const [email, setEmail] = useState("");
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email.trim()) return;
-    /* TODO: Replace with actual form endpoint (Formspree, Formspark, or custom API) */
-    window.location.href = `mailto:daniel@quotal.app?subject=Early Access Request&body=I'd like early access to Quotal. My email: ${encodeURIComponent(email)}`;
-  }
 
   return (
-    <section id="signup" className="py-24 md:py-32 px-6">
+    <section className="py-24 md:py-32 px-6">
       <div className="max-w-2xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -31,25 +22,15 @@ export default function CTA() {
             {t("subtitle")}
           </p>
 
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+          <a
+            href="/sign-in"
+            className="inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-white font-medium px-8 py-3.5 rounded-lg transition-all duration-150 text-base"
           >
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={t("placeholder")}
-              required
-              className="flex-1 bg-surface border border-border rounded-lg px-4 py-3 text-sm text-text-primary placeholder:text-text-dim focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition-all duration-150"
-            />
-            <button
-              type="submit"
-              className="bg-accent hover:bg-accent-light text-white font-medium px-6 py-3 rounded-lg transition-all duration-150 text-sm whitespace-nowrap"
-            >
-              {t("button")}
-            </button>
-          </form>
+            {t("button")}
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8H13M10 5L13 8L10 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
 
           <p className="text-xs text-text-dim mt-4">{t("note")}</p>
         </motion.div>

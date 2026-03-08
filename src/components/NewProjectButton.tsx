@@ -7,13 +7,35 @@ import { Modal } from "./ui/Modal";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
 import { authFetch } from "@/lib/api";
+import UpgradeModal from "./UpgradeModal";
+import { PLAN_LIMITS } from "@/lib/plans";
 
-export default function NewProjectButton() {
+interface NewProjectButtonProps {
+  projectCount?: number;
+  userPlan?: string;
+}
+
+export default function NewProjectButton({
+  projectCount = 0,
+  userPlan = "free",
+}: NewProjectButtonProps) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showUpgrade, setShowUpgrade] = useState(false);
   const router = useRouter();
   const t = useTranslations("Common");
+
+  const limits = PLAN_LIMITS[userPlan as keyof typeof PLAN_LIMITS] || PLAN_LIMITS.free;
+  const atLimit = projectCount >= limits.maxProjects;
+
+  function handleClick() {
+    if (atLimit) {
+      setShowUpgrade(true);
+    } else {
+      setOpen(true);
+    }
+  }
 
   async function handleCreate() {
     if (!name.trim()) return;
@@ -24,6 +46,16 @@ export default function NewProjectButton() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: name.trim() }),
       });
+
+      if (res.status === 403) {
+        const data = await res.json();
+        if (data.error === "PLAN_LIMIT") {
+          setOpen(false);
+          setShowUpgrade(true);
+          return;
+        }
+      }
+
       if (res.ok) {
         const project = await res.json();
         setOpen(false);
@@ -38,7 +70,7 @@ export default function NewProjectButton() {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>
+      <Button onClick={handleClick}>
         <svg
           width="14"
           height="14"
@@ -84,6 +116,13 @@ export default function NewProjectButton() {
           </div>
         </form>
       </Modal>
+
+      <UpgradeModal
+        open={showUpgrade}
+        onClose={() => setShowUpgrade(false)}
+        limitType="projects"
+        max={limits.maxProjects}
+      />
     </>
   );
 }

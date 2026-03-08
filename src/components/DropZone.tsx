@@ -6,6 +6,8 @@ import { useTranslations } from "next-intl";
 import { Button } from "./ui/Button";
 import { Spinner } from "./ui/Spinner";
 import { authFetch } from "@/lib/api";
+import UpgradeModal from "./UpgradeModal";
+import { PLAN_LIMITS } from "@/lib/plans";
 
 interface UploadingFile {
   name: string;
@@ -15,6 +17,8 @@ interface UploadingFile {
 
 interface DropZoneProps {
   projectId: string;
+  quoteCount?: number;
+  userPlan?: string;
 }
 
 const ACCEPTED_TYPES = [
@@ -31,19 +35,29 @@ const ACCEPTED_TYPES = [
 
 const ACCEPTED_EXTENSIONS = ".pdf,.xlsx,.xls,.csv,.txt,.png,.jpg,.jpeg,.gif,.webp";
 
-export default function DropZone({ projectId }: DropZoneProps) {
+export default function DropZone({ projectId, quoteCount = 0, userPlan = "free" }: DropZoneProps) {
   const t = useTranslations("Upload");
   const [isDragOver, setIsDragOver] = useState(false);
   const [files, setFiles] = useState<UploadingFile[]>([]);
   const [showPaste, setShowPaste] = useState(false);
   const [pasteText, setPasteText] = useState("");
   const [pasteLoading, setPasteLoading] = useState(false);
+  const [showUpgrade, setShowUpgrade] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [isRendering, startTransition] = useTransition();
 
+  const limits = PLAN_LIMITS[userPlan as keyof typeof PLAN_LIMITS] || PLAN_LIMITS.free;
+  const currentQuoteCount = quoteCount + files.filter((f) => f.status === "done").length;
+  const atLimit = currentQuoteCount >= limits.maxQuotesPerProject;
+
   const uploadFile = useCallback(
     async (file: File) => {
+      if (atLimit) {
+        setShowUpgrade(true);
+        return;
+      }
+
       const fileName = file.name;
       setFiles((prev) => [...prev, { name: fileName, status: "uploading" }]);
 
@@ -59,6 +73,11 @@ export default function DropZone({ projectId }: DropZoneProps) {
 
         if (!res.ok) {
           const err = await res.json().catch(() => ({ error: "Upload failed" }));
+          if (err.error === "PLAN_LIMIT") {
+            setFiles((prev) => prev.filter((f) => f.name !== fileName));
+            setShowUpgrade(true);
+            return;
+          }
           throw new Error(err.error || "Upload failed");
         }
 
@@ -123,7 +142,7 @@ export default function DropZone({ projectId }: DropZoneProps) {
         );
       }
     },
-    [projectId, router]
+    [projectId, router, atLimit]
   );
 
   function handleDrop(e: React.DragEvent) {
@@ -141,6 +160,10 @@ export default function DropZone({ projectId }: DropZoneProps) {
 
   async function handlePasteSubmit() {
     if (!pasteText.trim()) return;
+    if (atLimit) {
+      setShowUpgrade(true);
+      return;
+    }
     setPasteLoading(true);
     try {
       const res = await authFetch("/api/quotes/paste", {
@@ -307,6 +330,13 @@ export default function DropZone({ projectId }: DropZoneProps) {
           <span className="text-accent-light font-medium">{t("comparing")}</span>
         </div>
       )}
+
+      <UpgradeModal
+        open={showUpgrade}
+        onClose={() => setShowUpgrade(false)}
+        limitType="quotes"
+        max={limits.maxQuotesPerProject}
+      />
     </div>
   );
 }

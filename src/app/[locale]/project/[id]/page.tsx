@@ -7,9 +7,13 @@ import AppShell from "@/components/AppShell";
 import DropZone from "@/components/DropZone";
 import ComparisonTable from "@/components/ComparisonTable";
 import QuoteDetail from "@/components/QuoteDetail";
-import DeleteProjectButton from "@/components/DeleteProjectButton";
+import ProjectActions from "@/components/ProjectActions";
 
 export const dynamic = "force-dynamic";
+
+export const metadata = {
+  robots: { index: false, follow: false },
+};
 
 interface PageProps {
   params: Promise<{ id: string; locale: string }>;
@@ -83,6 +87,7 @@ export default async function ProjectDetailPage({
       projects={allProjects}
       userEmail={user.email}
       inboxAddress={user.inboxAddress}
+      userPlan={user.plan}
     >
       <div className="mb-6">
         <div className="flex items-center gap-2 text-sm text-text-dim mb-1">
@@ -96,7 +101,7 @@ export default async function ProjectDetailPage({
         </div>
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-semibold">{project.name}</h1>
-          <DeleteProjectButton projectId={id} projectName={project.name} />
+          <ProjectActions projectId={id} projectName={project.name} />
         </div>
         <p className="text-text-muted text-sm mt-1">
           {t("quotes", { count: project.quotes.length })}
@@ -124,7 +129,7 @@ export default async function ProjectDetailPage({
             <h2 className="text-sm font-semibold uppercase tracking-wider text-text-dim mb-3">
               {t("uploadSection")}
             </h2>
-            <DropZone projectId={id} />
+            <DropZone projectId={id} quoteCount={project.quotes.length} userPlan={user.plan} />
           </div>
 
           <div>

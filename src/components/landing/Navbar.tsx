@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import QuotalLogo from "@/components/QuotalLogo";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 export default function Navbar() {
   const t = useTranslations("Landing.nav");
@@ -20,13 +21,13 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-bg/90 backdrop-blur-xl shadow-sm border-b border-border/30"
+          ? "bg-bg/35 backdrop-blur-[10px] shadow-sm border-b border-border/30"
           : "bg-transparent"
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="#" className="text-text-primary">
-          <QuotalLogo className="h-5 w-auto" />
+          <QuotalLogo className="h-6 w-auto" />
         </a>
 
         <div className="flex items-center gap-3">
@@ -37,11 +38,12 @@ export default function Navbar() {
             {t("watchDemo")}
           </a>
           <a
-            href="#signup"
+            href="/sign-in"
             className="text-sm font-medium bg-accent hover:bg-accent-light text-white px-6 py-2.5 rounded-lg transition-all duration-150"
           >
             {t("earlyAccess")}
           </a>
+          <LocaleSwitcher />
         </div>
       </div>
     </nav>

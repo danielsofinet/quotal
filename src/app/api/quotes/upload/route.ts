@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth";
+import { getAuthenticatedUser, getPlanLimits } from "@/lib/auth";
 import { parseFile } from "@/lib/fileParser";
 import { extractQuoteData, extractQuoteFromFile, isDirectFileType } from "@/lib/extraction";
+import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 export const maxDuration = 60;
 
@@ -28,6 +29,9 @@ const ALLOWED_EXTENSIONS = new Set([
 export async function POST(request: NextRequest) {
   const user = await getAuthenticatedUser(request);
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const rl = rateLimit(`upload:${user.id}`, 10, 60_000);
+  if (!rl.success) return rateLimitResponse(60_000);
 
   const formData = await request.formData();
   const file = formData.get("file") as File | null;
@@ -60,6 +64,18 @@ export async function POST(request: NextRequest) {
   });
   if (!project) {
     return NextResponse.json({ error: "Project not found" }, { status: 404 });
+  }
+
+  // Enforce plan limits
+  const limits = getPlanLimits(user.plan);
+  const quoteCount = await prisma.quote.count({
+    where: { projectId },
+  });
+  if (quoteCount >= limits.maxQuotesPerProject) {
+    return NextResponse.json(
+      { error: "PLAN_LIMIT", limit: "quotes", current: quoteCount, max: limits.maxQuotesPerProject },
+      { status: 403 },
+    );
   }
 
   const bytes = await file.arrayBuffer();
@@ -148,14 +164,13 @@ export async function POST(request: NextRequest) {
     });
     return NextResponse.json(result);
   } catch (error) {
-    const errMsg = error instanceof Error ? error.message : String(error);
-    console.error("Quote processing failed:", errMsg);
+    console.error("Quote processing failed:", error instanceof Error ? error.message : String(error));
     await prisma.quote.update({
       where: { id: quote.id },
       data: { processingStatus: "FAILED" },
     });
     return NextResponse.json(
-      { ...quote, processingStatus: "FAILED", error: errMsg },
+      { ...quote, processingStatus: "FAILED" },
       { status: 200 }
     );
   }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { extractQuoteData, extractQuoteFromFile, isDirectFileType } from "@/lib/extraction";
 import { parseFile } from "@/lib/fileParser";
+import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 export const maxDuration = 60;
 
@@ -32,6 +33,7 @@ const ALLOWED_ATTACHMENT_TYPES = new Set([
 ]);
 
 const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
+const MAX_ATTACHMENTS = 5;
 
 export async function POST(request: NextRequest) {
   // Verify webhook token — reject if not configured or mismatched
@@ -40,7 +42,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const payload: PostmarkInboundPayload = await request.json();
+  let payload: PostmarkInboundPayload;
+  try { payload = await request.json(); } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
 
   // Extract the recipient inbox address
   const toAddress = payload.To.toLowerCase();
@@ -48,6 +53,10 @@ export async function POST(request: NextRequest) {
   const inboxAddress = inboxMatch
     ? inboxMatch[0].replace(/@$/, "") + "@quotal.app"
     : toAddress;
+
+  // Rate limit per inbox address
+  const rl = rateLimit(`inbound:${inboxAddress}`, 5, 60_000);
+  if (!rl.success) return rateLimitResponse(60_000);
 
   // Find user by inbox address
   const user = await prisma.user.findFirst({
@@ -81,9 +90,14 @@ export async function POST(request: NextRequest) {
 
   const results: string[] = [];
 
-  // Process attachments
+  // Process attachments (capped at 5)
   if (payload.Attachments && payload.Attachments.length > 0) {
-    for (const attachment of payload.Attachments) {
+    const attachments = payload.Attachments.slice(0, MAX_ATTACHMENTS);
+    if (payload.Attachments.length > MAX_ATTACHMENTS) {
+      results.push(`Only processing first ${MAX_ATTACHMENTS} of ${payload.Attachments.length} attachments`);
+    }
+
+    for (const attachment of attachments) {
       // Validate attachment type and size
       if (!ALLOWED_ATTACHMENT_TYPES.has(attachment.ContentType)) {
         results.push(`Skipped ${attachment.Name}: unsupported file type (${attachment.ContentType})`);

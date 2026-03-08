@@ -2,13 +2,13 @@
   "Landing": {
     "nav": {
       "watchDemo": "Se demo",
-      "earlyAccess": "Tidig åtkomst"
+      "earlyAccess": "Kom igång"
     },
     "hero": {
-      "badge": "Nu i tidig åtkomst",
+      "badge": "Nu tillgänglig",
       "title": "Sluta jämföra leverantörsofferter i kalkylblad",
       "subtitle": "Quotal extraherar rader ur alla dokument — PDF, Excel, e-post — och ger dig en normaliserad jämförelse sida vid sida på sekunder. Dolda avgifter flaggas automatiskt.",
-      "cta": "Få tidig åtkomst",
+      "cta": "Börja gratis",
       "ctaSecondary": "Se 60s demo ↓"
     },
     "heroTable": {
@@ -65,7 +65,7 @@
     },
     "demo": {
       "label": "SE DET I PRAKTIKEN",
-      "title": "60 sekunder från kaos till klarhet",
+      "title": "Från kaos till klarhet",
       "watchDemo": "Se demon",
       "noSignup": "Ingen registrering krävs för att titta"
     },
@@ -110,7 +110,7 @@
         "price": "€0",
         "subtitle": "Prova",
         "features": {
-          "f1": "1 projekt",
+          "f1": "2 projekt",
           "f2": "3 offerter per projekt",
           "f3": "Alla AI-extraheringsfunktioner",
           "f4": "E-postvidarebefordran"
@@ -119,8 +119,11 @@
       },
       "pro": {
         "name": "Pro",
-        "price": "€49",
+        "price": "$29",
         "period": "/mån",
+        "yearlyPrice": "$290",
+        "yearlyPeriod": "/år",
+        "yearlySavings": "Spara 2 månader",
         "subtitle": "För inköpsteam",
         "popular": "Populär",
         "features": {
@@ -130,22 +133,22 @@
           "f4": "Prioriterad bearbetning",
           "f5": "CSV/Excel-export"
         },
-        "cta": "Få tidig åtkomst"
+        "cta": "Börja gratis"
       },
-      "note": "Inget kreditkort krävs. Avsluta när som helst."
+      "monthly": "Månadsvis",
+      "yearly": "Årsvis",
+      "note": "Avsluta när som helst. Ingen bindningstid."
     },
     "cta": {
       "title": "Redo att sluta kopiera och klistra offerter?",
-      "subtitle": "Gå med i tidig åtkomst. Gratis för de första 50 användarna.",
-      "placeholder": "Din jobbmail",
-      "button": "Gå med i tidig åtkomst",
-      "note": "Ingen spam. Vi mejlar dig när ditt konto är redo."
+      "subtitle": "Börja jämföra leverantörsofferter på sekunder. Gratis för alltid.",
+      "button": "Kom igång",
+      "note": "Gratis plan. Inget kreditkort behövs."
     },
     "footer": {
       "copyright": "© {year} Quotal",
       "privacy": "Integritet",
-      "contact": "Kontakt",
-      "linkedin": "LinkedIn"
+      "contact": "Kontakt"
     }
   },
   "Auth": {
@@ -178,6 +181,7 @@
     "projects": "Projekt",
     "emailInbox": "E-postinkorg",
     "forwardTo": "Vidarebefordra leverantörsofferter till:",
+    "settings": "Settings",
     "signOut": "Logga ut"
   },
   "Comparison": {
@@ -265,6 +269,74 @@
     "deleteWarning": "Detta raderar permanent alla offerter och extraherad data i projektet. Åtgärden kan inte ångras.",
     "cancel": "Avbryt",
     "best": "Bäst:",
-    "quote": "{count, plural, =1 {1 offert} other {# offerter}}"
+    "quote": "{count, plural, =1 {1 offert} other {# offerter}}",
+    "renameProject": "Byt namn på projekt",
+    "rename": "Byt namn",
+    "projectActions": "Projektåtgärder"
+  },
+  "Upgrade": {
+    "title": "Uppgradera till Pro",
+    "projectLimit": "Du har nått gränsen på {max} projekt i gratisplanen.",
+    "quoteLimit": "Du har nått gränsen på {max} offerter per projekt i gratisplanen.",
+    "subtitle": "Lås upp obegränsat antal projekt och offerter med Pro.",
+    "free": "Gratis",
+    "pro": "Pro",
+    "projects": "projekt",
+    "quotesPerProject": "offerter/projekt",
+    "freeProjects": "2",
+    "freeQuotes": "3",
+    "proProjects": "Obegränsat",
+    "proQuotes": "Obegränsat",
+    "features": "Plus historisk spårning, CSV-export och prioriterad bearbetning.",
+    "monthly": "Månadsvis",
+    "yearly": "Årsvis",
+    "monthlyPrice": "$29/mån",
+    "yearlyPrice": "$290/år",
+    "yearlySavings": "Spara 2 månader",
+    "upgrade": "Uppgradera till Pro",
+    "maybeLater": "Kanske senare"
+  },
+  "Billing": {
+    "plan": "Plan",
+    "free": "Gratis",
+    "pro": "Pro",
+    "upgrade": "Uppgradera",
+    "manage": "Hantera fakturering"
+  },
+  "Settings": {
+    "title": "Settings",
+    "profile": {
+      "heading": "Profile",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "save": "Save",
+      "saved": "Saved",
+      "saving": "Saving..."
+    },
+    "preferences": {
+      "heading": "Preferences",
+      "language": "Language",
+      "theme": "Theme"
+    },
+    "billing": {
+      "heading": "Billing",
+      "currentPlan": "Current plan",
+      "nextBilling": "Next billing date",
+      "upgrade": "Upgrade",
+      "manageSub": "Manage subscription"
+    },
+    "danger": {
+      "heading": "Danger Zone",
+      "deleteAccount": "Delete account",
+      "deleteDescription": "Permanently delete your account, all projects, and all quotes. This cannot be undone.",
+      "deleteConfirmTitle": "Delete your account",
+      "deleteConfirmDescription": "This will permanently delete your account and all associated data. Type your email address to confirm.",
+      "emailLabel": "Your email address",
+      "emailPlaceholder": "you@example.com",
+      "confirmDelete": "Delete my account",
+      "cancel": "Cancel",
+      "deleting": "Deleting..."
+    }
   }
 }

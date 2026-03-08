@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -87,6 +86,71 @@ body {
   --violet-200: #ddd6fe;
 }
 
+/* App light mode — reuses the Stripe-inspired palette */
+[data-theme="light"] {
+  --color-bg: #FFFFFF;
+  --color-surface: #F6F9FC;
+  --color-surface-hover: #E9EEF4;
+  --color-border: #E3E8EE;
+  --color-border-light: #D3D9E0;
+  --color-text-primary: #0A2540;
+  --color-text-muted: #425466;
+  --color-text-dim: #8898AA;
+  --color-accent: #635BFF;
+  --color-accent-light: #7A73FF;
+  --color-accent-dim: rgba(99,91,255,0.08);
+  --color-success: #00A67E;
+  --color-success-dim: rgba(0,166,126,0.08);
+  --color-danger: #DF1B41;
+  --color-danger-dim: rgba(223,27,65,0.08);
+  --color-warning: #D97706;
+  --color-warning-dim: rgba(217,119,6,0.08);
+}
+
+/* Light-mode scrollbar + selection (app) */
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #D3D9E0;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: #8898AA;
+}
+[data-theme="light"] ::selection {
+  background: #635BFF;
+  color: white;
+}
+
+/* Force dark — keeps sign-in page dark regardless of theme */
+.force-dark {
+  --color-bg: #0A0A0F;
+  --color-surface: #12121A;
+  --color-surface-hover: #1A1A25;
+  --color-border: #1E1E2E;
+  --color-border-light: #2A2A3E;
+  --color-text-primary: #E8E8ED;
+  --color-text-muted: #8888A0;
+  --color-text-dim: #5A5A72;
+  --color-accent: #6C5CE7;
+  --color-accent-light: #7C6CF7;
+  --color-accent-dim: rgba(108,92,231,0.12);
+  --color-success: #00C48C;
+  --color-success-dim: rgba(0,196,140,0.12);
+  --color-danger: #FF6B6B;
+  --color-danger-dim: rgba(255,107,107,0.12);
+  --color-warning: #FFAB00;
+  --color-warning-dim: rgba(255,171,0,0.12);
+}
+
+.force-dark ::-webkit-scrollbar-thumb {
+  background: #2A2A3E;
+}
+.force-dark ::-webkit-scrollbar-thumb:hover {
+  background: #5A5A72;
+}
+.force-dark ::selection {
+  background: #6C5CE7;
+  color: white;
+}
+
 /* Stripe-inspired light mode for landing page */
 .landing-light {
   --color-bg: #FFFFFF;
@@ -132,6 +196,19 @@ body {
 }
 
 
+/* Theme transition — applied temporarily during toggle */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 350ms ease-in-out,
+              color 350ms ease-in-out,
+              border-color 350ms ease-in-out,
+              box-shadow 350ms ease-in-out,
+              fill 350ms ease-in-out,
+              stroke 350ms ease-in-out !important;
+}
+
 /* App UI animations */
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; }
@@ -157,13 +234,35 @@ body {
   animation: slide-up 0.2s ease-out;
 }
 
+@keyframes dropdown {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-dropdown {
+  animation: dropdown 0.15s ease-out;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .animate-slide-up,
-  .animate-pulse-subtle {
+  .animate-pulse-subtle,
+  .animate-dropdown {
     animation: none;
+  }
+  html.theme-transitioning,
+  html.theme-transitioning *,
+  html.theme-transitioning *::before,
+  html.theme-transitioning *::after {
+    transition: none !important;
   }
 }

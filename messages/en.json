@@ -2,13 +2,13 @@
   "Landing": {
     "nav": {
       "watchDemo": "Watch Demo",
-      "earlyAccess": "Get Early Access"
+      "earlyAccess": "Get Started"
     },
     "hero": {
-      "badge": "Now in early access",
+      "badge": "Now available",
       "title": "Stop comparing vendor quotes in spreadsheets",
       "subtitle": "Quotal extracts line items from any document — PDF, Excel, email — and gives you a normalized side-by-side comparison in seconds. Hidden fees flagged automatically.",
-      "cta": "Get Early Access",
+      "cta": "Start Free",
       "ctaSecondary": "Watch 60s Demo ↓"
     },
     "heroTable": {
@@ -65,7 +65,7 @@
     },
     "demo": {
       "label": "SEE IT IN ACTION",
-      "title": "60 seconds from chaos to clarity",
+      "title": "From chaos to clarity",
       "watchDemo": "Watch the demo",
       "noSignup": "No signup required to watch"
     },
@@ -110,7 +110,7 @@
         "price": "€0",
         "subtitle": "Try it out",
         "features": {
-          "f1": "1 project",
+          "f1": "2 projects",
           "f2": "3 quotes per project",
           "f3": "All AI extraction features",
           "f4": "Email forwarding"
@@ -119,8 +119,11 @@
       },
       "pro": {
         "name": "Pro",
-        "price": "€49",
+        "price": "$29",
         "period": "/mo",
+        "yearlyPrice": "$290",
+        "yearlyPeriod": "/yr",
+        "yearlySavings": "Save 2 months",
         "subtitle": "For procurement teams",
         "popular": "Popular",
         "features": {
@@ -130,22 +133,22 @@
           "f4": "Priority processing",
           "f5": "CSV/Excel export"
         },
-        "cta": "Get Early Access"
+        "cta": "Start Free"
       },
-      "note": "No credit card required. Cancel anytime."
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "note": "Cancel anytime. No long-term commitment."
     },
     "cta": {
       "title": "Ready to stop copy-pasting quotes?",
-      "subtitle": "Join the early access. Free for the first 50 users.",
-      "placeholder": "Your work email",
-      "button": "Join Early Access",
-      "note": "No spam. We'll email you when your account is ready."
+      "subtitle": "Start comparing vendor quotes in seconds. Free forever.",
+      "button": "Get Started",
+      "note": "Free plan. No credit card needed."
     },
     "footer": {
       "copyright": "© {year} Quotal",
       "privacy": "Privacy",
-      "contact": "Contact",
-      "linkedin": "LinkedIn"
+      "contact": "Contact"
     }
   },
   "Auth": {
@@ -178,6 +181,7 @@
     "projects": "Projects",
     "emailInbox": "Email Inbox",
     "forwardTo": "Forward supplier quotes to:",
+    "settings": "Settings",
     "signOut": "Sign out"
   },
   "Comparison": {
@@ -265,6 +269,74 @@
     "deleteWarning": "This will permanently delete all quotes and extracted data in this project. This action cannot be undone.",
     "cancel": "Cancel",
     "best": "Best:",
-    "quote": "{count, plural, =1 {1 quote} other {# quotes}}"
+    "quote": "{count, plural, =1 {1 quote} other {# quotes}}",
+    "renameProject": "Rename Project",
+    "rename": "Rename",
+    "projectActions": "Project actions"
+  },
+  "Upgrade": {
+    "title": "Upgrade to Pro",
+    "projectLimit": "You've reached the limit of {max} projects on the Free plan.",
+    "quoteLimit": "You've reached the limit of {max} quotes per project on the Free plan.",
+    "subtitle": "Unlock unlimited projects and quotes with Pro.",
+    "free": "Free",
+    "pro": "Pro",
+    "projects": "projects",
+    "quotesPerProject": "quotes/project",
+    "freeProjects": "2",
+    "freeQuotes": "3",
+    "proProjects": "Unlimited",
+    "proQuotes": "Unlimited",
+    "features": "Plus historical tracking, CSV export, and priority processing.",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "monthlyPrice": "$29/mo",
+    "yearlyPrice": "$290/yr",
+    "yearlySavings": "Save 2 months",
+    "upgrade": "Upgrade to Pro",
+    "maybeLater": "Maybe later"
+  },
+  "Billing": {
+    "plan": "Plan",
+    "free": "Free",
+    "pro": "Pro",
+    "upgrade": "Upgrade",
+    "manage": "Manage billing"
+  },
+  "Settings": {
+    "title": "Settings",
+    "profile": {
+      "heading": "Profile",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "save": "Save",
+      "saved": "Saved",
+      "saving": "Saving..."
+    },
+    "preferences": {
+      "heading": "Preferences",
+      "language": "Language",
+      "theme": "Theme"
+    },
+    "billing": {
+      "heading": "Billing",
+      "currentPlan": "Current plan",
+      "nextBilling": "Next billing date",
+      "upgrade": "Upgrade",
+      "manageSub": "Manage subscription"
+    },
+    "danger": {
+      "heading": "Danger Zone",
+      "deleteAccount": "Delete account",
+      "deleteDescription": "Permanently delete your account, all projects, and all quotes. This cannot be undone.",
+      "deleteConfirmTitle": "Delete your account",
+      "deleteConfirmDescription": "This will permanently delete your account and all associated data. Type your email address to confirm.",
+      "emailLabel": "Your email address",
+      "emailPlaceholder": "you@example.com",
+      "confirmDelete": "Delete my account",
+      "cancel": "Cancel",
+      "deleting": "Deleting..."
+    }
   }
 }

@@ -4,7 +4,7 @@ import { routing } from "@/i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
-const PUBLIC_PATHS = ["/sign-in", "/api/", "/_next", "/__/auth", "/favicon"];
+const PUBLIC_PATHS = ["/sign-in", "/privacy", "/api/", "/_next", "/__/auth", "/favicon"];
 
 function isPublicPath(pathname: string): boolean {
   // Root path is public (landing page)
@@ -32,12 +32,15 @@ function stripLocalePrefix(pathname: string): string {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip middleware entirely for static files, Next internals, and API routes
+  // Skip middleware entirely for static files, Next internals, API routes,
+  // and SEO files (sitemap, robots)
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api/") ||
     pathname.startsWith("/__/auth") ||
-    pathname.startsWith("/favicon")
+    pathname.startsWith("/favicon") ||
+    pathname === "/sitemap.xml" ||
+    pathname === "/robots.txt"
   ) {
     return NextResponse.next();
   }
@@ -58,5 +61,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|favicon.svg|flags/|api/|sitemap\\.xml|robots\\.txt|.*\\.mp4$|.*\\.png$|.*\\.jpg$|.*\\.webp$|.*\\.svg$).*)"],
 };

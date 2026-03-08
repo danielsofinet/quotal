@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 const stagger = {
@@ -15,6 +16,7 @@ const fadeUp = {
 
 export default function Pricing() {
   const t = useTranslations("Landing.pricing");
+  const [yearly, setYearly] = useState(false);
 
   const freeFeatures = ["f1", "f2", "f3", "f4"] as const;
   const proFeatures = ["f1", "f2", "f3", "f4", "f5"] as const;
@@ -32,9 +34,33 @@ export default function Pricing() {
           <span className="text-xs uppercase tracking-widest font-medium text-accent-light mb-3 block">
             {t("label")}
           </span>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-text-primary">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-text-primary mb-8">
             {t("title")}
           </h2>
+
+          {/* Monthly / Yearly toggle */}
+          <div className="inline-flex items-center gap-1 p-1 rounded-lg bg-surface border border-border">
+            <button
+              onClick={() => setYearly(false)}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-150 ${
+                !yearly
+                  ? "bg-accent text-white"
+                  : "text-text-muted hover:text-text-primary"
+              }`}
+            >
+              {t("monthly")}
+            </button>
+            <button
+              onClick={() => setYearly(true)}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-150 ${
+                yearly
+                  ? "bg-accent text-white"
+                  : "text-text-muted hover:text-text-primary"
+              }`}
+            >
+              {t("yearly")}
+            </button>
+          </div>
         </motion.div>
 
         <motion.div
@@ -82,10 +108,38 @@ export default function Pricing() {
             </span>
             <h3 className="text-lg font-semibold text-text-primary mb-1">{t("pro.name")}</h3>
             <p className="text-sm text-text-dim mb-6">{t("pro.subtitle")}</p>
-            <div className="mb-6">
-              <span className="text-4xl font-semibold text-text-primary font-mono">{t("pro.price")}</span>
-              <span className="text-text-dim text-sm">{t("pro.period")}</span>
+
+            {/* Animated price */}
+            <div className="mb-6 h-12 relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={yearly ? "yearly" : "monthly"}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="absolute left-0 flex items-baseline gap-1"
+                >
+                  <span className="text-4xl font-semibold text-text-primary font-mono">
+                    {yearly ? t("pro.yearlyPrice") : t("pro.price")}
+                  </span>
+                  <span className="text-text-dim text-sm">
+                    {yearly ? t("pro.yearlyPeriod") : t("pro.period")}
+                  </span>
+                  {yearly && (
+                    <motion.span
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.2, delay: 0.1 }}
+                      className="ml-1.5 inline-flex items-center px-2 py-0.5 rounded-full bg-success-dim text-success text-[10px] font-semibold uppercase tracking-wider"
+                    >
+                      {t("pro.yearlySavings")}
+                    </motion.span>
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </div>
+
             <ul className="space-y-3 mb-8 flex-1">
               {proFeatures.map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-text-muted">
@@ -97,7 +151,7 @@ export default function Pricing() {
               ))}
             </ul>
             <a
-              href="#signup"
+              href="/sign-in"
               className="inline-flex items-center justify-center text-sm font-medium bg-accent hover:bg-accent-light text-white px-6 py-3 rounded-lg transition-all duration-150"
             >
               {t("pro.cta")}

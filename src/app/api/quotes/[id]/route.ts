@@ -43,8 +43,23 @@ export async function PATCH(
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  const body = await request.json();
+  let body;
+  try { body = await request.json(); } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
   const { vendorName, currency, paymentTerms, deliveryDays, lineItems, fees } = body;
+
+  // Validate string fields with length caps
+  if (vendorName !== undefined && (typeof vendorName !== "string" || vendorName.length > 200)) {
+    return NextResponse.json({ error: "vendorName must be a string (max 200 chars)" }, { status: 400 });
+  }
+  if (currency !== undefined && (typeof currency !== "string" || currency.length > 10)) {
+    return NextResponse.json({ error: "currency must be a string (max 10 chars)" }, { status: 400 });
+  }
+  if (paymentTerms !== undefined && (typeof paymentTerms !== "string" || paymentTerms.length > 200)) {
+    return NextResponse.json({ error: "paymentTerms must be a string (max 200 chars)" }, { status: 400 });
+  }
 
   // Update quote fields
   await prisma.quote.update({

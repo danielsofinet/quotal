@@ -18,14 +18,11 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center gap-6">
-          <a href="#" className="text-xs text-text-dim hover:text-text-muted transition-colors">
+          <a href="/privacy" className="text-xs text-text-dim hover:text-text-muted transition-colors">
             {t("privacy")}
           </a>
-          <a href="#" className="text-xs text-text-dim hover:text-text-muted transition-colors">
+          <a href="mailto:contact@quotal.app" className="text-xs text-text-dim hover:text-text-muted transition-colors">
             {t("contact")}
-          </a>
-          <a href="#" className="text-xs text-text-dim hover:text-text-muted transition-colors">
-            {t("linkedin")}
           </a>
         </div>
       </div>

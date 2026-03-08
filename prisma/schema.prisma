@@ -8,14 +8,18 @@ datasource db {
 }
 
 model User {
-  id           String    @id @default(cuid())
-  firebaseUid  String    @unique
-  email        String    @unique
-  name         String?
-  inboxAddress String    @unique
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  projects     Project[]
+  id                   String    @id @default(cuid())
+  firebaseUid          String    @unique
+  email                String    @unique
+  name                 String?
+  inboxAddress         String    @unique
+  plan                 String    @default("free")
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
+  planExpiresAt        DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  projects             Project[]
 }
 
 model Project {

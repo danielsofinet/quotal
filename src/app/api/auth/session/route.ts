@@ -1,12 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminAuth } from "@/lib/firebase-admin";
 import { cookies } from "next/headers";
+import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 const SESSION_COOKIE_NAME = "__session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 5; // 5 days
 
 export async function POST(request: NextRequest) {
-  const { idToken } = await request.json();
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const rl = rateLimit(`session:${ip}`, 10, 60_000);
+  if (!rl.success) return rateLimitResponse(60_000);
+
+  let body;
+  try { body = await request.json(); } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
+  const { idToken } = body;
   if (!idToken) {
     return NextResponse.json({ error: "Missing idToken" }, { status: 400 });
   }
@@ -31,9 +41,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ status: "ok" });
   } catch (error) {
-    const err = error instanceof Error ? error.message : String(error);
-    console.error("Session creation failed:", err);
-    return NextResponse.json({ error: "Unauthorized", detail: err }, { status: 401 });
+    console.error("Session creation failed:", error instanceof Error ? error.message : String(error));
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 }
 
