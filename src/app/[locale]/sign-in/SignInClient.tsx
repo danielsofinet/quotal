@@ -79,8 +79,7 @@ export default function SignInClient() {
       <div className="w-full max-w-sm space-y-8">
         <div className="text-center">
           <QuotalLogo className="h-8 mx-auto mb-6 text-text-primary" />
-          <h1 className="text-2xl font-semibold">{t("signIn")}</h1>
-          <p className="text-text-muted text-sm mt-2">{t("subtitle")}</p>
+          <h1 className="text-2xl font-semibold text-white">{t("signIn")}</h1>
         </div>
 
         {error && (
