@@ -98,9 +98,9 @@
       }
     },
     "socialProof": {
-      "quote": "Every time you request quotes, you get 3–5 responses in completely different formats. Then you spend hours trying to make sense of them.",
-      "attribution": "— Procurement manager on Reddit",
-      "tagline": "Quotal was built to fix exactly this."
+      "label": "TESTIMONIALS",
+      "title": "Trusted by procurement teams worldwide",
+      "subtitle": "See why teams are switching to Quotal for vendor quote comparison."
     },
     "pricing": {
       "label": "PRICING",
