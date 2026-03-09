@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth";
+import { getAuthenticatedUser, getAuthenticatedUserFromCookies } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 export async function GET(request: NextRequest) {
-  const user = await getAuthenticatedUser(request);
+  const user = await getAuthenticatedUser(request) || await getAuthenticatedUserFromCookies();
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
