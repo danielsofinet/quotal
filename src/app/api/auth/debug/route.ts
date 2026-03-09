@@ -1,27 +1,22 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getAdminAuth } from "@/lib/firebase-admin";
+import { NextResponse } from "next/server";
+import { getUserWithProjects } from "@/lib/auth";
 
-export async function GET(request: NextRequest) {
-  const session = request.cookies.get("__session")?.value;
-
-  if (!session) {
-    return NextResponse.json({ error: "No __session cookie", cookies: request.cookies.getAll().map(c => c.name) });
-  }
-
+export async function GET() {
   try {
-    const adminAuth = getAdminAuth();
-    const decoded = await adminAuth.verifySessionCookie(session, true);
+    const user = await getUserWithProjects();
+    if (!user) {
+      return NextResponse.json({ status: "no_user", message: "getUserWithProjects returned null — check server logs for [auth] messages" });
+    }
     return NextResponse.json({
-      status: "valid",
-      uid: decoded.uid,
-      email: decoded.email,
-      cookieLength: session.length,
+      status: "ok",
+      userId: user.id,
+      email: user.email,
+      projectCount: user.projects?.length ?? 0,
     });
   } catch (err) {
     return NextResponse.json({
-      status: "invalid",
+      status: "error",
       error: err instanceof Error ? err.message : String(err),
-      cookieLength: session.length,
     });
   }
 }
