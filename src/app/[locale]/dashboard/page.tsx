@@ -14,10 +14,16 @@ export const metadata = {
 };
 
 export default async function DashboardPage() {
-  const [user, t] = await Promise.all([
-    getUserWithProjects(),
-    getTranslations("Dashboard"),
-  ]);
+  let user, t;
+  try {
+    [user, t] = await Promise.all([
+      getUserWithProjects(),
+      getTranslations("Dashboard"),
+    ]);
+  } catch (err) {
+    // Temporarily show errors instead of silent redirect
+    return <pre>Dashboard error: {err instanceof Error ? err.message : String(err)}</pre>;
+  }
 
   if (!user) {
     redirect("/sign-in");
