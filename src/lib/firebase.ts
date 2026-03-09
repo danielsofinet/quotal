@@ -105,11 +105,12 @@ async function syncSession(idToken: string) {
   const res = await fetch("/api/auth/session", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "same-origin",
     body: JSON.stringify({ idToken }),
   });
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
-    throw new Error(data.detail || data.error || "Session creation failed");
+    throw new Error(data.detail || data.error || `Session creation failed (${res.status})`);
   }
 }
 

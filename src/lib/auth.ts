@@ -40,9 +40,10 @@ export async function getAuthenticatedUserFromCookies() {
  */
 export async function getUserWithProjects() {
   const cookieStore = await cookies();
+  const allCookieNames = cookieStore.getAll().map((c) => c.name);
   const sessionCookie = cookieStore.get("__session")?.value;
   if (!sessionCookie) {
-    console.log("[auth] No __session cookie found");
+    console.log("[auth] No __session cookie found. All cookies:", allCookieNames);
     return null;
   }
 

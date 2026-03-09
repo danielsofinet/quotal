@@ -29,12 +29,18 @@ export async function POST(request: NextRequest) {
       expiresIn: SESSION_MAX_AGE * 1000,
     });
 
-    const isSecure = request.url.startsWith("https");
+    const isSecure =
+      request.headers.get("x-forwarded-proto") === "https" ||
+      request.url.startsWith("https");
+
     const response = NextResponse.json({ status: "ok" });
-    response.headers.set(
-      "Set-Cookie",
-      `${SESSION_COOKIE_NAME}=${sessionCookie}; Max-Age=${SESSION_MAX_AGE}; Path=/; HttpOnly; SameSite=Lax${isSecure ? "; Secure" : ""}`
-    );
+    response.cookies.set(SESSION_COOKIE_NAME, sessionCookie, {
+      maxAge: SESSION_MAX_AGE,
+      path: "/",
+      httpOnly: true,
+      sameSite: "lax",
+      secure: isSecure,
+    });
 
     return response;
   } catch (error) {
