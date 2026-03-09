@@ -41,10 +41,7 @@ const googleProvider = new GoogleAuthProvider();
 
 export async function signInWithGoogle() {
   const auth = getFirebaseAuth();
-  const result = await signInWithPopup(auth, googleProvider);
-  const idToken = await result.user.getIdToken();
-  await syncSession(idToken);
-  return result.user;
+  await signInWithRedirect(auth, googleProvider);
 }
 
 // Handle redirect result on page load

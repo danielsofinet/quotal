@@ -65,15 +65,10 @@ export default function SignInClient() {
     setLoading(true);
     setError(null);
     try {
-      const user = await signInWithGoogle();
-      if (user) router.push("/dashboard");
-      // If null, signInWithRedirect was used — handleRedirectResult picks it up on return
+      await signInWithGoogle();
     } catch (err) {
-      console.error("Google sign-in error:", err);
       const key = getErrorKey(err);
-      const detail = err instanceof Error ? ` (${(err as unknown as { code?: string }).code || err.message})` : "";
-      setError(t(`errors.${key === "default" ? "googleFailed" : key}`) + detail);
-    } finally {
+      setError(t(`errors.${key === "default" ? "googleFailed" : key}`));
       setLoading(false);
     }
   }
