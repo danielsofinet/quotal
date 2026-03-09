@@ -1,0 +1,29 @@
+IKEA for Business
+"IKEA US LLC, 420 Alan Wood Road, Conshohocken, PA 19428"
+Business Customer: Quotal Technologies Inc.
+Delivery Address: "580 Howard Street, San Francisco, CA 94105"
+Quote Reference: IKB-US-2026-88471
+Date: "March 3, 2026"
+Valid Until: "March 31, 2026"
+IKEA Business Specialist: Anna Lindqvist
+Payment Terms: Prepayment required (invoice issued upon order confirmation)
+"Note: Free delivery on orders over $5,000. Assembly available at per-item rates below."
+
+Product Name,Article Number,Qty,Price/Unit,Total Price
+BEKANT Desk sit/stand — 63x31" electric white/white,190.222.37,40,$549.00,"$21,960.00"
+MARKUS Office chair — Vissle dark grey,702.611.50,40,$249.99,"$9,999.60"
+LANGFJALL Conference chair — Gunnared dark grey/black,691.759.71,8,$179.00,"$1,432.00"
+GALANT File cabinet — white 20x31",803.651.84,10,$169.00,"$1,690.00"
+BEKANT Conference table — 110x55" white/black,190.472.54,2,$599.00,"$1,198.00"
+BEKANT Conference table — 55x55" white/black,590.472.62,2,$399.00,$798.00
+TERTIAL Work lamp — dark grey,503.554.28,20,$13.99,$279.80
+Delivery — Truck Delivery to Business Address (orders over $5000),SVC-DEL-FREE,1,$0.00,$0.00
+Assembly — Desks (per unit),SVC-ASM-DESK,40,$49.99,"$1,999.60"
+Assembly — Chairs (per unit),SVC-ASM-CHAIR,48,$29.99,"$1,439.52"
+Assembly — Tables (per unit),SVC-ASM-TABLE,4,$59.99,$239.96
+Assembly — Cabinets (per unit),SVC-ASM-CAB,10,$39.99,$399.90
+
+,,,"Subtotal:","$41,436.38"
+
+"Monitors/displays are not available through IKEA for Business. Please source separately."
+"Pricing reflects current IKEA Business pricing as of March 2026. Availability subject to stock. Assembly performed by IKEA-certified TaskRabbit partners. All products include standard IKEA warranty (10 years on BEKANT desks, 10 years on MARKUS chairs). Bulk order (40+ units) — dedicated Business delivery with scheduled appointment window."
