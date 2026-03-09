@@ -90,6 +90,7 @@ export default async function ProjectDetailPage({
       userEmail={user.email}
       inboxAddress={user.inboxAddress}
       userPlan={user.plan}
+      inboxCount={user._count.inboxItems}
     >
       <div className="mb-6">
         <div className="flex items-center gap-2 text-sm text-text-dim mb-1">

@@ -30,6 +30,7 @@ export default async function VendorsPage() {
       userEmail={user.email}
       inboxAddress={user.inboxAddress}
       userPlan={user.plan}
+      inboxCount={user._count.inboxItems}
     >
       <div className="mb-6">
         <h1 className="text-2xl font-semibold">{t("title")}</h1>

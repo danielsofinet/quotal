@@ -26,6 +26,7 @@ export default async function InboxPage() {
       userEmail={user.email}
       inboxAddress={user.inboxAddress}
       userPlan={user.plan}
+      inboxCount={user._count.inboxItems}
     >
       <InboxClient
         inboxAddress={user.inboxAddress}

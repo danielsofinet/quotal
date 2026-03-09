@@ -63,6 +63,7 @@ export async function getUserWithProjects() {
           },
           orderBy: { createdAt: "desc" },
         },
+        _count: { select: { inboxItems: true } },
       },
     });
 
@@ -77,7 +78,7 @@ export async function getUserWithProjects() {
           inboxAddress,
         },
       });
-      user = { ...created, projects: [] };
+      user = { ...created, projects: [], _count: { inboxItems: 0 } };
     }
 
     return user;

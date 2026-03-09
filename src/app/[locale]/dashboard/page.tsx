@@ -50,6 +50,7 @@ export default async function DashboardPage() {
       userEmail={user.email}
       inboxAddress={user.inboxAddress}
       userPlan={user.plan}
+      inboxCount={user._count.inboxItems}
     >
       <div className="mb-8 flex items-center justify-between">
         <div>

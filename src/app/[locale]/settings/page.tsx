@@ -26,6 +26,7 @@ export default async function SettingsPage() {
       userEmail={user.email}
       inboxAddress={user.inboxAddress}
       userPlan={user.plan}
+      inboxCount={user._count.inboxItems}
     >
       <SettingsClient
         userName={user.name || ""}

@@ -19,6 +19,7 @@ interface AppShellProps {
   userEmail?: string;
   inboxAddress?: string;
   userPlan?: string;
+  inboxCount?: number;
 }
 
 export default function AppShell({
@@ -27,6 +28,7 @@ export default function AppShell({
   userEmail,
   inboxAddress,
   userPlan,
+  inboxCount = 0,
 }: AppShellProps) {
   const pathname = usePathname();
   const { resolvedTheme } = useTheme();
@@ -50,6 +52,7 @@ export default function AppShell({
         userEmail={userEmail}
         inboxAddress={inboxAddress}
         userPlan={userPlan}
+        inboxCount={inboxCount}
         collapsed={collapsed}
         onToggleCollapsed={() => setCollapsed(!collapsed)}
       />

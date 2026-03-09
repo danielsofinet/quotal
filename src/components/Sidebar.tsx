@@ -2,7 +2,7 @@
 
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { authFetch } from "@/lib/api";
 import { PLAN_LIMITS } from "@/lib/plans";
 import { Modal } from "./ui/Modal";
@@ -22,6 +22,7 @@ interface SidebarProps {
   userEmail?: string;
   inboxAddress?: string;
   userPlan?: string;
+  inboxCount?: number;
   collapsed: boolean;
   onToggleCollapsed: () => void;
 }
@@ -31,6 +32,7 @@ export default function Sidebar({
   userEmail,
   inboxAddress,
   userPlan = "free",
+  inboxCount: initialInboxCount = 0,
   collapsed,
   onToggleCollapsed,
 }: SidebarProps) {
@@ -45,6 +47,44 @@ export default function Sidebar({
   const [creating, setCreating] = useState(false);
   const [showUpgrade, setShowUpgrade] = useState(false);
   const [inboxCopied, setInboxCopied] = useState(false);
+
+  // Live inbox count with polling
+  const [liveInboxCount, setLiveInboxCount] = useState(initialInboxCount);
+  const [hasNewMail, setHasNewMail] = useState(false);
+  const prevCountRef = useRef(initialInboxCount);
+
+  useEffect(() => {
+    setLiveInboxCount(initialInboxCount);
+    prevCountRef.current = initialInboxCount;
+  }, [initialInboxCount]);
+
+  useEffect(() => {
+    const poll = () => {
+      authFetch("/api/inbox")
+        .then((res) => res.json())
+        .then((data) => {
+          if (Array.isArray(data)) {
+            const newCount = data.length;
+            if (newCount > prevCountRef.current && pathname !== "/inbox") {
+              setHasNewMail(true);
+            }
+            setLiveInboxCount(newCount);
+            prevCountRef.current = newCount;
+          }
+        })
+        .catch(() => {});
+    };
+
+    const interval = setInterval(poll, 30_000);
+    return () => clearInterval(interval);
+  }, [pathname]);
+
+  // Clear new mail indicator when visiting inbox
+  useEffect(() => {
+    if (pathname === "/inbox") {
+      setHasNewMail(false);
+    }
+  }, [pathname]);
 
   const limits = PLAN_LIMITS[userPlan as keyof typeof PLAN_LIMITS] || PLAN_LIMITS.free;
   const atLimit = projects.length >= limits.maxProjects;
@@ -205,17 +245,35 @@ export default function Sidebar({
               : "text-text-muted hover:text-text-primary hover:bg-surface-hover"
           }`}
         >
-          <svg
-            width={collapsed ? "14" : "16"}
-            height={collapsed ? "14" : "16"}
-            viewBox="0 0 16 16"
-            fill="none"
-            className="shrink-0"
-          >
-            <rect x="1.5" y="3" width="13" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
-            <path d="M14.5 4.5L8 9L1.5 4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-          </svg>
-          {!collapsed && <span className="flex-1">{t("inbox")}</span>}
+          <span className="relative shrink-0">
+            <svg
+              width={collapsed ? "14" : "16"}
+              height={collapsed ? "14" : "16"}
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <rect x="1.5" y="3" width="13" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
+              <path d="M14.5 4.5L8 9L1.5 4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+            </svg>
+            {hasNewMail && (
+              <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-accent animate-pulse" />
+            )}
+          </span>
+          {!collapsed && (
+            <>
+              <span className="flex-1">{t("inbox")}</span>
+              {liveInboxCount > 0 && (
+                <span className="text-[11px] text-text-dim">
+                  {liveInboxCount}
+                </span>
+              )}
+            </>
+          )}
+          {collapsed && liveInboxCount > 0 && (
+            <span className="absolute top-0 right-1 text-[9px] font-semibold text-accent-light">
+              {liveInboxCount}
+            </span>
+          )}
         </Link>
 
         <Link
