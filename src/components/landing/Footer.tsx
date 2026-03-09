@@ -27,7 +27,7 @@ export default function Footer() {
           <a href="/privacy" className="text-xs text-text-dim hover:text-text-muted transition-colors">
             {t("privacy")}
           </a>
-          <a href="mailto:contact@quotal.app" className="text-xs text-text-dim hover:text-text-muted transition-colors">
+          <a href="mailto:hello@quotal.app" className="text-xs text-text-dim hover:text-text-muted transition-colors">
             {t("contact")}
           </a>
         </div>

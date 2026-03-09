@@ -39,7 +39,7 @@ export default async function Home() {
     logo: "https://quotal.app/favicon.svg",
     contactPoint: {
       "@type": "ContactPoint",
-      email: "contact@quotal.app",
+      email: "hello@quotal.app",
       contactType: "customer support",
     },
   };

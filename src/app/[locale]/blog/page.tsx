@@ -205,7 +205,7 @@ export default async function BlogPage({ params }: Props) {
               Privacy
             </a>
             <a
-              href="mailto:contact@quotal.app"
+              href="mailto:hello@quotal.app"
               className="text-xs text-text-dim hover:text-text-muted transition-colors"
             >
               Contact

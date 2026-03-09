@@ -119,8 +119,8 @@ export default function TermsPage() {
             <h2 className="text-base font-medium text-text-primary mb-3">12. Contact</h2>
             <p>
               Questions about these Terms? Contact us at{" "}
-              <a href="mailto:contact@quotal.app" className="text-accent hover:text-accent-light transition-colors">
-                contact@quotal.app
+              <a href="mailto:hello@quotal.app" className="text-accent hover:text-accent-light transition-colors">
+                hello@quotal.app
               </a>.
             </p>
           </section>

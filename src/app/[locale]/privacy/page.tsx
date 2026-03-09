@@ -100,8 +100,8 @@ export default function PrivacyPage() {
             <h2 className="text-base font-medium text-text-primary mb-3">10. Contact</h2>
             <p>
               If you have questions about this Privacy Policy or your data, contact us at{" "}
-              <a href="mailto:contact@quotal.app" className="text-accent hover:text-accent-light transition-colors">
-                contact@quotal.app
+              <a href="mailto:hello@quotal.app" className="text-accent hover:text-accent-light transition-colors">
+                hello@quotal.app
               </a>.
             </p>
           </section>
