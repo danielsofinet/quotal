@@ -145,6 +145,7 @@ export default async function ProjectDetailPage({
                 processingStatus: q.processingStatus as string,
               }))}
               projectId={id}
+              userPlan={user.plan}
             />
           </div>
         </div>

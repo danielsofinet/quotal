@@ -15,16 +15,20 @@ export const metadata: Metadata = {
     template: "%s | Quotal",
   },
   description:
-    "AI-powered tool that extracts and compares supplier quotes from any format. Hidden fees flagged. Free to try.",
+    "Upload supplier quotes in any format — PDF, Excel, email — and get a side-by-side comparison in seconds. AI flags hidden fees automatically. Free to start.",
   keywords: [
-    "vendor quote comparison",
-    "procurement software",
-    "supplier quote analysis",
-    "RFQ comparison",
+    "compare supplier quotes online",
+    "vendor quote comparison tool",
+    "procurement quote analysis",
+    "RFQ comparison software",
     "hidden fee detection",
-    "AI procurement",
-    "purchasing management",
-    "quote management tool",
+    "AI procurement tool",
+    "supplier quote management",
+    "quote comparison tool for procurement",
+    "compare vendor pricing",
+    "procurement cost analysis",
+    "supplier bid comparison",
+    "RFQ analysis software",
   ],
   authors: [{ name: "Quotal" }],
   creator: "Quotal",
@@ -37,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Quotal — Compare vendor quotes in seconds",
     description:
-      "AI-powered tool that extracts and compares supplier quotes from any format. Hidden fees flagged. Free to try.",
+      "Upload supplier quotes in any format and get a side-by-side comparison in seconds. AI flags hidden fees automatically. Free to start.",
     type: "website",
     siteName: "Quotal",
     images: [
@@ -53,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Quotal — Compare vendor quotes in seconds",
     description:
-      "AI-powered tool that extracts and compares supplier quotes from any format. Hidden fees flagged. Free to try.",
+      "Upload supplier quotes in any format and get a side-by-side comparison in seconds. AI flags hidden fees automatically. Free to start.",
     images: ["/og-image.png"],
   },
   robots: {

@@ -194,6 +194,39 @@ export default function Sidebar({
           {!collapsed && <span className="flex-1">{t("dashboard")}</span>}
         </Link>
 
+        <Link
+          href="/vendors"
+          className={`flex items-center gap-2.5 rounded-lg text-sm transition-colors mb-1 ${
+            collapsed ? "justify-center w-8 h-8 mx-auto px-0 py-0" : "px-2.5 py-2"
+          } ${
+            pathname === "/vendors"
+              ? "bg-accent-dim text-accent-light"
+              : "text-text-muted hover:text-text-primary hover:bg-surface-hover"
+          }`}
+        >
+          <svg
+            width={collapsed ? "14" : "16"}
+            height={collapsed ? "14" : "16"}
+            viewBox="0 0 16 16"
+            fill="none"
+            className="shrink-0"
+          >
+            <path d="M8 1.5L14.5 5V11L8 14.5L1.5 11V5L8 1.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <path d="M8 14.5V8" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M14.5 5L8 8L1.5 5" stroke="currentColor" strokeWidth="1.5" />
+          </svg>
+          {!collapsed && (
+            <span className="flex-1 flex items-center gap-2">
+              {t("vendors")}
+              {userPlan !== "pro" && (
+                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wider bg-accent-dim text-accent-light">
+                  Pro
+                </span>
+              )}
+            </span>
+          )}
+        </Link>
+
         {/* Projects section */}
         <div className="mt-5">
           {!collapsed && (

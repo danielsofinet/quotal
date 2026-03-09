@@ -26,10 +26,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const locale of routing.locales) {
     entries.push({
       url: localeUrl("/", locale),
-      lastModified: new Date(),
+      lastModified: new Date("2026-03-08"),
       changeFrequency: "weekly",
       priority: 1.0,
       alternates: alternates("/"),
+    });
+  }
+
+  // Terms page — all locales
+  for (const locale of routing.locales) {
+    entries.push({
+      url: localeUrl("/terms", locale),
+      lastModified: new Date("2026-03-08"),
+      changeFrequency: "yearly",
+      priority: 0.3,
+      alternates: alternates("/terms"),
     });
   }
 
@@ -37,7 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const locale of routing.locales) {
     entries.push({
       url: localeUrl("/privacy", locale),
-      lastModified: new Date(),
+      lastModified: new Date("2026-03-08"),
       changeFrequency: "yearly",
       priority: 0.3,
       alternates: alternates("/privacy"),

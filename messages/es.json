@@ -147,6 +147,7 @@
     },
     "footer": {
       "copyright": "© {year} Quotal",
+      "terms": "Términos",
       "privacy": "Privacy",
       "contact": "Contact"
     }
@@ -181,6 +182,7 @@
     "projects": "Projects",
     "emailInbox": "Email Inbox",
     "forwardTo": "Forward supplier quotes to:",
+    "vendors": "Proveedores",
     "settings": "Settings",
     "signOut": "Sign out"
   },
@@ -206,7 +208,8 @@
     "fastest": "(fastest)",
     "notesWarnings": "Notes & Warnings",
     "uploadToCompare": "Upload quotes to see comparisons",
-    "uploadMore": "Upload at least one more quote to compare"
+    "uploadMore": "Upload at least one more quote to compare",
+    "exportCsv": "Exportar CSV"
   },
   "Upload": {
     "clickToUpload": "Click to upload",
@@ -219,7 +222,8 @@
     "uploading": "Uploading...",
     "extracting": "Extracting data...",
     "done": "Done",
-    "comparing": "Comparing quotes..."
+    "comparing": "Comparing quotes...",
+    "priority": "Prioridad"
   },
   "QuoteDetail": {
     "backToComparison": "Back to comparison",
@@ -338,5 +342,17 @@
       "cancel": "Cancel",
       "deleting": "Deleting..."
     }
+  },
+  "Vendors": {
+    "title": "Proveedores",
+    "subtitle": "Rastrea los precios de tus proveedores en todos tus proyectos",
+    "proFeature": "Función Pro",
+    "proDescription": "Actualiza a Pro para ver cómo cambian los precios de cada proveedor en todos tus proyectos.",
+    "noVendors": "Sin datos de proveedores aún. Sube cotizaciones para ver tus proveedores aquí.",
+    "quoteCount": "{count, plural, =1 {1 cotización} other {# cotizaciones}}",
+    "quoteHistory": "Historial de cotizaciones",
+    "trendUp": "Precio subió",
+    "trendDown": "Precio bajó",
+    "trendStable": "Estable"
   }
 }

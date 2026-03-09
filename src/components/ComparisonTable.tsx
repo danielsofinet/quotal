@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { Badge } from "./ui/Badge";
+import { authFetch } from "@/lib/api";
+import UpgradeModal from "./UpgradeModal";
 
 interface LineItem {
   id: string;
@@ -39,6 +42,7 @@ interface Quote {
 interface ComparisonTableProps {
   quotes: Quote[];
   projectId: string;
+  userPlan?: string;
 }
 
 function fmt(amount: number, currency?: string | null) {
@@ -46,9 +50,34 @@ function fmt(amount: number, currency?: string | null) {
   return `${sym}${amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
-export default function ComparisonTable({ quotes, projectId }: ComparisonTableProps) {
+export default function ComparisonTable({ quotes, projectId, userPlan = "free" }: ComparisonTableProps) {
   const t = useTranslations("Comparison");
+  const [showUpgrade, setShowUpgrade] = useState(false);
+  const [exporting, setExporting] = useState(false);
   const processed = quotes.filter((q) => q.processingStatus === "DONE");
+
+  async function handleExport() {
+    if (userPlan !== "pro") {
+      setShowUpgrade(true);
+      return;
+    }
+    setExporting(true);
+    try {
+      const res = await authFetch(`/api/projects/${projectId}/export`);
+      if (!res.ok) return;
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = res.headers.get("Content-Disposition")?.match(/filename="(.+)"/)?.[1] || "export.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } finally {
+      setExporting(false);
+    }
+  }
 
   if (processed.length < 2) {
     return (
@@ -247,6 +276,26 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
         )}
       </div>
 
+      {/* Export */}
+      <div className="flex justify-end">
+        <button
+          onClick={handleExport}
+          disabled={exporting}
+          className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-text-muted hover:text-text-primary hover:bg-surface transition-all duration-150 disabled:opacity-50"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="shrink-0">
+            <path d="M2 10V13C2 13.5523 2.44772 14 3 14H13C13.5523 14 14 13.5523 14 13V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M8 2V10M8 10L5 7M8 10L11 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          {t("exportCsv")}
+          {userPlan !== "pro" && (
+            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wider bg-accent-dim text-accent-light">
+              Pro
+            </span>
+          )}
+        </button>
+      </div>
+
       {/* Main Comparison Table */}
       <div className="border border-border rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
@@ -426,6 +475,13 @@ export default function ComparisonTable({ quotes, projectId }: ComparisonTablePr
           </div>
         </div>
       )}
+
+      <UpgradeModal
+        open={showUpgrade}
+        onClose={() => setShowUpgrade(false)}
+        limitType="quotes"
+        max={0}
+      />
     </div>
   );
 }

@@ -310,7 +310,7 @@ export default function DropZone({ projectId, quoteCount = 0, userPlan = "free" 
                 </svg>
               )}
               <span className="text-text-primary truncate flex-1">{f.name}</span>
-              <span className="text-xs text-text-dim">
+              <span className="text-xs text-text-dim flex items-center gap-1.5">
                 {f.status === "uploading"
                   ? t("uploading")
                   : f.status === "processing"
@@ -318,6 +318,11 @@ export default function DropZone({ projectId, quoteCount = 0, userPlan = "free" 
                     : f.status === "done"
                       ? t("done")
                       : f.error || "Error"}
+                {(f.status === "uploading" || f.status === "processing") && userPlan === "pro" && (
+                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider bg-accent-dim text-accent-light animate-pulse-subtle">
+                    {t("priority")}
+                  </span>
+                )}
               </span>
             </div>
           ))}

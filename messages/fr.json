@@ -147,6 +147,7 @@
     },
     "footer": {
       "copyright": "© {year} Quotal",
+      "terms": "CGU",
       "privacy": "Confidentialité",
       "contact": "Contact"
     }
@@ -181,6 +182,7 @@
     "projects": "Projets",
     "emailInbox": "Boîte e-mail",
     "forwardTo": "Transférez vos devis fournisseurs à :",
+    "vendors": "Fournisseurs",
     "settings": "Paramètres",
     "signOut": "Se déconnecter"
   },
@@ -206,7 +208,8 @@
     "fastest": "(le plus rapide)",
     "notesWarnings": "Notes et avertissements",
     "uploadToCompare": "Importez des devis pour voir la comparaison",
-    "uploadMore": "Importez au moins un devis supplémentaire pour comparer"
+    "uploadMore": "Importez au moins un devis supplémentaire pour comparer",
+    "exportCsv": "Exporter CSV"
   },
   "Upload": {
     "clickToUpload": "Cliquez pour importer",
@@ -219,7 +222,8 @@
     "uploading": "Import en cours...",
     "extracting": "Extraction des données...",
     "done": "Terminé",
-    "comparing": "Comparaison des devis..."
+    "comparing": "Comparaison des devis...",
+    "priority": "Priorité"
   },
   "QuoteDetail": {
     "backToComparison": "Retour à la comparaison",
@@ -338,5 +342,17 @@
       "cancel": "Annuler",
       "deleting": "Suppression..."
     }
+  },
+  "Vendors": {
+    "title": "Fournisseurs",
+    "subtitle": "Suivez les prix de vos fournisseurs sur tous vos projets",
+    "proFeature": "Fonctionnalité Pro",
+    "proDescription": "Passez au Pro pour voir comment les prix de chaque fournisseur évoluent sur l'ensemble de vos projets.",
+    "noVendors": "Aucune donnée fournisseur. Importez des devis pour voir vos fournisseurs ici.",
+    "quoteCount": "{count, plural, =1 {1 devis} other {# devis}}",
+    "quoteHistory": "Historique des devis",
+    "trendUp": "Prix en hausse",
+    "trendDown": "Prix en baisse",
+    "trendStable": "Stable"
   }
 }

@@ -147,6 +147,7 @@
     },
     "footer": {
       "copyright": "© {year} Quotal",
+      "terms": "Villkor",
       "privacy": "Integritet",
       "contact": "Kontakt"
     }
@@ -181,6 +182,7 @@
     "projects": "Projekt",
     "emailInbox": "E-postinkorg",
     "forwardTo": "Vidarebefordra leverantörsofferter till:",
+    "vendors": "Leverantörer",
     "settings": "Settings",
     "signOut": "Logga ut"
   },
@@ -206,7 +208,8 @@
     "fastest": "(snabbast)",
     "notesWarnings": "Anteckningar & varningar",
     "uploadToCompare": "Ladda upp offerter för att se jämförelser",
-    "uploadMore": "Ladda upp minst en offert till för att jämföra"
+    "uploadMore": "Ladda upp minst en offert till för att jämföra",
+    "exportCsv": "Exportera CSV"
   },
   "Upload": {
     "clickToUpload": "Klicka för att ladda upp",
@@ -219,7 +222,8 @@
     "uploading": "Laddar upp...",
     "extracting": "Extraherar data...",
     "done": "Klar",
-    "comparing": "Jämför offerter..."
+    "comparing": "Jämför offerter...",
+    "priority": "Prioritet"
   },
   "QuoteDetail": {
     "backToComparison": "Tillbaka till jämförelse",
@@ -338,5 +342,17 @@
       "cancel": "Cancel",
       "deleting": "Deleting..."
     }
+  },
+  "Vendors": {
+    "title": "Leverantörer",
+    "subtitle": "Spåra leverantörspriser över alla dina projekt",
+    "proFeature": "Pro-funktion",
+    "proDescription": "Uppgradera till Pro för att se hur varje leverantörs priser förändras över alla dina projekt.",
+    "noVendors": "Inga leverantörsdata ännu. Ladda upp offerter för att se dina leverantörer här.",
+    "quoteCount": "{count, plural, =1 {1 offert} other {# offerter}}",
+    "quoteHistory": "Offerthistorik",
+    "trendUp": "Pris ökat",
+    "trendDown": "Pris minskat",
+    "trendStable": "Stabilt"
   }
 }
