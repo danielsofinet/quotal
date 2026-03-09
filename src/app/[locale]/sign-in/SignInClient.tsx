@@ -66,9 +66,11 @@ export default function SignInClient() {
     setError(null);
     try {
       await signInWithGoogle();
+      router.push("/dashboard");
     } catch (err) {
       const key = getErrorKey(err);
       setError(t(`errors.${key === "default" ? "googleFailed" : key}`));
+    } finally {
       setLoading(false);
     }
   }
