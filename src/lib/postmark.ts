@@ -14,7 +14,7 @@ export function getPostmarkClient(): ServerClient {
   return client;
 }
 
-const FROM_ADDRESS = process.env.POSTMARK_FROM_ADDRESS || "login@quotal.app";
+const FROM_ADDRESS = process.env.POSTMARK_FROM_ADDRESS || "contact@quotal.app";
 const WELCOME_FROM = process.env.POSTMARK_WELCOME_FROM || FROM_ADDRESS;
 
 interface MagicLinkStrings {
