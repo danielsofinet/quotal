@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { prisma } from "./prisma";
 import { getAdminAuth } from "./firebase-admin";
 import { v4 as uuidv4 } from "uuid";
+import { sendWelcomeEmail } from "./postmark";
 
 /**
  * Verify Firebase token from Authorization header and find/create user in DB.
@@ -79,6 +80,9 @@ export async function getUserWithProjects() {
         },
       });
       user = { ...created, projects: [], _count: { inboxItems: 0 } };
+      sendWelcomeEmail(created.email, created.name).catch((err) =>
+        console.error("[auth] Welcome email failed:", err instanceof Error ? err.message : String(err))
+      );
     }
 
     return user;
@@ -117,6 +121,9 @@ async function findOrCreateUser(
         inboxAddress,
       },
     });
+    sendWelcomeEmail(user.email, user.name).catch((err) =>
+      console.error("[auth] Welcome email failed:", err instanceof Error ? err.message : String(err))
+    );
   }
 
   return user;
