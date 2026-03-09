@@ -404,7 +404,17 @@
     "justNow": "just now",
     "minutesAgo": "{count}m ago",
     "hoursAgo": "{count}h ago",
-    "daysAgo": "{count}d ago"
+    "daysAgo": "{count}d ago",
+    "from": "From",
+    "subjectLabel": "Subject",
+    "received": "Received",
+    "assignSingle": "Assign to project",
+    "deleteSingle": "Delete",
+    "delete": "{count, plural, =1 {Delete 1 item} other {Delete # items}}",
+    "deleteTitle": "Delete emails",
+    "deleteDescription": "{count, plural, =1 {Are you sure you want to delete this email? This can't be undone.} other {Are you sure you want to delete # emails? This can't be undone.}}",
+    "cancel": "Cancel",
+    "confirmDelete": "{count, plural, =1 {Delete} other {Delete #}}"
   },
   "Vendors": {
     "title": "Vendors",

@@ -404,7 +404,17 @@
     "justNow": "à l'instant",
     "minutesAgo": "il y a {count}min",
     "hoursAgo": "il y a {count}h",
-    "daysAgo": "il y a {count}j"
+    "daysAgo": "il y a {count}j",
+    "from": "De",
+    "subjectLabel": "Objet",
+    "received": "Reçu",
+    "assignSingle": "Assigner à un projet",
+    "deleteSingle": "Supprimer",
+    "delete": "{count, plural, =1 {Supprimer 1 élément} other {Supprimer # éléments}}",
+    "deleteTitle": "Supprimer les e-mails",
+    "deleteDescription": "{count, plural, =1 {Êtes-vous sûr de vouloir supprimer cet e-mail ? Cette action est irréversible.} other {Êtes-vous sûr de vouloir supprimer # e-mails ? Cette action est irréversible.}}",
+    "cancel": "Annuler",
+    "confirmDelete": "{count, plural, =1 {Supprimer} other {Supprimer #}}"
   },
   "Vendors": {
     "title": "Fournisseurs",

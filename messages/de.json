@@ -404,7 +404,17 @@
     "justNow": "gerade eben",
     "minutesAgo": "vor {count}Min.",
     "hoursAgo": "vor {count}Std.",
-    "daysAgo": "vor {count}T."
+    "daysAgo": "vor {count}T.",
+    "from": "Von",
+    "subjectLabel": "Betreff",
+    "received": "Empfangen",
+    "assignSingle": "Projekt zuweisen",
+    "deleteSingle": "Löschen",
+    "delete": "{count, plural, =1 {1 Element löschen} other {# Elemente löschen}}",
+    "deleteTitle": "E-Mails löschen",
+    "deleteDescription": "{count, plural, =1 {Möchten Sie diese E-Mail wirklich löschen? Dies kann nicht rückgängig gemacht werden.} other {Möchten Sie wirklich # E-Mails löschen? Dies kann nicht rückgängig gemacht werden.}}",
+    "cancel": "Abbrechen",
+    "confirmDelete": "{count, plural, =1 {Löschen} other {# löschen}}"
   },
   "Vendors": {
     "title": "Lieferanten",

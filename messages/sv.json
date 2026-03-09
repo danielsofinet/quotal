@@ -404,7 +404,17 @@
     "justNow": "just nu",
     "minutesAgo": "{count}min sedan",
     "hoursAgo": "{count}h sedan",
-    "daysAgo": "{count}d sedan"
+    "daysAgo": "{count}d sedan",
+    "from": "Från",
+    "subjectLabel": "Ämne",
+    "received": "Mottagen",
+    "assignSingle": "Tilldela till projekt",
+    "deleteSingle": "Radera",
+    "delete": "{count, plural, =1 {Radera 1 objekt} other {Radera # objekt}}",
+    "deleteTitle": "Radera e-post",
+    "deleteDescription": "{count, plural, =1 {Är du säker på att du vill radera detta e-postmeddelande? Det går inte att ångra.} other {Är du säker på att du vill radera # e-postmeddelanden? Det går inte att ångra.}}",
+    "cancel": "Avbryt",
+    "confirmDelete": "{count, plural, =1 {Radera} other {Radera #}}"
   },
   "Vendors": {
     "title": "Leverantörer",

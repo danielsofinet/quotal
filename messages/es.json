@@ -404,7 +404,17 @@
     "justNow": "ahora mismo",
     "minutesAgo": "hace {count}min",
     "hoursAgo": "hace {count}h",
-    "daysAgo": "hace {count}d"
+    "daysAgo": "hace {count}d",
+    "from": "De",
+    "subjectLabel": "Asunto",
+    "received": "Recibido",
+    "assignSingle": "Asignar a proyecto",
+    "deleteSingle": "Eliminar",
+    "delete": "{count, plural, =1 {Eliminar 1 elemento} other {Eliminar # elementos}}",
+    "deleteTitle": "Eliminar correos",
+    "deleteDescription": "{count, plural, =1 {¿Estás seguro de que quieres eliminar este correo? Esta acción no se puede deshacer.} other {¿Estás seguro de que quieres eliminar # correos? Esta acción no se puede deshacer.}}",
+    "cancel": "Cancelar",
+    "confirmDelete": "{count, plural, =1 {Eliminar} other {Eliminar #}}"
   },
   "Vendors": {
     "title": "Proveedores",

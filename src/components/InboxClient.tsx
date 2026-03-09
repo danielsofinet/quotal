@@ -13,8 +13,10 @@ interface InboxItem {
   fromEmail: string;
   fromName: string | null;
   subject: string | null;
+  textBody: string | null;
   createdAt: string;
   attachmentCount: number;
+  attachmentNames: string[];
 }
 
 interface Project {
@@ -33,8 +35,11 @@ export default function InboxClient({ inboxAddress, projects }: InboxClientProps
   const [items, setItems] = useState<InboxItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [expanded, setExpanded] = useState<string | null>(null);
   const [assigning, setAssigning] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [assignModalOpen, setAssignModalOpen] = useState(false);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const fetchItems = useCallback(() => {
@@ -50,13 +55,18 @@ export default function InboxClient({ inboxAddress, projects }: InboxClientProps
     fetchItems();
   }, [fetchItems]);
 
-  function toggleItem(id: string) {
+  function toggleItem(id: string, e: React.MouseEvent) {
+    e.stopPropagation();
     setSelected((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;
     });
+  }
+
+  function toggleExpand(id: string) {
+    setExpanded((prev) => (prev === id ? null : id));
   }
 
   function toggleAll() {
@@ -82,11 +92,53 @@ export default function InboxClient({ inboxAddress, projects }: InboxClientProps
       if (res.ok) {
         setAssignModalOpen(false);
         setSelected(new Set());
+        setExpanded(null);
         fetchItems();
         router.refresh();
       }
     } finally {
       setAssigning(false);
+    }
+  }
+
+  async function handleDelete() {
+    const ids = Array.from(selected);
+    if (ids.length === 0) return;
+    setDeleting(true);
+    try {
+      const res = await authFetch("/api/inbox", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids }),
+      });
+      if (res.ok) {
+        setDeleteConfirmOpen(false);
+        setSelected(new Set());
+        setExpanded(null);
+        fetchItems();
+        router.refresh();
+      }
+    } finally {
+      setDeleting(false);
+    }
+  }
+
+  async function handleDeleteSingle(id: string, e: React.MouseEvent) {
+    e.stopPropagation();
+    const res = await authFetch("/api/inbox", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ids: [id] }),
+    });
+    if (res.ok) {
+      if (expanded === id) setExpanded(null);
+      setSelected((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+      fetchItems();
+      router.refresh();
     }
   }
 
@@ -160,33 +212,46 @@ export default function InboxClient({ inboxAddress, projects }: InboxClientProps
               </span>
             </div>
             {selected.size > 0 && (
-              <Button
-                size="sm"
-                onClick={() => setAssignModalOpen(true)}
-              >
-                {t("assignToProject", { count: selected.size })}
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => setDeleteConfirmOpen(true)}
+                >
+                  {t("delete", { count: selected.size })}
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => setAssignModalOpen(true)}
+                >
+                  {t("assignToProject", { count: selected.size })}
+                </Button>
+              </div>
             )}
           </div>
 
           {/* Email list */}
           <div className="space-y-1.5">
             {items.map((item) => (
-              <button
+              <div
                 key={item.id}
-                onClick={() => toggleItem(item.id)}
-                className={`w-full text-left px-4 py-3 rounded-lg border transition-all duration-100 cursor-pointer ${
+                className={`rounded-lg border transition-all duration-150 ${
                   selected.has(item.id)
                     ? "border-accent/40 bg-accent-dim/40"
                     : "border-border hover:border-border-light hover:bg-surface-hover"
                 }`}
               >
-                <div className="flex items-start gap-3">
+                {/* Header row */}
+                <div
+                  onClick={() => toggleExpand(item.id)}
+                  className="flex items-start gap-3 px-4 py-3 cursor-pointer"
+                >
                   <div
-                    className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors ${
+                    onClick={(e) => toggleItem(item.id, e)}
+                    className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
                       selected.has(item.id)
                         ? "bg-accent border-accent"
-                        : "border-border-light"
+                        : "border-border-light hover:border-text-dim"
                     }`}
                   >
                     {selected.has(item.id) && (
@@ -212,19 +277,109 @@ export default function InboxClient({ inboxAddress, projects }: InboxClientProps
                     <p className="text-sm text-text-muted truncate">
                       {item.subject || t("noSubject")}
                     </p>
-                    {item.attachmentCount > 0 && (
-                      <div className="flex items-center gap-1 mt-1">
-                        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="text-text-dim">
-                          <path d="M14.5 7.5L8.46 13.54a3.5 3.5 0 01-4.95-4.95L9.05 3.05a2.333 2.333 0 013.3 3.3L6.81 11.9a1.167 1.167 0 01-1.65-1.65l5.54-5.54" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                        </svg>
-                        <span className="text-[10px] text-text-dim">
-                          {t("attachments", { count: item.attachmentCount })}
+                    {!expanded || expanded !== item.id ? (
+                      <>
+                        {item.textBody && (
+                          <p className="text-xs text-text-dim mt-1 truncate">
+                            {item.textBody.slice(0, 120)}
+                          </p>
+                        )}
+                        {item.attachmentCount > 0 && (
+                          <div className="flex items-center gap-1 mt-1">
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="text-text-dim">
+                              <path d="M14.5 7.5L8.46 13.54a3.5 3.5 0 01-4.95-4.95L9.05 3.05a2.333 2.333 0 013.3 3.3L6.81 11.9a1.167 1.167 0 01-1.65-1.65l5.54-5.54" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                            </svg>
+                            <span className="text-[10px] text-text-dim">
+                              {t("attachments", { count: item.attachmentCount })}
+                            </span>
+                          </div>
+                        )}
+                      </>
+                    ) : null}
+                  </div>
+                  {/* Expand indicator */}
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    className={`shrink-0 mt-1 text-text-dim transition-transform duration-150 ${
+                      expanded === item.id ? "rotate-180" : ""
+                    }`}
+                  >
+                    <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+
+                {/* Expanded content */}
+                {expanded === item.id && (
+                  <div className="px-4 pb-4 pt-0 ml-7 border-t border-border/50 mt-0">
+                    <div className="pt-3 space-y-3">
+                      {/* From / Subject details */}
+                      <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs">
+                        <span className="text-text-dim">{t("from")}:</span>
+                        <span className="text-text-muted">
+                          {item.fromName ? `${item.fromName} <${item.fromEmail}>` : item.fromEmail}
+                        </span>
+                        <span className="text-text-dim">{t("subjectLabel")}:</span>
+                        <span className="text-text-muted">{item.subject || t("noSubject")}</span>
+                        <span className="text-text-dim">{t("received")}:</span>
+                        <span className="text-text-muted">
+                          {new Date(item.createdAt).toLocaleString()}
                         </span>
                       </div>
-                    )}
+
+                      {/* Attachments list */}
+                      {item.attachmentNames.length > 0 && (
+                        <div>
+                          <span className="text-xs text-text-dim block mb-1.5">{t("attachments", { count: item.attachmentCount })}:</span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {item.attachmentNames.map((name, i) => (
+                              <span
+                                key={i}
+                                className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-surface border border-border text-text-muted"
+                              >
+                                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" className="text-text-dim shrink-0">
+                                  <path d="M14.5 7.5L8.46 13.54a3.5 3.5 0 01-4.95-4.95L9.05 3.05a2.333 2.333 0 013.3 3.3L6.81 11.9a1.167 1.167 0 01-1.65-1.65l5.54-5.54" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                                </svg>
+                                {name}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Email body */}
+                      {item.textBody && (
+                        <div className="text-sm text-text-muted whitespace-pre-wrap leading-relaxed bg-bg/50 rounded-lg p-3 max-h-64 overflow-y-auto border border-border/50">
+                          {item.textBody}
+                        </div>
+                      )}
+
+                      {/* Actions */}
+                      <div className="flex items-center gap-2 pt-1">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelected(new Set([item.id]));
+                            setAssignModalOpen(true);
+                          }}
+                          className="text-xs font-medium text-accent hover:text-accent-light transition-colors cursor-pointer"
+                        >
+                          {t("assignSingle")}
+                        </button>
+                        <span className="text-border">|</span>
+                        <button
+                          onClick={(e) => handleDeleteSingle(item.id, e)}
+                          className="text-xs font-medium text-danger hover:text-danger/80 transition-colors cursor-pointer"
+                        >
+                          {t("deleteSingle")}
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </button>
+                )}
+              </div>
             ))}
           </div>
         </div>
@@ -260,6 +415,25 @@ export default function InboxClient({ inboxAddress, projects }: InboxClientProps
             <span>{t("assigning")}</span>
           </div>
         )}
+      </Modal>
+
+      {/* Delete confirmation modal */}
+      <Modal
+        open={deleteConfirmOpen}
+        onClose={() => setDeleteConfirmOpen(false)}
+        title={t("deleteTitle")}
+      >
+        <p className="text-sm text-text-muted mb-5">
+          {t("deleteDescription", { count: selected.size })}
+        </p>
+        <div className="flex justify-end gap-2">
+          <Button variant="secondary" onClick={() => setDeleteConfirmOpen(false)}>
+            {t("cancel")}
+          </Button>
+          <Button variant="danger" onClick={handleDelete} loading={deleting}>
+            {t("confirmDelete", { count: selected.size })}
+          </Button>
+        </div>
       </Modal>
     </div>
   );
