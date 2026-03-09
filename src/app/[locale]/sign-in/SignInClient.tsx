@@ -65,11 +65,16 @@ export default function SignInClient() {
     setLoading(true);
     setError(null);
     try {
-      await signInWithGoogle();
+      setError("Step 1: Opening Google sign-in...");
+      const user = await signInWithGoogle();
+      setError("Step 2: Got user " + user?.email + ". Creating session...");
+      // Session already synced in signInWithGoogle
+      setError("Step 3: Redirecting to dashboard...");
       router.push("/dashboard");
     } catch (err) {
-      const key = getErrorKey(err);
-      setError(t(`errors.${key === "default" ? "googleFailed" : key}`));
+      const code = (err as unknown as { code?: string }).code || "";
+      const msg = err instanceof Error ? err.message : String(err);
+      setError(`Error: ${code} — ${msg}`);
     } finally {
       setLoading(false);
     }
