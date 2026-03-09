@@ -72,7 +72,7 @@ export default async function ProjectDetailPage({
   const allProjects = user.projects.map((p) => ({
     id: p.id,
     name: p.name,
-    _count: { quotes: 0 },
+    _count: p._count,
   }));
 
   const selectedQuote = selectedQuoteId
