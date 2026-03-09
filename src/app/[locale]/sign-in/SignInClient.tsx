@@ -106,7 +106,9 @@ export default function SignInClient() {
     >
       <div className="w-full max-w-sm space-y-8">
         <div className="text-center">
-          <QuotalLogo className="h-8 mx-auto mb-6 text-text-primary" />
+          <a href="/" className="inline-block">
+            <QuotalLogo className="h-8 mx-auto mb-6 text-text-primary hover:opacity-80 transition-opacity" />
+          </a>
           <h1 className="text-2xl font-semibold text-white">{t("signIn")}</h1>
         </div>
 
