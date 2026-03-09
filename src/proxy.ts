@@ -48,14 +48,8 @@ export function proxy(request: NextRequest) {
   // Run i18n middleware first (handles locale detection + rewriting)
   const response = intlMiddleware(request);
 
-  // Check auth for protected paths
-  if (!isPublicPath(pathname)) {
-    const session = request.cookies.get("__session");
-    if (!session?.value) {
-      const signInUrl = new URL("/sign-in", request.url);
-      return NextResponse.redirect(signInUrl);
-    }
-  }
+  // Auth check temporarily disabled for debugging
+  // Protected pages handle their own auth via getUserWithProjects()
 
   return response;
 }
