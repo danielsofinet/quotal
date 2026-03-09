@@ -2,7 +2,12 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import QuotalLogo from "@/components/QuotalLogo";
-import { getAllPosts, getPostBySlug, renderMarkdown } from "@/lib/blog";
+import {
+  getAllPostsAsync,
+  getPostBySlugAsync,
+  renderMarkdown,
+} from "@/lib/blog";
+import { routing } from "@/i18n/routing";
 
 export const dynamic = "force-dynamic";
 
@@ -11,20 +16,40 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const { slug, locale } = await params;
+  const post = await getPostBySlugAsync(slug, locale);
   if (!post) return {};
+
+  const canonical =
+    locale === routing.defaultLocale
+      ? `https://quotal.app/blog/${post.slug}`
+      : `https://quotal.app/${locale}/blog/${post.slug}`;
+
+  const alternates: Record<string, string> = {
+    "x-default": `https://quotal.app/blog/${post.slug}`,
+  };
+  for (const l of routing.locales) {
+    alternates[l] =
+      l === routing.defaultLocale
+        ? `https://quotal.app/blog/${post.slug}`
+        : `https://quotal.app/${l}/blog/${post.slug}`;
+  }
 
   return {
     title: `${post.title} — Quotal`,
     description: post.description,
+    alternates: {
+      canonical,
+      languages: alternates,
+    },
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://quotal.app/blog/${post.slug}`,
+      url: canonical,
       siteName: "Quotal",
       type: "article",
       publishedTime: post.date,
+      locale: locale,
     },
     twitter: {
       card: "summary_large_image",
@@ -35,12 +60,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const { slug, locale } = await params;
+  const post = await getPostBySlugAsync(slug, locale);
   if (!post) notFound();
 
   const html = renderMarkdown(post.content);
-  const allPosts = getAllPosts().filter((p) => p.slug !== slug).slice(0, 3);
+  const allPosts = (await getAllPostsAsync(locale))
+    .filter((p) => p.slug !== slug)
+    .slice(0, 3);
 
   // Structured data for SEO
   const jsonLd = {
@@ -49,6 +76,7 @@ export default async function BlogPostPage({ params }: Props) {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
+    inLanguage: locale,
     author: {
       "@type": "Organization",
       name: "Quotal",
@@ -61,7 +89,10 @@ export default async function BlogPostPage({ params }: Props) {
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://quotal.app/blog/${post.slug}`,
+      "@id":
+        locale === routing.defaultLocale
+          ? `https://quotal.app/blog/${post.slug}`
+          : `https://quotal.app/${locale}/blog/${post.slug}`,
     },
   };
 
@@ -102,7 +133,7 @@ export default async function BlogPostPage({ params }: Props) {
             </span>
             <span className="text-xs text-text-dim">{post.readingTime}</span>
             <span className="text-xs text-text-dim">
-              {new Date(post.date).toLocaleDateString("en-US", {
+              {new Date(post.date).toLocaleDateString(locale, {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
