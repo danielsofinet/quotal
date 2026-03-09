@@ -53,7 +53,7 @@ export function proxy(request: NextRequest) {
     const session = request.cookies.get("__session");
     console.log(`[proxy] path=${pathname} hasSession=${!!session?.value} cookieLen=${session?.value?.length || 0}`);
     if (!session?.value) {
-      const signInUrl = new URL("/sign-in", request.url);
+      const signInUrl = new URL("/sign-in?from=proxy&path=" + encodeURIComponent(pathname), request.url);
       return NextResponse.redirect(signInUrl);
     }
   }
