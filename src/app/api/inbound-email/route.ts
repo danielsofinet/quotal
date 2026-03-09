@@ -81,8 +81,31 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  // If we have a project, process the email directly into it
+  // If we have a project, process the email directly into it AND save to inbox
   if (project) {
+    // Save to inbox as already-assigned (no base64 to save space)
+    const attachmentNames = payload.Attachments?.slice(0, MAX_ATTACHMENTS)
+      .filter((a) => ALLOWED_ATTACHMENT_TYPES.has(a.ContentType) && a.ContentLength <= MAX_ATTACHMENT_SIZE)
+      .map((a) => ({
+        name: a.Name,
+        contentType: a.ContentType,
+        contentLength: a.ContentLength,
+      })) || [];
+
+    await prisma.inboxItem.create({
+      data: {
+        userId: user.id,
+        fromEmail: payload.From,
+        fromName: payload.FromName || null,
+        subject: payload.Subject || null,
+        textBody: payload.TextBody || null,
+        attachments: attachmentNames.length > 0 ? attachmentNames : undefined,
+        assignedToProjectId: project.id,
+        assignedToProject: project.name,
+        assignedAt: new Date(),
+      },
+    });
+
     return await processIntoProject(project.id, payload);
   }
 

@@ -414,7 +414,8 @@
     "deleteTitle": "E-Mails löschen",
     "deleteDescription": "{count, plural, =1 {Möchten Sie diese E-Mail wirklich löschen? Dies kann nicht rückgängig gemacht werden.} other {Möchten Sie wirklich # E-Mails löschen? Dies kann nicht rückgängig gemacht werden.}}",
     "cancel": "Abbrechen",
-    "confirmDelete": "{count, plural, =1 {Löschen} other {# löschen}}"
+    "confirmDelete": "{count, plural, =1 {Löschen} other {# löschen}}",
+    "usedIn": "Verwendet in {project}"
   },
   "Vendors": {
     "title": "Lieferanten",

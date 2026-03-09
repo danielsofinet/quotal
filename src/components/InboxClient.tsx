@@ -17,6 +17,9 @@ interface InboxItem {
   createdAt: string;
   attachmentCount: number;
   attachmentNames: string[];
+  assignedToProjectId: string | null;
+  assignedToProject: string | null;
+  assignedAt: string | null;
 }
 
 interface Project {
@@ -274,9 +277,19 @@ export default function InboxClient({ inboxAddress, projects }: InboxClientProps
                         {timeAgo(item.createdAt)}
                       </span>
                     </div>
-                    <p className="text-sm text-text-muted truncate">
-                      {item.subject || t("noSubject")}
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm text-text-muted truncate">
+                        {item.subject || t("noSubject")}
+                      </p>
+                      {item.assignedToProject && (
+                        <span className="shrink-0 inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-success/15 text-success">
+                          <svg width="8" height="8" viewBox="0 0 16 16" fill="none">
+                            <path d="M4 8L7 11L12 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                          {item.assignedToProject}
+                        </span>
+                      )}
+                    </div>
                     {!expanded || expanded !== item.id ? (
                       <>
                         {item.textBody && (
@@ -358,16 +371,22 @@ export default function InboxClient({ inboxAddress, projects }: InboxClientProps
 
                       {/* Actions */}
                       <div className="flex items-center gap-2 pt-1">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelected(new Set([item.id]));
-                            setAssignModalOpen(true);
-                          }}
-                          className="text-xs font-medium text-accent hover:text-accent-light transition-colors cursor-pointer"
-                        >
-                          {t("assignSingle")}
-                        </button>
+                        {item.assignedToProject ? (
+                          <span className="text-xs text-success">
+                            {t("usedIn", { project: item.assignedToProject })}
+                          </span>
+                        ) : (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelected(new Set([item.id]));
+                              setAssignModalOpen(true);
+                            }}
+                            className="text-xs font-medium text-accent hover:text-accent-light transition-colors cursor-pointer"
+                          >
+                            {t("assignSingle")}
+                          </button>
+                        )}
                         <span className="text-border">|</span>
                         <button
                           onClick={(e) => handleDeleteSingle(item.id, e)}

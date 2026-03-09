@@ -37,15 +37,18 @@ model Project {
 }
 
 model InboxItem {
-  id          String   @id @default(cuid())
-  userId      String
-  fromEmail   String
-  fromName    String?
-  subject     String?
-  textBody    String?
-  attachments Json?
-  createdAt   DateTime @default(now())
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                  String   @id @default(cuid())
+  userId              String
+  fromEmail           String
+  fromName            String?
+  subject             String?
+  textBody            String?
+  attachments         Json?
+  assignedToProjectId String?
+  assignedToProject   String?
+  assignedAt          DateTime?
+  createdAt           DateTime @default(now())
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum ProcessingStatus {

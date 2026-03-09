@@ -414,7 +414,8 @@
     "deleteTitle": "Supprimer les e-mails",
     "deleteDescription": "{count, plural, =1 {Êtes-vous sûr de vouloir supprimer cet e-mail ? Cette action est irréversible.} other {Êtes-vous sûr de vouloir supprimer # e-mails ? Cette action est irréversible.}}",
     "cancel": "Annuler",
-    "confirmDelete": "{count, plural, =1 {Supprimer} other {Supprimer #}}"
+    "confirmDelete": "{count, plural, =1 {Supprimer} other {Supprimer #}}",
+    "usedIn": "Utilisé dans {project}"
   },
   "Vendors": {
     "title": "Fournisseurs",

@@ -414,7 +414,8 @@
     "deleteTitle": "Eliminar correos",
     "deleteDescription": "{count, plural, =1 {¿Estás seguro de que quieres eliminar este correo? Esta acción no se puede deshacer.} other {¿Estás seguro de que quieres eliminar # correos? Esta acción no se puede deshacer.}}",
     "cancel": "Cancelar",
-    "confirmDelete": "{count, plural, =1 {Eliminar} other {Eliminar #}}"
+    "confirmDelete": "{count, plural, =1 {Eliminar} other {Eliminar #}}",
+    "usedIn": "Usado en {project}"
   },
   "Vendors": {
     "title": "Proveedores",

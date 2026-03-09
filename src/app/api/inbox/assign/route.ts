@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth";
 import { processAttachmentQuote, processTextQuote } from "@/lib/quote-processing";
@@ -77,8 +78,16 @@ export async function POST(request: NextRequest) {
       results.push(`Processed email: ${item.subject || "No subject"}`);
     }
 
-    // Remove from inbox after processing
-    await prisma.inboxItem.delete({ where: { id: item.id } });
+    // Mark as assigned (keep in inbox for reference)
+    await prisma.inboxItem.update({
+      where: { id: item.id },
+      data: {
+        assignedToProjectId: projectId,
+        assignedToProject: project.name,
+        assignedAt: new Date(),
+        attachments: Prisma.DbNull, // Clear base64 data to save space
+      },
+    });
   }
 
   return NextResponse.json({ results, assigned: items.length });

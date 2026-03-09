@@ -414,7 +414,8 @@
     "deleteTitle": "Radera e-post",
     "deleteDescription": "{count, plural, =1 {Är du säker på att du vill radera detta e-postmeddelande? Det går inte att ångra.} other {Är du säker på att du vill radera # e-postmeddelanden? Det går inte att ångra.}}",
     "cancel": "Avbryt",
-    "confirmDelete": "{count, plural, =1 {Radera} other {Radera #}}"
+    "confirmDelete": "{count, plural, =1 {Radera} other {Radera #}}",
+    "usedIn": "Använd i {project}"
   },
   "Vendors": {
     "title": "Leverantörer",

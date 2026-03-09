@@ -63,7 +63,7 @@ export async function getUserWithProjects() {
           },
           orderBy: { createdAt: "desc" },
         },
-        _count: { select: { inboxItems: true } },
+        _count: { select: { inboxItems: { where: { assignedToProjectId: null } } } },
       },
     });
 

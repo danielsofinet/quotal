@@ -17,6 +17,9 @@ export async function GET(request: NextRequest) {
       textBody: true,
       createdAt: true,
       attachments: true,
+      assignedToProjectId: true,
+      assignedToProject: true,
+      assignedAt: true,
     },
   });
 
@@ -37,6 +40,9 @@ export async function GET(request: NextRequest) {
     attachmentNames: Array.isArray(item.attachments)
       ? (item.attachments as unknown as StoredAttachment[]).map((a) => a.name)
       : [],
+    assignedToProjectId: item.assignedToProjectId,
+    assignedToProject: item.assignedToProject,
+    assignedAt: item.assignedAt,
   }));
 
   return NextResponse.json(mapped);
