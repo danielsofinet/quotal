@@ -51,6 +51,7 @@ export function proxy(request: NextRequest) {
   // Check auth for protected paths
   if (!isPublicPath(pathname)) {
     const session = request.cookies.get("__session");
+    console.log(`[proxy] path=${pathname} hasSession=${!!session?.value} cookieLen=${session?.value?.length || 0}`);
     if (!session?.value) {
       const signInUrl = new URL("/sign-in", request.url);
       return NextResponse.redirect(signInUrl);
