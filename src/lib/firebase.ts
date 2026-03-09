@@ -2,6 +2,7 @@ import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
 import {
   getAuth,
   GoogleAuthProvider,
+  signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
   isSignInWithEmailLink,
@@ -40,7 +41,22 @@ const googleProvider = new GoogleAuthProvider();
 
 export async function signInWithGoogle() {
   const auth = getFirebaseAuth();
-  await signInWithRedirect(auth, googleProvider);
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const idToken = await result.user.getIdToken();
+    await syncSession(idToken);
+    return result.user;
+  } catch (err) {
+    // If popup fails (COOP, blocked), fall back to redirect
+    if (
+      err instanceof Error &&
+      (err.message.includes("popup") || err.message.includes("closed"))
+    ) {
+      await signInWithRedirect(auth, googleProvider);
+      return null;
+    }
+    throw err;
+  }
 }
 
 // Handle redirect result on page load
