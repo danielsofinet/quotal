@@ -65,20 +65,11 @@ export default function SignInClient() {
     setLoading(true);
     setError(null);
     try {
-      setError("Step 1: Opening Google sign-in...");
-      const user = await signInWithGoogle();
-      setError("Step 2: Got user " + user?.email);
-      // Check if cookie was set
-      const check = await fetch("/api/auth/session");
-      const data = await check.json();
-      setError("Step 3: Cookie check — " + JSON.stringify(data));
-      // Wait a moment then redirect
-      await new Promise(r => setTimeout(r, 2000));
+      await signInWithGoogle();
       window.location.href = "/dashboard";
     } catch (err) {
-      const code = (err as unknown as { code?: string }).code || "";
-      const msg = err instanceof Error ? err.message : String(err);
-      setError(`Error: ${code} — ${msg}`);
+      const key = getErrorKey(err);
+      setError(t(`errors.${key === "default" ? "googleFailed" : key}`));
     } finally {
       setLoading(false);
     }

@@ -43,14 +43,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
-  const session = request.cookies.get(SESSION_COOKIE_NAME);
-  return NextResponse.json({
-    hasSession: !!session?.value,
-    cookieLength: session?.value?.length || 0,
-  });
-}
-
 export async function DELETE() {
   const response = NextResponse.json({ status: "ok" });
   response.cookies.set(SESSION_COOKIE_NAME, "", {
