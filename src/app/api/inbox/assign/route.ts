@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
   const results: string[] = [];
 
   for (const item of items) {
-    const attachments = (Array.isArray(item.attachments) ? item.attachments : []) as StoredAttachment[];
+    const attachments = (Array.isArray(item.attachments) ? item.attachments : []) as unknown as StoredAttachment[];
 
     if (attachments.length > 0) {
       for (const att of attachments) {
