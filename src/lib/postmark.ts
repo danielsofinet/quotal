@@ -17,34 +17,130 @@ export function getPostmarkClient(): ServerClient {
 const FROM_ADDRESS = process.env.POSTMARK_FROM_ADDRESS || "login@quotal.app";
 const WELCOME_FROM = process.env.POSTMARK_WELCOME_FROM || FROM_ADDRESS;
 
+interface MagicLinkStrings {
+  subject: string;
+  heading: string;
+  intro: string;
+  cta: string;
+  expires: string;
+  ignore: string;
+  footer: string;
+  prefs: string;
+}
+
+const magicLinkI18n: Record<string, MagicLinkStrings> = {
+  en: {
+    subject: "Your Quotal sign-in link",
+    heading: "Sign in to Quotal",
+    intro: "Click the button below to sign in. This link is valid for 10 minutes.",
+    cta: "Sign in to Quotal",
+    expires: "This link expires in 10 minutes.",
+    ignore: "If you didn't request this, you can safely ignore this email.",
+    footer: "Questions? Just reply to this email.",
+    prefs: "Email preferences",
+  },
+  fr: {
+    subject: "Votre lien de connexion Quotal",
+    heading: "Connectez-vous à Quotal",
+    intro: "Cliquez sur le bouton ci-dessous pour vous connecter. Ce lien est valide pendant 10 minutes.",
+    cta: "Se connecter à Quotal",
+    expires: "Ce lien expire dans 10 minutes.",
+    ignore: "Si vous n'avez pas demandé ce lien, vous pouvez ignorer cet e-mail.",
+    footer: "Des questions ? Répondez simplement à cet e-mail.",
+    prefs: "Préférences e-mail",
+  },
+  de: {
+    subject: "Ihr Quotal-Anmeldelink",
+    heading: "Bei Quotal anmelden",
+    intro: "Klicken Sie auf die Schaltfläche unten, um sich anzumelden. Dieser Link ist 10 Minuten gültig.",
+    cta: "Bei Quotal anmelden",
+    expires: "Dieser Link läuft in 10 Minuten ab.",
+    ignore: "Falls Sie dies nicht angefordert haben, können Sie diese E-Mail ignorieren.",
+    footer: "Fragen? Antworten Sie einfach auf diese E-Mail.",
+    prefs: "E-Mail-Einstellungen",
+  },
+  es: {
+    subject: "Tu enlace de inicio de sesión en Quotal",
+    heading: "Inicia sesión en Quotal",
+    intro: "Haz clic en el botón de abajo para iniciar sesión. Este enlace es válido durante 10 minutos.",
+    cta: "Iniciar sesión en Quotal",
+    expires: "Este enlace caduca en 10 minutos.",
+    ignore: "Si no solicitaste esto, puedes ignorar este correo.",
+    footer: "¿Preguntas? Solo responde a este correo.",
+    prefs: "Preferencias de correo",
+  },
+  sv: {
+    subject: "Din Quotal-inloggningslänk",
+    heading: "Logga in på Quotal",
+    intro: "Klicka på knappen nedan för att logga in. Länken är giltig i 10 minuter.",
+    cta: "Logga in på Quotal",
+    expires: "Länken upphör att gälla om 10 minuter.",
+    ignore: "Om du inte begärde detta kan du ignorera detta e-postmeddelande.",
+    footer: "Frågor? Svara bara på detta e-postmeddelande.",
+    prefs: "E-postinställningar",
+  },
+};
+
+function buildMagicLinkHtml(t: MagicLinkStrings, signInLink: string, locale: string): string {
+  return `<!DOCTYPE html>
+<html lang="${locale}">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#F4F4F7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F4F4F7;">
+<tr><td align="center" style="padding:40px 16px;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#FFFFFF;border-radius:12px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.06);">
+
+<tr><td style="padding:40px 40px 32px;border-bottom:1px solid #EDEDF0;">
+<img src="https://quotal.app/quotal-logo.svg" alt="Quotal" width="120" style="width:120px;display:block;" />
+</td></tr>
+
+<tr><td style="padding:36px 40px 20px;">
+<h1 style="margin:0 0 16px;color:#0A2540;font-size:24px;font-weight:700;letter-spacing:-0.3px;">${t.heading}</h1>
+<p style="margin:0;color:#4A5568;font-size:15px;line-height:1.7;">${t.intro}</p>
+</td></tr>
+
+<tr><td style="padding:8px 40px 32px;text-align:center;">
+<a href="${signInLink}" style="display:inline-block;background-color:#635BFF;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:600;padding:13px 36px;border-radius:8px;">${t.cta}</a>
+</td></tr>
+
+<tr><td style="padding:0 40px 28px;">
+<p style="margin:0 0 8px;color:#64748B;font-size:13px;line-height:1.6;">${t.expires}</p>
+<p style="margin:0;color:#64748B;font-size:13px;line-height:1.6;">${t.ignore}</p>
+</td></tr>
+
+<tr><td style="padding:0 40px 24px;">
+<p style="margin:0;color:#B0B0C0;font-size:12px;line-height:1.5;word-break:break-all;">${signInLink}</p>
+</td></tr>
+
+<tr><td style="background-color:#FAFAFA;padding:24px 40px;border-top:1px solid #EDEDF0;">
+<p style="margin:0 0 6px;color:#8888A0;font-size:13px;line-height:1.5;text-align:center;">${t.footer}</p>
+<p style="margin:0 0 12px;color:#8888A0;font-size:13px;line-height:1.5;text-align:center;"><a href="https://quotal.app" style="color:#635BFF;text-decoration:none;">quotal.app</a></p>
+<p style="margin:0;color:#B0B0C0;font-size:11px;line-height:1.5;text-align:center;">Quotal &middot; Stockholm, Sweden<br><a href="https://quotal.app/settings" style="color:#B0B0C0;text-decoration:underline;">${t.prefs}</a></p>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>`;
+}
+
 export async function sendMagicLinkEmail(
   to: string,
   signInLink: string,
   locale: string = "en"
 ) {
   const pm = getPostmarkClient();
+  const t = magicLinkI18n[locale] || magicLinkI18n.en;
 
-  const subjects: Record<string, string> = {
-    en: "Your Quotal sign-in link",
-    fr: "Votre lien de connexion Quotal",
-    sv: "Din Quotal-inloggningslänk",
-    de: "Ihr Quotal-Anmeldelink",
-    es: "Tu enlace de inicio de sesión en Quotal",
-  };
-
-  const bodies: Record<string, string> = {
-    en: `Click the link below to sign in to Quotal:\n\n${signInLink}\n\nThis link expires in 10 minutes. If you didn't request this, you can safely ignore this email.`,
-    fr: `Cliquez sur le lien ci-dessous pour vous connecter à Quotal :\n\n${signInLink}\n\nCe lien expire dans 10 minutes. Si vous n'avez pas demandé ce lien, vous pouvez ignorer cet e-mail.`,
-    sv: `Klicka på länken nedan för att logga in på Quotal:\n\n${signInLink}\n\nDen här länken upphör att gälla om 10 minuter. Om du inte begärde detta kan du ignorera detta e-postmeddelande.`,
-    de: `Klicken Sie auf den Link unten, um sich bei Quotal anzumelden:\n\n${signInLink}\n\nDieser Link läuft in 10 Minuten ab. Falls Sie dies nicht angefordert haben, können Sie diese E-Mail ignorieren.`,
-    es: `Haz clic en el enlace de abajo para iniciar sesión en Quotal:\n\n${signInLink}\n\nEste enlace caduca en 10 minutos. Si no solicitaste esto, puedes ignorar este correo.`,
-  };
+  const textBody = `${t.heading}\n\n${t.intro}\n\n${signInLink}\n\n${t.expires} ${t.ignore}`;
 
   await pm.sendEmail({
     From: FROM_ADDRESS,
     To: to,
-    Subject: subjects[locale] || subjects.en,
-    TextBody: bodies[locale] || bodies.en,
+    Subject: t.subject,
+    TextBody: textBody,
+    HtmlBody: buildMagicLinkHtml(t, signInLink, locale),
     MessageStream: "outbound",
   });
 }
