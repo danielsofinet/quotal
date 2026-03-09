@@ -67,10 +67,14 @@ export default function SignInClient() {
     try {
       setError("Step 1: Opening Google sign-in...");
       const user = await signInWithGoogle();
-      setError("Step 2: Got user " + user?.email + ". Creating session...");
-      // Session already synced in signInWithGoogle
-      setError("Step 3: Redirecting to dashboard...");
-      router.push("/dashboard");
+      setError("Step 2: Got user " + user?.email);
+      // Check if cookie was set
+      const check = await fetch("/api/auth/session");
+      const data = await check.json();
+      setError("Step 3: Cookie check — " + JSON.stringify(data));
+      // Wait a moment then redirect
+      await new Promise(r => setTimeout(r, 2000));
+      window.location.href = "/dashboard";
     } catch (err) {
       const code = (err as unknown as { code?: string }).code || "";
       const msg = err instanceof Error ? err.message : String(err);

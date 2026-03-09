@@ -29,20 +29,26 @@ export async function POST(request: NextRequest) {
       expiresIn: SESSION_MAX_AGE * 1000,
     });
 
+    const isSecure = request.url.startsWith("https");
     const response = NextResponse.json({ status: "ok" });
-    response.cookies.set(SESSION_COOKIE_NAME, sessionCookie, {
-      maxAge: SESSION_MAX_AGE,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-    });
+    response.headers.set(
+      "Set-Cookie",
+      `${SESSION_COOKIE_NAME}=${sessionCookie}; Max-Age=${SESSION_MAX_AGE}; Path=/; HttpOnly; SameSite=Lax${isSecure ? "; Secure" : ""}`
+    );
 
     return response;
   } catch (error) {
     console.error("Session creation failed:", error instanceof Error ? error.message : String(error));
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+}
+
+export async function GET(request: NextRequest) {
+  const session = request.cookies.get(SESSION_COOKIE_NAME);
+  return NextResponse.json({
+    hasSession: !!session?.value,
+    cookieLength: session?.value?.length || 0,
+  });
 }
 
 export async function DELETE() {
