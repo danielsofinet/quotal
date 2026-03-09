@@ -47,12 +47,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ status: "ok" });
   } catch (error) {
-    console.error(
-      "Magic link failed:",
-      error instanceof Error ? error.message : String(error)
-    );
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error("Magic link failed:", msg);
     return NextResponse.json(
-      { error: "Failed to send sign-in link" },
+      { error: "Failed to send sign-in link", debug: msg },
       { status: 500 }
     );
   }
