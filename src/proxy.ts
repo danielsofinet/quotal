@@ -45,11 +45,38 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Run i18n middleware first (handles locale detection + rewriting)
+  // Run i18n middleware (handles locale detection + rewriting)
   const response = intlMiddleware(request);
 
-  // Auth check temporarily disabled for debugging
-  // Protected pages handle their own auth via getUserWithProjects()
+  // Preserve original request cookies through the intl middleware response.
+  // intlMiddleware uses x-middleware-override-headers to set NEXT_LOCALE,
+  // which can overwrite the original cookie header and strip __session.
+  const originalCookies = request.headers.get("cookie") || "";
+  const middlewareCookie =
+    response.headers.get("x-middleware-request-cookie") || "";
+
+  // Merge: start with original cookies, append any middleware-added ones
+  const mergedCookies = originalCookies
+    ? middlewareCookie
+      ? `${originalCookies}; ${middlewareCookie}`
+      : originalCookies
+    : middlewareCookie;
+
+  // Ensure "cookie" is in the override list
+  const overrides =
+    response.headers.get("x-middleware-override-headers") || "";
+  const overrideSet = new Set(
+    overrides
+      .split(",")
+      .map((h) => h.trim())
+      .filter(Boolean),
+  );
+  overrideSet.add("cookie");
+  response.headers.set(
+    "x-middleware-override-headers",
+    Array.from(overrideSet).join(","),
+  );
+  response.headers.set("x-middleware-request-cookie", mergedCookies);
 
   return response;
 }
