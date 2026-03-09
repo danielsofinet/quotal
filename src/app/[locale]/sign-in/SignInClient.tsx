@@ -71,7 +71,7 @@ export default function SignInClient() {
     } catch (err) {
       console.error("Google sign-in error:", err);
       const key = getErrorKey(err);
-      const detail = err instanceof Error ? ` (${(err as Record<string, unknown>).code || err.message})` : "";
+      const detail = err instanceof Error ? ` (${(err as unknown as { code?: string }).code || err.message})` : "";
       setError(t(`errors.${key === "default" ? "googleFailed" : key}`) + detail);
     } finally {
       setLoading(false);
