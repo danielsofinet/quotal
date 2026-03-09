@@ -6,6 +6,16 @@ import { v4 as uuidv4 } from "uuid";
 import { getLocale } from "next-intl/server";
 import { sendWelcomeEmail } from "./postmark";
 
+const NTFY_TOPIC = process.env.NTFY_TOPIC || "quotal-signups-d7x";
+
+function notifyNewUser(email: string, name?: string | null) {
+  fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
+    method: "POST",
+    headers: { Title: "New Quotal signup", Tags: "tada" },
+    body: `${name || "Unknown"} (${email})`,
+  }).catch(() => {});
+}
+
 /**
  * Verify Firebase token from Authorization header and find/create user in DB.
  * Used by API routes.
@@ -85,6 +95,7 @@ export async function getUserWithProjects() {
       sendWelcomeEmail(created.email, created.name, locale).catch((err) =>
         console.error("[auth] Welcome email failed:", err instanceof Error ? err.message : String(err))
       );
+      notifyNewUser(created.email, created.name);
     }
 
     return user;
@@ -126,6 +137,7 @@ async function findOrCreateUser(
     sendWelcomeEmail(user.email, user.name, "en").catch((err) =>
       console.error("[auth] Welcome email failed:", err instanceof Error ? err.message : String(err))
     );
+    notifyNewUser(user.email, user.name);
   }
 
   return user;
