@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminAuth } from "@/lib/firebase-admin";
-import { cookies } from "next/headers";
 import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 const SESSION_COOKIE_NAME = "__session";
@@ -30,8 +29,8 @@ export async function POST(request: NextRequest) {
       expiresIn: SESSION_MAX_AGE * 1000,
     });
 
-    const cookieStore = await cookies();
-    cookieStore.set(SESSION_COOKIE_NAME, sessionCookie, {
+    const response = NextResponse.json({ status: "ok" });
+    response.cookies.set(SESSION_COOKIE_NAME, sessionCookie, {
       maxAge: SESSION_MAX_AGE,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -39,7 +38,7 @@ export async function POST(request: NextRequest) {
       path: "/",
     });
 
-    return NextResponse.json({ status: "ok" });
+    return response;
   } catch (error) {
     console.error("Session creation failed:", error instanceof Error ? error.message : String(error));
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -47,7 +46,13 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE() {
-  const cookieStore = await cookies();
-  cookieStore.delete(SESSION_COOKIE_NAME);
-  return NextResponse.json({ status: "ok" });
+  const response = NextResponse.json({ status: "ok" });
+  response.cookies.set(SESSION_COOKIE_NAME, "", {
+    maxAge: 0,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+  });
+  return response;
 }
