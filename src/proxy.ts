@@ -4,7 +4,7 @@ import { routing } from "@/i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
-const PUBLIC_PATHS = ["/sign-in", "/privacy", "/terms", "/api/", "/_next", "/__/auth", "/favicon"];
+const PUBLIC_PATHS = ["/sign-in", "/privacy", "/terms", "/blog", "/api/", "/_next", "/__/auth", "/favicon"];
 
 function isPublicPath(pathname: string): boolean {
   // Root path is public (landing page)

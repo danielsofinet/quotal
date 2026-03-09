@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
+import { getAllPosts } from "@/lib/blog";
 
 const BASE_URL = "https://quotal.app";
 
@@ -53,6 +54,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
       alternates: alternates("/privacy"),
     });
+  }
+
+  // Blog index — all locales
+  for (const locale of routing.locales) {
+    entries.push({
+      url: localeUrl("/blog", locale),
+      lastModified: new Date("2026-03-09"),
+      changeFrequency: "weekly",
+      priority: 0.8,
+      alternates: alternates("/blog"),
+    });
+  }
+
+  // Blog posts — all locales
+  const posts = getAllPosts();
+  for (const post of posts) {
+    for (const locale of routing.locales) {
+      entries.push({
+        url: localeUrl(`/blog/${post.slug}`, locale),
+        lastModified: new Date(post.date),
+        changeFrequency: "monthly",
+        priority: 0.7,
+        alternates: alternates(`/blog/${post.slug}`),
+      });
+    }
   }
 
   return entries;

@@ -18,6 +18,9 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center gap-6">
+          <a href="/blog" className="text-xs text-text-dim hover:text-text-muted transition-colors">
+            Blog
+          </a>
           <a href="/terms" className="text-xs text-text-dim hover:text-text-muted transition-colors">
             {t("terms")}
           </a>
