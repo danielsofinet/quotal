@@ -29,7 +29,7 @@ function stripLocalePrefix(pathname: string): string {
   return pathname;
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip middleware entirely for static files, Next internals, API routes,

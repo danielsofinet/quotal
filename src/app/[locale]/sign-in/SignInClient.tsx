@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   signInWithGoogle,
   handleRedirectResult,
@@ -13,9 +13,32 @@ import { Button } from "@/components/ui/Button";
 import QuotalLogo from "@/components/QuotalLogo";
 import InfiniteGrid from "@/components/ui/InfiniteGrid";
 
+function getErrorKey(error: unknown): string {
+  const code =
+    error instanceof Error && "code" in error
+      ? (error as { code: string }).code
+      : "";
+  switch (code) {
+    case "auth/operation-not-allowed":
+      return "operationNotAllowed";
+    case "auth/invalid-email":
+      return "invalidEmail";
+    case "auth/too-many-requests":
+      return "tooManyRequests";
+    case "auth/network-request-failed":
+      return "networkError";
+    case "auth/popup-closed-by-user":
+    case "auth/cancelled-popup-request":
+      return "popupClosed";
+    default:
+      return "default";
+  }
+}
+
 export default function SignInClient() {
   const router = useRouter();
   const t = useTranslations("Auth");
+  const locale = useLocale();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [magicLinkSent, setMagicLinkSent] = useState(false);
@@ -34,7 +57,7 @@ export default function SignInClient() {
         .then((user) => {
           if (user) router.push("/dashboard");
         })
-        .catch((err) => setError(err.message));
+        .catch((err) => setError(t(`errors.${getErrorKey(err)}`)));
     }
   }, [router]);
 
@@ -45,7 +68,8 @@ export default function SignInClient() {
       await signInWithGoogle();
       router.push("/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Google sign-in failed");
+      const key = getErrorKey(err);
+      setError(t(`errors.${key === "default" ? "googleFailed" : key}`));
     } finally {
       setLoading(false);
     }
@@ -57,10 +81,11 @@ export default function SignInClient() {
     setLoading(true);
     setError(null);
     try {
-      await sendMagicLink(email.trim());
+      await sendMagicLink(email.trim(), locale);
       setMagicLinkSent(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to send link");
+      const key = getErrorKey(err);
+      setError(t(`errors.${key === "default" ? "linkFailed" : key}`));
     } finally {
       setLoading(false);
     }

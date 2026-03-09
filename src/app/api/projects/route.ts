@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAuthenticatedUser, getPlanLimits } from "@/lib/auth";
 import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
+import { generateUniqueProjectSlug } from "@/lib/slug";
 
 export async function GET(request: NextRequest) {
   const user = await getAuthenticatedUser(request);
@@ -56,10 +57,13 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const emailSlug = await generateUniqueProjectSlug(user.id, trimmedName);
+
   const project = await prisma.project.create({
     data: {
       name: trimmedName,
       userId: user.id,
+      emailSlug,
     },
   });
 

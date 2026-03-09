@@ -7,6 +7,7 @@ import { Button } from "./ui/Button";
 import { Spinner } from "./ui/Spinner";
 import { authFetch } from "@/lib/api";
 import UpgradeModal from "./UpgradeModal";
+import InboxPicker from "./InboxPicker";
 import { PLAN_LIMITS } from "@/lib/plans";
 
 interface UploadingFile {
@@ -19,6 +20,7 @@ interface DropZoneProps {
   projectId: string;
   quoteCount?: number;
   userPlan?: string;
+  projectEmail?: string;
 }
 
 const ACCEPTED_TYPES = [
@@ -35,7 +37,7 @@ const ACCEPTED_TYPES = [
 
 const ACCEPTED_EXTENSIONS = ".pdf,.xlsx,.xls,.csv,.txt,.png,.jpg,.jpeg,.gif,.webp";
 
-export default function DropZone({ projectId, quoteCount = 0, userPlan = "free" }: DropZoneProps) {
+export default function DropZone({ projectId, quoteCount = 0, userPlan = "free", projectEmail }: DropZoneProps) {
   const t = useTranslations("Upload");
   const [isDragOver, setIsDragOver] = useState(false);
   const [files, setFiles] = useState<UploadingFile[]>([]);
@@ -43,6 +45,8 @@ export default function DropZone({ projectId, quoteCount = 0, userPlan = "free" 
   const [pasteText, setPasteText] = useState("");
   const [pasteLoading, setPasteLoading] = useState(false);
   const [showUpgrade, setShowUpgrade] = useState(false);
+  const [showInbox, setShowInbox] = useState(false);
+  const [emailCopied, setEmailCopied] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [isRendering, startTransition] = useTransition();
@@ -255,7 +259,34 @@ export default function DropZone({ projectId, quoteCount = 0, userPlan = "free" 
           </svg>
           {t("pasteText")}
         </Button>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => setShowInbox(true)}
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="mr-1.5">
+            <rect x="1.5" y="3" width="13" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
+            <path d="M14.5 4.5L8 9L1.5 4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+          </svg>
+          {t("fromInbox")}
+        </Button>
       </div>
+
+      {projectEmail && (
+        <div className="flex items-center gap-2 text-xs text-text-dim">
+          <span>{t("forwardTo")}</span>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(projectEmail);
+              setEmailCopied(true);
+              setTimeout(() => setEmailCopied(false), 1500);
+            }}
+            className="font-mono text-accent hover:text-accent-light transition-colors cursor-pointer"
+          >
+            {emailCopied ? t("copied") : projectEmail}
+          </button>
+        </div>
+      )}
 
       {showPaste && (
         <div className="border border-border rounded-lg p-4 bg-surface animate-slide-up">
@@ -335,6 +366,12 @@ export default function DropZone({ projectId, quoteCount = 0, userPlan = "free" 
           <span className="text-accent-light font-medium">{t("comparing")}</span>
         </div>
       )}
+
+      <InboxPicker
+        open={showInbox}
+        onClose={() => setShowInbox(false)}
+        projectId={projectId}
+      />
 
       <UpgradeModal
         open={showUpgrade}

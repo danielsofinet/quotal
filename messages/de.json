@@ -160,7 +160,17 @@
     "emailPlaceholder": "you@company.com",
     "sendLink": "Send sign-in link",
     "checkEmail": "Check your email",
-    "linkSent": "We sent a sign-in link to {email}"
+    "linkSent": "Wir haben einen Anmeldelink an {email} gesendet",
+    "errors": {
+      "operationNotAllowed": "E-Mail-Anmeldung ist derzeit nicht verfügbar. Bitte versuchen Sie es mit Google.",
+      "invalidEmail": "Diese E-Mail-Adresse sieht nicht richtig aus. Bitte überprüfen.",
+      "tooManyRequests": "Zu viele Versuche. Bitte warten Sie einen Moment.",
+      "networkError": "Verbindung fehlgeschlagen. Überprüfen Sie Ihre Internetverbindung.",
+      "popupClosed": "Anmeldung abgebrochen. Versuchen Sie es erneut.",
+      "googleFailed": "Anmeldung mit Google fehlgeschlagen. Bitte erneut versuchen.",
+      "linkFailed": "Anmeldelink konnte nicht gesendet werden. Bitte erneut versuchen.",
+      "default": "Etwas ist schiefgelaufen. Bitte erneut versuchen."
+    }
   },
   "Dashboard": {
     "title": "Projects",
@@ -182,9 +192,11 @@
     "projects": "Projects",
     "emailInbox": "Email Inbox",
     "forwardTo": "Forward supplier quotes to:",
+    "inbox": "Posteingang",
     "vendors": "Lieferanten",
     "settings": "Settings",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "copied": "Kopiert!"
   },
   "Comparison": {
     "cheapestOverall": "Cheapest Overall",
@@ -223,7 +235,27 @@
     "extracting": "Extracting data...",
     "done": "Done",
     "comparing": "Comparing quotes...",
-    "priority": "Priorität"
+    "priority": "Priorität",
+    "fromInbox": "Aus Posteingang",
+    "forwardTo": "Angebote direkt weiterleiten:",
+    "copied": "Kopiert!"
+  },
+  "Inbox": {
+    "modalTitle": "Aus Posteingang hinzufügen",
+    "empty": "Keine E-Mails in Ihrem Posteingang",
+    "emptyHint": "Leiten Sie Lieferanten-E-Mails an Ihre Posteingangsadresse weiter.",
+    "selectAll": "Alle auswählen",
+    "deselectAll": "Alle abwählen",
+    "itemCount": "{count, plural, =1 {1 E-Mail} other {# E-Mails}}",
+    "noSubject": "Kein Betreff",
+    "attachments": "{count, plural, =1 {1 Anhang} other {# Anhänge}}",
+    "addToProject": "{count, plural, =1 {1 Element hinzufügen} other {# Elemente hinzufügen}}",
+    "adding": "Wird hinzugefügt...",
+    "cancel": "Abbrechen",
+    "justNow": "gerade eben",
+    "minutesAgo": "vor {count} Min.",
+    "hoursAgo": "vor {count} Std.",
+    "daysAgo": "vor {count} T."
   },
   "QuoteDetail": {
     "backToComparison": "Back to comparison",
@@ -323,6 +355,15 @@
       "language": "Language",
       "theme": "Theme"
     },
+    "inbox": {
+      "heading": "E-Mail-Posteingang",
+      "description": "Leiten Sie Lieferantenangebote an diese Adresse weiter. Sie werden automatisch extrahiert und Ihrem letzten Projekt hinzugefügt.",
+      "copy": "Adresse kopieren",
+      "save": "Speichern",
+      "saved": "Gespeichert",
+      "error": "Ihre Posteingangsadresse konnte nicht aktualisiert werden. Versuchen Sie es erneut.",
+      "upgradeHint": "Auf Pro upgraden, um Ihre Weiterleitungsadresse anzupassen."
+    },
     "billing": {
       "heading": "Billing",
       "currentPlan": "Current plan",
@@ -342,6 +383,28 @@
       "cancel": "Cancel",
       "deleting": "Deleting..."
     }
+  },
+  "InboxPage": {
+    "title": "Posteingang",
+    "subtitle": "Weitergeleitete E-Mails, die noch keinem Projekt zugeordnet sind",
+    "forwardHint": "Lieferantenangebote weiterleiten an:",
+    "copied": "Kopiert!",
+    "empty": "Ihr Posteingang ist leer",
+    "emptyDescription": "Leiten Sie Angebots-E-Mails an Ihre Posteingangsadresse weiter — sie erscheinen hier zur Zuordnung zu Projekten.",
+    "selectAll": "Alle auswählen",
+    "deselectAll": "Alle abwählen",
+    "itemCount": "{count, plural, =1 {1 E-Mail} other {# E-Mails}}",
+    "assignToProject": "{count, plural, =1 {1 Element zuordnen} other {# Elemente zuordnen}}",
+    "noSubject": "Kein Betreff",
+    "attachments": "{count, plural, =1 {1 Anhang} other {# Anhänge}}",
+    "assignTitle": "Projekt zuordnen",
+    "assignDescription": "{count, plural, =1 {1 E-Mail} other {# E-Mails}} einem Projekt zur Verarbeitung zuordnen.",
+    "noProjects": "Noch keine Projekte. Erstellen Sie zuerst ein Projekt.",
+    "assigning": "Wird zugeordnet...",
+    "justNow": "gerade eben",
+    "minutesAgo": "vor {count}Min.",
+    "hoursAgo": "vor {count}Std.",
+    "daysAgo": "vor {count}T."
   },
   "Vendors": {
     "title": "Lieferanten",

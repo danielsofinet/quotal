@@ -131,7 +131,16 @@ export default async function ProjectDetailPage({
             <h2 className="text-sm font-semibold uppercase tracking-wider text-text-dim mb-3">
               {t("uploadSection")}
             </h2>
-            <DropZone projectId={id} quoteCount={project.quotes.length} userPlan={user.plan} />
+            <DropZone
+              projectId={id}
+              quoteCount={project.quotes.length}
+              userPlan={user.plan}
+              projectEmail={
+                project.emailSlug
+                  ? `${user.inboxAddress.split("@")[0]}+${project.emailSlug}@in.quotal.app`
+                  : undefined
+              }
+            />
           </div>
 
           <div>

@@ -160,7 +160,17 @@
     "emailPlaceholder": "du@företag.se",
     "sendLink": "Skicka inloggningslänk",
     "checkEmail": "Kolla din e-post",
-    "linkSent": "Vi skickade en inloggningslänk till {email}"
+    "linkSent": "Vi skickade en inloggningslänk till {email}",
+    "errors": {
+      "operationNotAllowed": "E-postinloggning är inte tillgänglig just nu. Prova Google istället.",
+      "invalidEmail": "Den e-postadressen ser inte rätt ut. Kontrollera och försök igen.",
+      "tooManyRequests": "För många försök. Vänta en stund och försök igen.",
+      "networkError": "Kunde inte ansluta. Kontrollera din internetanslutning.",
+      "popupClosed": "Inloggningen avbröts. Försök igen när du är redo.",
+      "googleFailed": "Kunde inte logga in med Google. Försök igen.",
+      "linkFailed": "Kunde inte skicka inloggningslänken. Försök igen.",
+      "default": "Något gick fel. Försök igen."
+    }
   },
   "Dashboard": {
     "title": "Projekt",
@@ -182,9 +192,11 @@
     "projects": "Projekt",
     "emailInbox": "E-postinkorg",
     "forwardTo": "Vidarebefordra leverantörsofferter till:",
+    "inbox": "Inkorg",
     "vendors": "Leverantörer",
     "settings": "Settings",
-    "signOut": "Logga ut"
+    "signOut": "Logga ut",
+    "copied": "Kopierat!"
   },
   "Comparison": {
     "cheapestOverall": "Billigast totalt",
@@ -223,7 +235,27 @@
     "extracting": "Extraherar data...",
     "done": "Klar",
     "comparing": "Jämför offerter...",
-    "priority": "Prioritet"
+    "priority": "Prioritet",
+    "fromInbox": "Från inkorg",
+    "forwardTo": "Vidarebefordra offerter direkt:",
+    "copied": "Kopierat!"
+  },
+  "Inbox": {
+    "modalTitle": "Lägg till från inkorg",
+    "empty": "Inga e-postmeddelanden i din inkorg",
+    "emptyHint": "Vidarebefordra leverantörsmejl till din inkorgadress så visas de här.",
+    "selectAll": "Välj alla",
+    "deselectAll": "Avmarkera alla",
+    "itemCount": "{count, plural, =1 {1 e-post} other {# e-postmeddelanden}}",
+    "noSubject": "Inget ämne",
+    "attachments": "{count, plural, =1 {1 bilaga} other {# bilagor}}",
+    "addToProject": "{count, plural, =1 {Lägg till 1 objekt} other {Lägg till # objekt}}",
+    "adding": "Lägger till...",
+    "cancel": "Avbryt",
+    "justNow": "just nu",
+    "minutesAgo": "{count} min sedan",
+    "hoursAgo": "{count} tim sedan",
+    "daysAgo": "{count} d sedan"
   },
   "QuoteDetail": {
     "backToComparison": "Tillbaka till jämförelse",
@@ -323,6 +355,15 @@
       "language": "Language",
       "theme": "Theme"
     },
+    "inbox": {
+      "heading": "E-postinkorg",
+      "description": "Vidarebefordra leverantörsofferter till denna adress. De extraheras och läggs till i ditt senaste projekt automatiskt.",
+      "copy": "Kopiera adress",
+      "save": "Spara",
+      "saved": "Sparat",
+      "error": "Kunde inte uppdatera din inkorgadress. Försök igen.",
+      "upgradeHint": "Uppgradera till Pro för att anpassa din vidarebefordringsadress."
+    },
     "billing": {
       "heading": "Billing",
       "currentPlan": "Current plan",
@@ -342,6 +383,28 @@
       "cancel": "Cancel",
       "deleting": "Deleting..."
     }
+  },
+  "InboxPage": {
+    "title": "Inkorg",
+    "subtitle": "Vidarebefordrade e-postmeddelanden som inte tilldelats något projekt ännu",
+    "forwardHint": "Vidarebefordra leverantörsofferter till:",
+    "copied": "Kopierat!",
+    "empty": "Din inkorg är tom",
+    "emptyDescription": "Vidarebefordra e-post med leverantörsofferter till din inkorgadress så visas de här för tilldelning till projekt.",
+    "selectAll": "Välj alla",
+    "deselectAll": "Avmarkera alla",
+    "itemCount": "{count, plural, =1 {1 e-post} other {# e-postmeddelanden}}",
+    "assignToProject": "{count, plural, =1 {Tilldela 1 objekt} other {Tilldela # objekt}}",
+    "noSubject": "Inget ämne",
+    "attachments": "{count, plural, =1 {1 bilaga} other {# bilagor}}",
+    "assignTitle": "Tilldela till projekt",
+    "assignDescription": "{count, plural, =1 {Tilldela 1 e-post} other {Tilldela # e-postmeddelanden}} till ett projekt för bearbetning.",
+    "noProjects": "Inga projekt ännu. Skapa ett projekt först.",
+    "assigning": "Tilldelar...",
+    "justNow": "just nu",
+    "minutesAgo": "{count}min sedan",
+    "hoursAgo": "{count}h sedan",
+    "daysAgo": "{count}d sedan"
   },
   "Vendors": {
     "title": "Leverantörer",

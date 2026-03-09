@@ -25,13 +25,17 @@ interface SettingsClientProps {
   userEmail: string;
   userPlan: string;
   planExpiresAt: string | null;
+  inboxAddress: string;
 }
+
+const INBOX_DOMAIN = "@in.quotal.app";
 
 export default function SettingsClient({
   userName,
   userEmail,
   userPlan,
   planExpiresAt,
+  inboxAddress,
 }: SettingsClientProps) {
   const t = useTranslations("Settings");
   const tp = useTranslations("Landing.pricing");
@@ -45,6 +49,48 @@ export default function SettingsClient({
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const nameChanged = name.trim() !== userName;
+
+  // Inbox state
+  const currentPrefix = inboxAddress.split("@")[0];
+  const [inboxPrefix, setInboxPrefix] = useState(currentPrefix);
+  const [inboxSaving, setInboxSaving] = useState(false);
+  const [inboxSaved, setInboxSaved] = useState(false);
+  const [inboxError, setInboxError] = useState("");
+  const [inboxCopied, setInboxCopied] = useState(false);
+  const inboxChanged = inboxPrefix.trim() !== currentPrefix;
+  const isPro = userPlan === "pro";
+
+  async function handleSaveInbox() {
+    if (!inboxChanged || !inboxPrefix.trim()) return;
+    setInboxSaving(true);
+    setInboxSaved(false);
+    setInboxError("");
+    try {
+      const res = await authFetch("/api/users/profile", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ inboxPrefix: inboxPrefix.trim().toLowerCase() }),
+      });
+      if (res.ok) {
+        setInboxSaved(true);
+        setTimeout(() => setInboxSaved(false), 2000);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setInboxError(data.error || t("inbox.error"));
+      }
+    } catch {
+      setInboxError(t("inbox.error"));
+    } finally {
+      setInboxSaving(false);
+    }
+  }
+
+  function handleCopyInbox() {
+    const address = `${inboxPrefix.trim()}${INBOX_DOMAIN}`;
+    navigator.clipboard.writeText(address);
+    setInboxCopied(true);
+    setTimeout(() => setInboxCopied(false), 2000);
+  }
 
   // Language dropdown state
   const [langOpen, setLangOpen] = useState(false);
@@ -252,6 +298,79 @@ export default function SettingsClient({
             </div>
           </section>
         </div>
+
+        {/* Email Inbox */}
+        <section className="rounded-xl border border-border bg-surface p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-base font-semibold">{t("inbox.heading")}</h2>
+            {!isPro && (
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider bg-accent-dim text-accent-light">
+                Pro
+              </span>
+            )}
+          </div>
+          <p className="text-sm text-text-muted mb-4">{t("inbox.description")}</p>
+
+          <div className="flex items-center gap-2">
+            <div className="flex-1 flex items-stretch rounded-lg border border-border overflow-hidden bg-bg">
+              <input
+                type="text"
+                value={inboxPrefix}
+                onChange={(e) => {
+                  setInboxError("");
+                  setInboxPrefix(e.target.value.replace(/[^a-zA-Z0-9._+-]/g, ""));
+                }}
+                disabled={!isPro}
+                maxLength={40}
+                className="flex-1 min-w-0 px-3 py-2.5 text-sm text-text-primary bg-transparent focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                placeholder="your-name"
+              />
+              <span className="inline-flex items-center px-3 text-sm text-text-dim bg-surface border-l border-border select-none whitespace-nowrap">
+                {INBOX_DOMAIN}
+              </span>
+            </div>
+            <button
+              onClick={handleCopyInbox}
+              className="flex items-center justify-center w-10 h-10 rounded-lg border border-border bg-surface text-text-muted hover:text-text-primary hover:bg-surface-hover transition-colors shrink-0"
+              title={t("inbox.copy")}
+            >
+              {inboxCopied ? (
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M5 8L7 10L11 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <rect x="5.5" y="5.5" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
+                  <path d="M10.5 5.5V4a1.5 1.5 0 00-1.5-1.5H4A1.5 1.5 0 002.5 4v5A1.5 1.5 0 004 10.5h1.5" stroke="currentColor" strokeWidth="1.2" />
+                </svg>
+              )}
+            </button>
+          </div>
+
+          {inboxError && (
+            <p className="text-sm text-danger mt-2">{inboxError}</p>
+          )}
+
+          {isPro && inboxChanged && (
+            <div className="mt-3">
+              <Button
+                size="sm"
+                variant={inboxSaved ? "secondary" : "primary"}
+                disabled={!inboxChanged || inboxSaving}
+                loading={inboxSaving}
+                onClick={handleSaveInbox}
+              >
+                {inboxSaved ? t("inbox.saved") : t("inbox.save")}
+              </Button>
+            </div>
+          )}
+
+          {!isPro && (
+            <p className="text-xs text-text-dim mt-3">
+              {t("inbox.upgradeHint")}
+            </p>
+          )}
+        </section>
 
         {/* Billing — pricing cards */}
         <section className="rounded-xl border border-border bg-surface p-6">

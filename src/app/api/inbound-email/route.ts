@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { extractQuoteData, extractQuoteFromFile, isDirectFileType } from "@/lib/extraction";
-import { parseFile } from "@/lib/fileParser";
+import { processAttachmentQuote, processTextQuote } from "@/lib/quote-processing";
 import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 export const maxDuration = 60;
@@ -36,8 +35,8 @@ const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024; // 10MB
 const MAX_ATTACHMENTS = 5;
 
 export async function POST(request: NextRequest) {
-  // Verify webhook token — reject if not configured or mismatched
-  const token = request.headers.get("x-postmark-token");
+  // Verify webhook token via query param
+  const token = request.nextUrl.searchParams.get("token");
   if (!process.env.POSTMARK_WEBHOOK_TOKEN || token !== process.env.POSTMARK_WEBHOOK_TOKEN) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -47,12 +46,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  // Extract the recipient inbox address
+  // Parse the To address: {userPrefix}+{projectSlug}@in.quotal.app or {userPrefix}@in.quotal.app
   const toAddress = payload.To.toLowerCase();
-  const inboxMatch = toAddress.match(/quotes\+[^@]+@/);
-  const inboxAddress = inboxMatch
-    ? inboxMatch[0].replace(/@$/, "") + "@quotal.app"
-    : toAddress;
+  const toLocal = toAddress.split("@")[0];
+  const plusIndex = toLocal.indexOf("+");
+  const userPrefix = plusIndex >= 0 ? toLocal.substring(0, plusIndex) : toLocal;
+  const projectSlug = plusIndex >= 0 ? toLocal.substring(plusIndex + 1) : null;
+  const inboxAddress = `${userPrefix}@in.quotal.app`;
 
   // Rate limit per inbox address
   const rl = rateLimit(`inbound:${inboxAddress}`, 5, 60_000);
@@ -73,24 +73,49 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unknown inbox address" }, { status: 404 });
   }
 
-  // Find the user's most recent project, or create an "Inbox" project
-  let project = await prisma.project.findFirst({
-    where: { userId: user.id },
-    orderBy: { createdAt: "desc" },
-  });
-
-  if (!project) {
-    project = await prisma.project.create({
-      data: {
-        name: "Inbox",
-        userId: user.id,
-      },
+  // If there's a project slug, try to route directly to that project
+  let project = null;
+  if (projectSlug) {
+    project = await prisma.project.findFirst({
+      where: { userId: user.id, emailSlug: projectSlug },
     });
   }
 
+  // If we have a project, process the email directly into it
+  if (project) {
+    return await processIntoProject(project.id, payload);
+  }
+
+  // Otherwise, store in inbox as an unassigned item
+  const attachmentData = payload.Attachments?.slice(0, MAX_ATTACHMENTS)
+    .filter((a) => ALLOWED_ATTACHMENT_TYPES.has(a.ContentType) && a.ContentLength <= MAX_ATTACHMENT_SIZE)
+    .map((a) => ({
+      name: a.Name,
+      contentType: a.ContentType,
+      contentBase64: a.Content,
+      contentLength: a.ContentLength,
+    })) || [];
+
+  await prisma.inboxItem.create({
+    data: {
+      userId: user.id,
+      fromEmail: payload.From,
+      fromName: payload.FromName || null,
+      subject: payload.Subject || null,
+      textBody: payload.TextBody || null,
+      attachments: attachmentData.length > 0 ? attachmentData : undefined,
+    },
+  });
+
+  return NextResponse.json({
+    message: "Added to inbox",
+    destination: "inbox",
+  });
+}
+
+async function processIntoProject(projectId: string, payload: PostmarkInboundPayload) {
   const results: string[] = [];
 
-  // Process attachments (capped at 5)
   if (payload.Attachments && payload.Attachments.length > 0) {
     const attachments = payload.Attachments.slice(0, MAX_ATTACHMENTS);
     if (payload.Attachments.length > MAX_ATTACHMENTS) {
@@ -98,7 +123,6 @@ export async function POST(request: NextRequest) {
     }
 
     for (const attachment of attachments) {
-      // Validate attachment type and size
       if (!ALLOWED_ATTACHMENT_TYPES.has(attachment.ContentType)) {
         results.push(`Skipped ${attachment.Name}: unsupported file type (${attachment.ContentType})`);
         continue;
@@ -112,7 +136,7 @@ export async function POST(request: NextRequest) {
 
       const quote = await prisma.quote.create({
         data: {
-          projectId: project.id,
+          projectId,
           fileName: attachment.Name,
           processingStatus: "PENDING",
         },
@@ -123,14 +147,13 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // If no attachments but there's text body, process the email body as a quote
   if (
     (!payload.Attachments || payload.Attachments.length === 0) &&
     payload.TextBody
   ) {
     const quote = await prisma.quote.create({
       data: {
-        projectId: project.id,
+        projectId,
         fileName: `Email: ${payload.Subject || "No subject"}`,
         rawText: payload.TextBody,
         processingStatus: "PENDING",
@@ -141,149 +164,9 @@ export async function POST(request: NextRequest) {
     results.push("Processed email body as quote");
   }
 
-  console.log(
-    `[Inbound Email] Confirmation would be sent to ${payload.From}: ` +
-      `Quote(s) from email "${payload.Subject}" added to project "${project.name}"`
-  );
-
   return NextResponse.json({
-    message: "Received and processing",
-    project: project.name,
+    message: "Processed into project",
+    destination: "project",
     results,
   });
-}
-
-async function processAttachmentQuote(
-  quoteId: string,
-  buffer: Buffer,
-  mimeType: string
-) {
-  try {
-    await prisma.quote.update({
-      where: { id: quoteId },
-      data: { processingStatus: "PROCESSING" },
-    });
-
-    const rawText = await parseFile(buffer, mimeType);
-    let extracted;
-    if (rawText) {
-      extracted = await extractQuoteData(rawText);
-    } else if (isDirectFileType(mimeType)) {
-      extracted = await extractQuoteFromFile(buffer, mimeType);
-    } else {
-      throw new Error("Could not extract content from attachment");
-    }
-
-    const itemsTotal = extracted.lineItems.reduce(
-      (sum, i) => sum + i.subtotal,
-      0
-    );
-    const feesTotal = extracted.fees.reduce((sum, f) => sum + f.amount, 0);
-
-    await prisma.quote.update({
-      where: { id: quoteId },
-      data: {
-        vendorName: extracted.vendorName,
-        ...(rawText && { rawText }),
-        currency: extracted.currency,
-        paymentTerms: extracted.paymentTerms,
-        deliveryDays: extracted.deliveryDays,
-        notes: extracted.notes,
-        grandTotal: itemsTotal + feesTotal,
-        processingStatus: "DONE",
-      },
-    });
-
-    if (extracted.lineItems.length > 0) {
-      await prisma.lineItem.createMany({
-        data: extracted.lineItems.map((item) => ({
-          quoteId,
-          name: item.normalizedName,
-          rawName: item.rawName,
-          unitPrice: item.unitPrice,
-          quantity: item.quantity,
-          unit: item.unit,
-          subtotal: item.subtotal,
-        })),
-      });
-    }
-
-    if (extracted.fees.length > 0) {
-      await prisma.fee.createMany({
-        data: extracted.fees.map((fee) => ({
-          quoteId,
-          name: fee.name,
-          amount: fee.amount,
-          isHidden: fee.isHidden,
-        })),
-      });
-    }
-  } catch (error) {
-    console.error("Attachment processing failed:", error);
-    await prisma.quote.update({
-      where: { id: quoteId },
-      data: { processingStatus: "FAILED" },
-    });
-  }
-}
-
-async function processTextQuote(quoteId: string, rawText: string) {
-  try {
-    await prisma.quote.update({
-      where: { id: quoteId },
-      data: { processingStatus: "PROCESSING" },
-    });
-
-    const extracted = await extractQuoteData(rawText);
-
-    const itemsTotal = extracted.lineItems.reduce(
-      (sum, i) => sum + i.subtotal,
-      0
-    );
-    const feesTotal = extracted.fees.reduce((sum, f) => sum + f.amount, 0);
-
-    await prisma.quote.update({
-      where: { id: quoteId },
-      data: {
-        vendorName: extracted.vendorName,
-        currency: extracted.currency,
-        paymentTerms: extracted.paymentTerms,
-        deliveryDays: extracted.deliveryDays,
-        notes: extracted.notes,
-        grandTotal: itemsTotal + feesTotal,
-        processingStatus: "DONE",
-      },
-    });
-
-    if (extracted.lineItems.length > 0) {
-      await prisma.lineItem.createMany({
-        data: extracted.lineItems.map((item) => ({
-          quoteId,
-          name: item.normalizedName,
-          rawName: item.rawName,
-          unitPrice: item.unitPrice,
-          quantity: item.quantity,
-          unit: item.unit,
-          subtotal: item.subtotal,
-        })),
-      });
-    }
-
-    if (extracted.fees.length > 0) {
-      await prisma.fee.createMany({
-        data: extracted.fees.map((fee) => ({
-          quoteId,
-          name: fee.name,
-          amount: fee.amount,
-          isHidden: fee.isHidden,
-        })),
-      });
-    }
-  } catch (error) {
-    console.error("Text quote processing failed:", error);
-    await prisma.quote.update({
-      where: { id: quoteId },
-      data: { processingStatus: "FAILED" },
-    });
-  }
 }

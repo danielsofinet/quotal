@@ -1,7 +1,7 @@
 import { getUserWithProjects } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import AppShell from "@/components/AppShell";
-import SettingsClient from "@/components/SettingsClient";
+import InboxClient from "@/components/InboxClient";
 
 export const dynamic = "force-dynamic";
 
@@ -9,30 +9,27 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function SettingsPage() {
+export default async function InboxPage() {
   const user = await getUserWithProjects();
 
-  if (!user) {
-    redirect("/sign-in");
-  }
+  if (!user) redirect("/sign-in");
+
+  const allProjects = user.projects.map((p) => ({
+    id: p.id,
+    name: p.name,
+    _count: { quotes: 0 },
+  }));
 
   return (
     <AppShell
-      projects={user.projects.map((p) => ({
-        id: p.id,
-        name: p.name,
-        _count: p._count,
-      }))}
+      projects={allProjects}
       userEmail={user.email}
       inboxAddress={user.inboxAddress}
       userPlan={user.plan}
     >
-      <SettingsClient
-        userName={user.name || ""}
-        userEmail={user.email}
-        userPlan={user.plan}
-        planExpiresAt={user.planExpiresAt?.toISOString() || null}
+      <InboxClient
         inboxAddress={user.inboxAddress}
+        projects={user.projects.map((p) => ({ id: p.id, name: p.name }))}
       />
     </AppShell>
   );

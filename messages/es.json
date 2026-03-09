@@ -160,7 +160,17 @@
     "emailPlaceholder": "you@company.com",
     "sendLink": "Send sign-in link",
     "checkEmail": "Check your email",
-    "linkSent": "We sent a sign-in link to {email}"
+    "linkSent": "Hemos enviado un enlace de inicio de sesión a {email}",
+    "errors": {
+      "operationNotAllowed": "El inicio de sesión por correo no está disponible ahora. Prueba con Google.",
+      "invalidEmail": "Esa dirección de correo no parece correcta. Por favor, revísala.",
+      "tooManyRequests": "Demasiados intentos. Espera un momento e inténtalo de nuevo.",
+      "networkError": "No se pudo conectar. Comprueba tu conexión a internet.",
+      "popupClosed": "Inicio de sesión cancelado. Inténtalo cuando estés listo.",
+      "googleFailed": "No se pudo iniciar sesión con Google. Inténtalo de nuevo.",
+      "linkFailed": "No se pudo enviar el enlace. Inténtalo de nuevo.",
+      "default": "Algo salió mal. Inténtalo de nuevo."
+    }
   },
   "Dashboard": {
     "title": "Projects",
@@ -182,9 +192,11 @@
     "projects": "Projects",
     "emailInbox": "Email Inbox",
     "forwardTo": "Forward supplier quotes to:",
+    "inbox": "Bandeja de entrada",
     "vendors": "Proveedores",
     "settings": "Settings",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "copied": "¡Copiado!"
   },
   "Comparison": {
     "cheapestOverall": "Cheapest Overall",
@@ -223,7 +235,27 @@
     "extracting": "Extracting data...",
     "done": "Done",
     "comparing": "Comparing quotes...",
-    "priority": "Prioridad"
+    "priority": "Prioridad",
+    "fromInbox": "Desde bandeja",
+    "forwardTo": "Reenviar presupuestos directamente:",
+    "copied": "¡Copiado!"
+  },
+  "Inbox": {
+    "modalTitle": "Añadir desde bandeja de entrada",
+    "empty": "No hay correos en tu bandeja",
+    "emptyHint": "Reenvía correos de proveedores a tu dirección de bandeja y aparecerán aquí.",
+    "selectAll": "Seleccionar todo",
+    "deselectAll": "Deseleccionar todo",
+    "itemCount": "{count, plural, =1 {1 correo} other {# correos}}",
+    "noSubject": "Sin asunto",
+    "attachments": "{count, plural, =1 {1 adjunto} other {# adjuntos}}",
+    "addToProject": "{count, plural, =1 {Añadir 1 elemento} other {Añadir # elementos}}",
+    "adding": "Añadiendo...",
+    "cancel": "Cancelar",
+    "justNow": "ahora mismo",
+    "minutesAgo": "hace {count} min",
+    "hoursAgo": "hace {count} h",
+    "daysAgo": "hace {count} d"
   },
   "QuoteDetail": {
     "backToComparison": "Back to comparison",
@@ -323,6 +355,15 @@
       "language": "Language",
       "theme": "Theme"
     },
+    "inbox": {
+      "heading": "Bandeja de entrada",
+      "description": "Reenvía los presupuestos de proveedores a esta dirección. Se extraerán y añadirán automáticamente a tu último proyecto.",
+      "copy": "Copiar dirección",
+      "save": "Guardar",
+      "saved": "Guardado",
+      "error": "No se pudo actualizar tu dirección. Inténtalo de nuevo.",
+      "upgradeHint": "Actualiza a Pro para personalizar tu dirección de reenvío."
+    },
     "billing": {
       "heading": "Billing",
       "currentPlan": "Current plan",
@@ -342,6 +383,28 @@
       "cancel": "Cancel",
       "deleting": "Deleting..."
     }
+  },
+  "InboxPage": {
+    "title": "Bandeja de entrada",
+    "subtitle": "Correos reenviados que aún no se han asignado a un proyecto",
+    "forwardHint": "Reenvía cotizaciones de proveedores a:",
+    "copied": "¡Copiado!",
+    "empty": "Tu bandeja de entrada está vacía",
+    "emptyDescription": "Reenvía correos de cotizaciones de proveedores a tu dirección de bandeja de entrada y aparecerán aquí para asignar a proyectos.",
+    "selectAll": "Seleccionar todo",
+    "deselectAll": "Deseleccionar todo",
+    "itemCount": "{count, plural, =1 {1 correo} other {# correos}}",
+    "assignToProject": "{count, plural, =1 {Asignar 1 elemento} other {Asignar # elementos}}",
+    "noSubject": "Sin asunto",
+    "attachments": "{count, plural, =1 {1 adjunto} other {# adjuntos}}",
+    "assignTitle": "Asignar a proyecto",
+    "assignDescription": "{count, plural, =1 {Asignar 1 correo} other {Asignar # correos}} a un proyecto para procesamiento.",
+    "noProjects": "Sin proyectos aún. Crea un proyecto primero.",
+    "assigning": "Asignando...",
+    "justNow": "ahora mismo",
+    "minutesAgo": "hace {count}min",
+    "hoursAgo": "hace {count}h",
+    "daysAgo": "hace {count}d"
   },
   "Vendors": {
     "title": "Proveedores",

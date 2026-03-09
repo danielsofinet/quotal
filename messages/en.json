@@ -160,7 +160,17 @@
     "emailPlaceholder": "you@company.com",
     "sendLink": "Send sign-in link",
     "checkEmail": "Check your email",
-    "linkSent": "We sent a sign-in link to {email}"
+    "linkSent": "We sent a sign-in link to {email}",
+    "errors": {
+      "operationNotAllowed": "Email sign-in isn't available right now. Please try Google instead.",
+      "invalidEmail": "That email address doesn't look right. Please check and try again.",
+      "tooManyRequests": "Too many attempts. Please wait a moment and try again.",
+      "networkError": "Couldn't connect. Check your internet and try again.",
+      "popupClosed": "Sign-in was cancelled. Try again when you're ready.",
+      "googleFailed": "Couldn't sign in with Google. Please try again.",
+      "linkFailed": "Couldn't send the sign-in link. Please try again.",
+      "default": "Something went wrong. Please try again."
+    }
   },
   "Dashboard": {
     "title": "Projects",
@@ -182,9 +192,11 @@
     "projects": "Projects",
     "emailInbox": "Email Inbox",
     "forwardTo": "Forward supplier quotes to:",
+    "inbox": "Inbox",
     "vendors": "Vendors",
     "settings": "Settings",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "copied": "Copied!"
   },
   "Comparison": {
     "cheapestOverall": "Cheapest Overall",
@@ -223,7 +235,27 @@
     "extracting": "Extracting data...",
     "done": "Done",
     "comparing": "Comparing quotes...",
-    "priority": "Priority"
+    "priority": "Priority",
+    "fromInbox": "From inbox",
+    "forwardTo": "Forward quotes directly:",
+    "copied": "Copied!"
+  },
+  "Inbox": {
+    "modalTitle": "Add from inbox",
+    "empty": "No emails in your inbox",
+    "emptyHint": "Forward supplier emails to your inbox address and they'll appear here.",
+    "selectAll": "Select all",
+    "deselectAll": "Deselect all",
+    "itemCount": "{count, plural, =1 {1 email} other {# emails}}",
+    "noSubject": "No subject",
+    "attachments": "{count, plural, =1 {1 attachment} other {# attachments}}",
+    "addToProject": "{count, plural, =1 {Add 1 item} other {Add # items}}",
+    "adding": "Adding...",
+    "cancel": "Cancel",
+    "justNow": "just now",
+    "minutesAgo": "{count}m ago",
+    "hoursAgo": "{count}h ago",
+    "daysAgo": "{count}d ago"
   },
   "QuoteDetail": {
     "backToComparison": "Back to comparison",
@@ -323,6 +355,15 @@
       "language": "Language",
       "theme": "Theme"
     },
+    "inbox": {
+      "heading": "Email Inbox",
+      "description": "Forward supplier quotes to this address. They'll be extracted and added to your latest project automatically.",
+      "copy": "Copy address",
+      "save": "Save",
+      "saved": "Saved",
+      "error": "Couldn't update your inbox address. Try again.",
+      "upgradeHint": "Upgrade to Pro to customise your forwarding address."
+    },
     "billing": {
       "heading": "Billing",
       "currentPlan": "Current plan",
@@ -342,6 +383,28 @@
       "cancel": "Cancel",
       "deleting": "Deleting..."
     }
+  },
+  "InboxPage": {
+    "title": "Inbox",
+    "subtitle": "Emails forwarded to your inbox that haven't been assigned to a project yet",
+    "forwardHint": "Forward supplier quotes to:",
+    "copied": "Copied!",
+    "empty": "Your inbox is empty",
+    "emptyDescription": "Forward supplier quote emails to your inbox address and they'll appear here for you to assign to projects.",
+    "selectAll": "Select all",
+    "deselectAll": "Deselect all",
+    "itemCount": "{count, plural, =1 {1 email} other {# emails}}",
+    "assignToProject": "{count, plural, =1 {Assign 1 item} other {Assign # items}}",
+    "noSubject": "No subject",
+    "attachments": "{count, plural, =1 {1 attachment} other {# attachments}}",
+    "assignTitle": "Assign to project",
+    "assignDescription": "{count, plural, =1 {Assign 1 email} other {Assign # emails}} to a project for processing.",
+    "noProjects": "No projects yet. Create a project first.",
+    "assigning": "Assigning...",
+    "justNow": "just now",
+    "minutesAgo": "{count}m ago",
+    "hoursAgo": "{count}h ago",
+    "daysAgo": "{count}d ago"
   },
   "Vendors": {
     "title": "Vendors",

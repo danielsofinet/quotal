@@ -5,7 +5,6 @@ import {
   signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
-  sendSignInLinkToEmail,
   isSignInWithEmailLink,
   signInWithEmailLink,
   signOut as firebaseSignOut,
@@ -60,13 +59,22 @@ export async function handleRedirectResult(): Promise<User | null> {
   return null;
 }
 
-export async function sendMagicLink(email: string) {
-  const auth = getFirebaseAuth();
-  const actionCodeSettings = {
-    url: `${window.location.origin}/sign-in?finishSignIn=true`,
-    handleCodeInApp: true,
-  };
-  await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+export async function sendMagicLink(email: string, locale?: string) {
+  const res = await fetch("/api/auth/magic-link", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, locale }),
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    const error = new Error(data.error || "Failed to send sign-in link");
+    if (res.status === 429) {
+      (error as Error & { code: string }).code = "auth/too-many-requests";
+    }
+    throw error;
+  }
+
   window.localStorage.setItem("emailForSignIn", email);
 }
 

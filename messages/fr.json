@@ -160,7 +160,17 @@
     "emailPlaceholder": "vous@entreprise.com",
     "sendLink": "Envoyer le lien de connexion",
     "checkEmail": "Vérifiez votre e-mail",
-    "linkSent": "Nous avons envoyé un lien de connexion à {email}"
+    "linkSent": "Nous avons envoyé un lien de connexion à {email}",
+    "errors": {
+      "operationNotAllowed": "La connexion par e-mail n'est pas disponible pour le moment. Essayez Google.",
+      "invalidEmail": "Cette adresse e-mail ne semble pas correcte. Veuillez vérifier.",
+      "tooManyRequests": "Trop de tentatives. Veuillez patienter un instant.",
+      "networkError": "Impossible de se connecter. Vérifiez votre connexion internet.",
+      "popupClosed": "Connexion annulée. Réessayez quand vous êtes prêt.",
+      "googleFailed": "Impossible de se connecter avec Google. Veuillez réessayer.",
+      "linkFailed": "Impossible d'envoyer le lien de connexion. Veuillez réessayer.",
+      "default": "Une erreur est survenue. Veuillez réessayer."
+    }
   },
   "Dashboard": {
     "title": "Projets",
@@ -182,9 +192,11 @@
     "projects": "Projets",
     "emailInbox": "Boîte e-mail",
     "forwardTo": "Transférez vos devis fournisseurs à :",
+    "inbox": "Boîte de réception",
     "vendors": "Fournisseurs",
     "settings": "Paramètres",
-    "signOut": "Se déconnecter"
+    "signOut": "Se déconnecter",
+    "copied": "Copié !"
   },
   "Comparison": {
     "cheapestOverall": "Le moins cher au total",
@@ -223,7 +235,27 @@
     "extracting": "Extraction des données...",
     "done": "Terminé",
     "comparing": "Comparaison des devis...",
-    "priority": "Priorité"
+    "priority": "Priorité",
+    "fromInbox": "Depuis la boîte",
+    "forwardTo": "Transférer les devis directement :",
+    "copied": "Copié !"
+  },
+  "Inbox": {
+    "modalTitle": "Ajouter depuis la boîte de réception",
+    "empty": "Aucun e-mail dans votre boîte",
+    "emptyHint": "Transférez les e-mails de vos fournisseurs à votre adresse de réception et ils apparaîtront ici.",
+    "selectAll": "Tout sélectionner",
+    "deselectAll": "Tout désélectionner",
+    "itemCount": "{count, plural, =1 {1 e-mail} other {# e-mails}}",
+    "noSubject": "Sans objet",
+    "attachments": "{count, plural, =1 {1 pièce jointe} other {# pièces jointes}}",
+    "addToProject": "{count, plural, =1 {Ajouter 1 élément} other {Ajouter # éléments}}",
+    "adding": "Ajout en cours...",
+    "cancel": "Annuler",
+    "justNow": "à l'instant",
+    "minutesAgo": "il y a {count} min",
+    "hoursAgo": "il y a {count} h",
+    "daysAgo": "il y a {count} j"
   },
   "QuoteDetail": {
     "backToComparison": "Retour à la comparaison",
@@ -323,6 +355,15 @@
       "language": "Langue",
       "theme": "Thème"
     },
+    "inbox": {
+      "heading": "Boîte de réception",
+      "description": "Transférez les devis fournisseurs à cette adresse. Ils seront extraits et ajoutés automatiquement à votre dernier projet.",
+      "copy": "Copier l'adresse",
+      "save": "Enregistrer",
+      "saved": "Enregistré",
+      "error": "Impossible de mettre à jour votre adresse. Réessayez.",
+      "upgradeHint": "Passez à Pro pour personnaliser votre adresse de transfert."
+    },
     "billing": {
       "heading": "Facturation",
       "currentPlan": "Plan actuel",
@@ -342,6 +383,28 @@
       "cancel": "Annuler",
       "deleting": "Suppression..."
     }
+  },
+  "InboxPage": {
+    "title": "Boîte de réception",
+    "subtitle": "Emails transférés qui n'ont pas encore été assignés à un projet",
+    "forwardHint": "Transférez les devis fournisseurs à :",
+    "copied": "Copié !",
+    "empty": "Votre boîte de réception est vide",
+    "emptyDescription": "Transférez les emails de devis fournisseurs à votre adresse de réception et ils apparaîtront ici pour être assignés à des projets.",
+    "selectAll": "Tout sélectionner",
+    "deselectAll": "Tout désélectionner",
+    "itemCount": "{count, plural, =1 {1 email} other {# emails}}",
+    "assignToProject": "{count, plural, =1 {Assigner 1 élément} other {Assigner # éléments}}",
+    "noSubject": "Sans objet",
+    "attachments": "{count, plural, =1 {1 pièce jointe} other {# pièces jointes}}",
+    "assignTitle": "Assigner à un projet",
+    "assignDescription": "{count, plural, =1 {Assigner 1 email} other {Assigner # emails}} à un projet pour traitement.",
+    "noProjects": "Aucun projet. Créez d'abord un projet.",
+    "assigning": "Assignation...",
+    "justNow": "à l'instant",
+    "minutesAgo": "il y a {count}min",
+    "hoursAgo": "il y a {count}h",
+    "daysAgo": "il y a {count}j"
   },
   "Vendors": {
     "title": "Fournisseurs",

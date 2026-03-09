@@ -62,7 +62,7 @@ export async function getUserWithProjects() {
 
     // Auto-create if first sign-in
     if (!user) {
-      const inboxAddress = `quotes+${uuidv4().slice(0, 8)}@quotal.app`;
+      const inboxAddress = `${(email || "").split("@")[0].replace(/[^a-zA-Z0-9._+-]/g, "").slice(0, 40) || uuidv4().slice(0, 8)}@in.quotal.app`;
       const created = await prisma.user.create({
         data: {
           firebaseUid: decoded.uid,
@@ -100,7 +100,7 @@ async function findOrCreateUser(
   let user = await prisma.user.findUnique({ where: { firebaseUid } });
 
   if (!user) {
-    const inboxAddress = `quotes+${uuidv4().slice(0, 8)}@quotal.app`;
+    const inboxAddress = `${(email || "").split("@")[0].replace(/[^a-zA-Z0-9._+-]/g, "").slice(0, 40) || uuidv4().slice(0, 8)}@in.quotal.app`;
     user = await prisma.user.create({
       data: {
         firebaseUid,

@@ -8,28 +8,44 @@ datasource db {
 }
 
 model User {
-  id                   String    @id @default(cuid())
-  firebaseUid          String    @unique
-  email                String    @unique
+  id                   String      @id @default(cuid())
+  firebaseUid          String      @unique
+  email                String      @unique
   name                 String?
-  inboxAddress         String    @unique
-  plan                 String    @default("free")
-  stripeCustomerId     String?   @unique
-  stripeSubscriptionId String?   @unique
+  inboxAddress         String      @unique
+  plan                 String      @default("free")
+  stripeCustomerId     String?     @unique
+  stripeSubscriptionId String?     @unique
   planExpiresAt        DateTime?
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @updatedAt
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
   projects             Project[]
+  inboxItems           InboxItem[]
 }
 
 model Project {
   id        String   @id @default(cuid())
   name      String
+  emailSlug String?
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   quotes    Quote[]
+
+  @@unique([userId, emailSlug])
+}
+
+model InboxItem {
+  id          String   @id @default(cuid())
+  userId      String
+  fromEmail   String
+  fromName    String?
+  subject     String?
+  textBody    String?
+  attachments Json?
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum ProcessingStatus {

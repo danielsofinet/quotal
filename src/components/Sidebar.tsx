@@ -44,6 +44,7 @@ export default function Sidebar({
   const [projectName, setProjectName] = useState("");
   const [creating, setCreating] = useState(false);
   const [showUpgrade, setShowUpgrade] = useState(false);
+  const [inboxCopied, setInboxCopied] = useState(false);
 
   const limits = PLAN_LIMITS[userPlan as keyof typeof PLAN_LIMITS] || PLAN_LIMITS.free;
   const atLimit = projects.length >= limits.maxProjects;
@@ -195,6 +196,29 @@ export default function Sidebar({
         </Link>
 
         <Link
+          href="/inbox"
+          className={`flex items-center gap-2.5 rounded-lg text-sm transition-colors mb-1 ${
+            collapsed ? "justify-center w-8 h-8 mx-auto px-0 py-0" : "px-2.5 py-2"
+          } ${
+            pathname === "/inbox"
+              ? "bg-accent-dim text-accent-light"
+              : "text-text-muted hover:text-text-primary hover:bg-surface-hover"
+          }`}
+        >
+          <svg
+            width={collapsed ? "14" : "16"}
+            height={collapsed ? "14" : "16"}
+            viewBox="0 0 16 16"
+            fill="none"
+            className="shrink-0"
+          >
+            <rect x="1.5" y="3" width="13" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
+            <path d="M14.5 4.5L8 9L1.5 4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+          </svg>
+          {!collapsed && <span className="flex-1">{t("inbox")}</span>}
+        </Link>
+
+        <Link
           href="/vendors"
           className={`flex items-center gap-2.5 rounded-lg text-sm transition-colors mb-1 ${
             collapsed ? "justify-center w-8 h-8 mx-auto px-0 py-0" : "px-2.5 py-2"
@@ -302,29 +326,6 @@ export default function Sidebar({
           </div>
         </div>
 
-        {!collapsed && (
-          <div className="mt-5">
-            <div className="px-2.5 mb-2">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-text-dim">
-                {t("emailInbox")}
-              </span>
-            </div>
-            <div className="px-2.5 py-2">
-              <p className="text-[11px] text-text-dim leading-relaxed">
-                {t("forwardTo")}
-              </p>
-              {inboxAddress && (
-                <button
-                  onClick={() => navigator.clipboard.writeText(inboxAddress)}
-                  className="mt-1.5 text-[11px] font-mono text-accent break-all text-left hover:text-accent-light transition-colors"
-                  title="Click to copy"
-                >
-                  {inboxAddress}
-                </button>
-              )}
-            </div>
-          </div>
-        )}
       </nav>
 
       {/* Settings — pinned to bottom */}
