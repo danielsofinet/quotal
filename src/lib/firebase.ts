@@ -41,22 +41,10 @@ const googleProvider = new GoogleAuthProvider();
 
 export async function signInWithGoogle() {
   const auth = getFirebaseAuth();
-  try {
-    const result = await signInWithPopup(auth, googleProvider);
-    const idToken = await result.user.getIdToken();
-    await syncSession(idToken);
-    return result.user;
-  } catch (err) {
-    // If popup fails (COOP, blocked), fall back to redirect
-    if (
-      err instanceof Error &&
-      (err.message.includes("popup") || err.message.includes("closed"))
-    ) {
-      await signInWithRedirect(auth, googleProvider);
-      return null;
-    }
-    throw err;
-  }
+  const result = await signInWithPopup(auth, googleProvider);
+  const idToken = await result.user.getIdToken();
+  await syncSession(idToken);
+  return result.user;
 }
 
 // Handle redirect result on page load
