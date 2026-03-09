@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { prisma } from "./prisma";
 import { getAdminAuth } from "./firebase-admin";
 import { v4 as uuidv4 } from "uuid";
+import { getLocale } from "next-intl/server";
 import { sendWelcomeEmail } from "./postmark";
 
 /**
@@ -80,7 +81,8 @@ export async function getUserWithProjects() {
         },
       });
       user = { ...created, projects: [], _count: { inboxItems: 0 } };
-      sendWelcomeEmail(created.email, created.name).catch((err) =>
+      const locale = await getLocale().catch(() => "en");
+      sendWelcomeEmail(created.email, created.name, locale).catch((err) =>
         console.error("[auth] Welcome email failed:", err instanceof Error ? err.message : String(err))
       );
     }
@@ -121,7 +123,7 @@ async function findOrCreateUser(
         inboxAddress,
       },
     });
-    sendWelcomeEmail(user.email, user.name).catch((err) =>
+    sendWelcomeEmail(user.email, user.name, "en").catch((err) =>
       console.error("[auth] Welcome email failed:", err instanceof Error ? err.message : String(err))
     );
   }
