@@ -4,13 +4,10 @@ import Link from "next/link";
 import QuotalLogo from "@/components/QuotalLogo";
 import { getAllPosts, getPostBySlug, renderMarkdown } from "@/lib/blog";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ slug: string; locale: string }>;
-}
-
-export async function generateStaticParams() {
-  const posts = getAllPosts();
-  return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
