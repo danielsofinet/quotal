@@ -41,11 +41,16 @@ export async function getAuthenticatedUserFromCookies() {
 export async function getUserWithProjects() {
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get("__session")?.value;
-  if (!sessionCookie) return null;
+  if (!sessionCookie) {
+    console.log("[auth] No __session cookie found");
+    return null;
+  }
 
   try {
+    console.log("[auth] Verifying session cookie, length:", sessionCookie.length);
     const adminAuth = getAdminAuth();
     const decoded = await adminAuth.verifySessionCookie(sessionCookie, true);
+    console.log("[auth] Session verified for uid:", decoded.uid);
 
     // Try to find user with projects in one query
     let user = await prisma.user.findUnique({
@@ -75,7 +80,8 @@ export async function getUserWithProjects() {
     }
 
     return user;
-  } catch {
+  } catch (err) {
+    console.error("[auth] Session verify failed:", err instanceof Error ? err.message : String(err));
     return null;
   }
 }
