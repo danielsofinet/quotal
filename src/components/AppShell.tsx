@@ -75,12 +75,12 @@ export default function AppShell({
       </div>
 
       {/* Mobile overlay */}
-      {mobileOpen && (
-        <div
-          className="md:hidden fixed inset-0 bg-black/50 z-40 animate-in fade-in duration-200"
-          onClick={() => setMobileOpen(false)}
-        />
-      )}
+      <div
+        className={`md:hidden fixed inset-0 bg-black/50 z-40 transition-opacity duration-200 ${
+          mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setMobileOpen(false)}
+      />
 
       {/* Sidebar */}
       <Sidebar

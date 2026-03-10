@@ -182,6 +182,9 @@ export default function Sidebar({
         </button>
       </div>
 
+      {/* Scrollable body */}
+      <div className="flex-1 flex flex-col overflow-y-auto">
+
       {/* Plan badge */}
       <div className={`px-3 py-2.5 border-b border-border ${collapsed ? "flex justify-center" : ""}`}>
         <div className={`flex items-center ${collapsed ? "justify-center" : "justify-between"}`}>
@@ -225,7 +228,7 @@ export default function Sidebar({
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-3 px-2">
+      <nav className="flex-1 py-3 px-2">
         <Link
           href="/dashboard"
           className={`flex items-center gap-2.5 rounded-lg text-sm transition-colors mb-1 ${
@@ -460,6 +463,8 @@ export default function Sidebar({
           {!collapsed && <span>{t("settings")}</span>}
         </Link>
       </div>
+
+      </div>{/* end scrollable body */}
     </aside>
 
     <Modal open={createOpen} onClose={() => setCreateOpen(false)} title={tc("newProject")}>
