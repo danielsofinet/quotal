@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import Sidebar from "./Sidebar";
 import PageTransition from "./PageTransition";
 import InfiniteGrid from "./ui/InfiniteGrid";
+import QuotalLogo from "./QuotalLogo";
 
 interface Project {
   id: string;
@@ -38,34 +39,73 @@ export default function AppShell({
     }
     return false;
   });
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const showGrid = pathname === "/dashboard";
   const isDark = resolvedTheme === "dark";
 
   useEffect(() => setMounted(true), []);
 
+  // Close mobile drawer on navigation
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
   const content = (
-    <div className="max-w-[1200px] mx-auto px-8 py-8">
+    <div className="max-w-[1200px] mx-auto px-4 py-6 md:px-8 md:py-8">
       <PageTransition>{children}</PageTransition>
     </div>
   );
 
   return (
     <div className="min-h-screen">
-      <Sidebar
-        projects={projects}
-        userEmail={userEmail}
-        inboxAddress={inboxAddress}
-        userPlan={userPlan}
-        inboxCount={inboxCount}
-        collapsed={collapsed}
-        onToggleCollapsed={() => {
-          const next = !collapsed;
-          setCollapsed(next);
-          localStorage.setItem("sidebar-collapsed", String(next));
-        }}
-      />
-      <main className={`min-h-screen transition-all duration-150 ${collapsed ? "ml-16" : "ml-64"}`}>
+      {/* Mobile top bar */}
+      <div className="md:hidden fixed top-0 left-0 right-0 h-14 bg-surface border-b border-border flex items-center justify-between px-4 z-50">
+        <button
+          onClick={() => setMobileOpen(true)}
+          className="p-2 -ml-2 rounded-lg hover:bg-surface-hover transition-colors"
+          aria-label="Open menu"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </button>
+        <QuotalLogo className="h-4 text-text-primary" />
+        <div className="w-9" /> {/* Spacer for centering */}
+      </div>
+
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/50 z-40 animate-in fade-in duration-200"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* Sidebar — hidden on mobile, shown as drawer when open */}
+      <div className={`
+        fixed top-0 left-0 h-screen z-50
+        transition-transform duration-200 ease-out
+        md:translate-x-0
+        ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+      `}>
+        <Sidebar
+          projects={projects}
+          userEmail={userEmail}
+          inboxAddress={inboxAddress}
+          userPlan={userPlan}
+          inboxCount={inboxCount}
+          collapsed={collapsed}
+          onToggleCollapsed={() => {
+            const next = !collapsed;
+            setCollapsed(next);
+            localStorage.setItem("sidebar-collapsed", String(next));
+          }}
+          onMobileClose={() => setMobileOpen(false)}
+        />
+      </div>
+
+      <main className={`min-h-screen transition-all duration-150 pt-14 md:pt-0 ${collapsed ? "md:ml-16" : "md:ml-64"}`}>
         {showGrid && mounted ? (
           <InfiniteGrid
             className="min-h-screen"

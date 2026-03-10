@@ -25,6 +25,7 @@ interface SidebarProps {
   inboxCount?: number;
   collapsed: boolean;
   onToggleCollapsed: () => void;
+  onMobileClose?: () => void;
 }
 
 export default function Sidebar({
@@ -35,6 +36,7 @@ export default function Sidebar({
   inboxCount: initialInboxCount = 0,
   collapsed,
   onToggleCollapsed,
+  onMobileClose,
 }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -129,13 +131,25 @@ export default function Sidebar({
   return (
   <>
     <aside
-      className={`fixed left-0 top-0 h-screen bg-surface border-r border-border flex flex-col transition-all duration-150 z-40 ${
-        collapsed ? "w-16" : "w-64"
+      className={`fixed left-0 top-0 h-screen bg-surface border-r border-border flex flex-col transition-all duration-150 z-40 w-64 ${
+        collapsed ? "md:w-16" : "md:w-64"
       }`}
     >
       {/* Logo */}
       <div className="h-14 flex items-center px-4 border-b border-border justify-between">
-        <Link href="/dashboard" className={`flex items-center ${collapsed ? "justify-center" : "gap-2"}`}>
+        {/* Mobile close button */}
+        {onMobileClose && (
+          <button
+            onClick={onMobileClose}
+            className="md:hidden p-1.5 rounded-md hover:bg-surface-hover transition-colors text-text-muted mr-2"
+            aria-label="Close menu"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </button>
+        )}
+        <Link href="/dashboard" className={`flex items-center ${collapsed ? "md:justify-center" : "gap-2"}`}>
           {collapsed ? (
             <svg viewBox="58 68 240 320" fill="currentColor" className="h-5 text-text-primary opacity-90" aria-label="Q">
               <path d="M203.04,305.89c-7.76,1.41-15.76,2.12-23.99,2.12-18.12,0-34.58-3.18-49.4-9.53-14.82-6.35-27.52-14.93-38.11-25.76-10.58-10.82-18.76-23.4-24.52-37.75-5.77-14.35-8.64-29.52-8.64-45.52s2.94-31.63,8.82-46.22c5.88-14.58,14.11-27.46,24.7-38.64,10.58-11.17,23.29-20.05,38.11-26.64,14.82-6.58,31.17-9.88,49.04-9.88,18.82,0,35.64,3.77,50.46,11.29,14.82,7.53,27.4,17.11,37.75,28.76,10.35,11.64,18.29,24.64,23.82,38.99,5.52,14.35,8.29,28.46,8.29,42.34,0,20.23-3.94,38.52-11.82,54.87-7.88,16.35-19,29.81-33.34,40.4l31.05,52.57-49.27,26.34-32.94-57.74ZM179.04,120.65c-9.17,0-17.46,1.89-24.87,5.65-7.41,3.77-13.82,8.82-19.23,15.17-5.41,6.35-9.59,13.71-12.53,22.05-2.94,8.35-4.41,17-4.41,25.93s1.53,17.76,4.59,25.76c3.05,8,7.29,15,12.7,20.99,5.41,6,11.88,10.71,19.41,14.11,7.53,3.41,15.64,5.12,24.35,5.12,9.64,0,18.17-2,25.58-6,7.41-4,13.76-9.11,19.05-15.35,5.29-6.23,9.29-13.29,12-21.17,2.7-7.88,4.06-15.7,4.06-23.46,0-9.64-1.47-18.64-4.41-26.99-2.94-8.35-7.06-15.64-12.35-21.88-5.29-6.23-11.64-11.11-19.05-14.64-7.41-3.53-15.7-5.29-24.88-5.29Z" />
@@ -146,7 +160,7 @@ export default function Sidebar({
         </Link>
         <button
           onClick={onToggleCollapsed}
-          className="p-1.5 rounded-md hover:bg-surface-hover transition-colors text-text-muted"
+          className="hidden md:block p-1.5 rounded-md hover:bg-surface-hover transition-colors text-text-muted"
         >
           <svg
             width="16"
