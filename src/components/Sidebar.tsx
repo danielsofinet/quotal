@@ -238,7 +238,7 @@ export default function Sidebar({
         <Link
           href="/inbox"
           className={`flex items-center gap-2.5 rounded-lg text-sm transition-colors mb-1 ${
-            collapsed ? "justify-center w-8 h-8 mx-auto px-0 py-0" : "px-2.5 py-2"
+            collapsed ? "relative justify-center w-8 h-8 mx-auto px-0 py-0" : "px-2.5 py-2"
           } ${
             pathname === "/inbox"
               ? "bg-accent-dim text-accent-light"
