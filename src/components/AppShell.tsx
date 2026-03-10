@@ -32,7 +32,12 @@ export default function AppShell({
 }: AppShellProps) {
   const pathname = usePathname();
   const { resolvedTheme } = useTheme();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("sidebar-collapsed") === "true";
+    }
+    return false;
+  });
   const [mounted, setMounted] = useState(false);
   const showGrid = pathname === "/dashboard";
   const isDark = resolvedTheme === "dark";
@@ -54,7 +59,11 @@ export default function AppShell({
         userPlan={userPlan}
         inboxCount={inboxCount}
         collapsed={collapsed}
-        onToggleCollapsed={() => setCollapsed(!collapsed)}
+        onToggleCollapsed={() => {
+          const next = !collapsed;
+          setCollapsed(next);
+          localStorage.setItem("sidebar-collapsed", String(next));
+        }}
       />
       <main className={`min-h-screen transition-all duration-150 ${collapsed ? "ml-16" : "ml-64"}`}>
         {showGrid && mounted ? (
