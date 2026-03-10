@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
+const NTFY_TOPIC = process.env.NTFY_TOPIC || "quotal-signups-d7x";
+
 export async function POST(request: NextRequest) {
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
@@ -33,6 +35,12 @@ export async function POST(request: NextRequest) {
         source: source || "template-download",
       },
     });
+
+    fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
+      method: "POST",
+      headers: { Title: "Template download", Tags: "arrow_down" },
+      body: `${email.toLowerCase()} (${source || "template-download"})`,
+    }).catch(() => {});
 
     return NextResponse.json({ status: "ok" });
   } catch (error) {
