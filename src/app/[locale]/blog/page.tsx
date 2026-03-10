@@ -194,12 +194,12 @@ export default async function BlogPage({ params }: Props) {
               href={`/blog/${posts[0].slug}`}
               className="group block mb-8 rounded-2xl border border-border bg-surface overflow-hidden hover:shadow-xl hover:shadow-black/5 hover:-translate-y-0.5 transition-all duration-200"
             >
-              <div className="grid md:grid-cols-2 md:h-[400px]">
+              <div className="grid md:grid-cols-[3fr_2fr] md:h-[400px]">
                 {posts[0].image ? (
                   <img
                     src={posts[0].image}
                     alt=""
-                    className="aspect-[4/3] md:aspect-auto w-full h-full object-cover"
+                    className="aspect-[4/3] md:aspect-auto w-full h-full object-cover object-center"
                   />
                 ) : (
                   <div className={`aspect-[4/3] md:aspect-auto ${
