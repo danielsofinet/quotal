@@ -196,7 +196,10 @@
     "vendors": "Vendors",
     "settings": "Settings",
     "signOut": "Sign out",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "betaTitle": "We’re in beta",
+    "betaMessage": "Got ideas or feedback? We’d love to hear from you.",
+    "betaContact": "Get in touch"
   },
   "Comparison": {
     "cheapestOverall": "Cheapest Overall",

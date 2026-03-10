@@ -386,6 +386,27 @@ export default function Sidebar({
 
       </nav>
 
+      {/* Beta notice */}
+      {!collapsed && (
+        <div className="mx-3 mb-2 px-3 py-3 rounded-lg bg-accent/[0.06] border border-accent/10">
+          <div className="flex items-start gap-2">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" className="shrink-0 mt-0.5 text-accent-light">
+              <path d="M8 1C4.13 1 1 4.13 1 8s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7Zm0 10.5a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM8.75 8a.75.75 0 0 1-1.5 0V5a.75.75 0 0 1 1.5 0v3Z" fill="currentColor"/>
+            </svg>
+            <div className="min-w-0">
+              <p className="text-[11px] font-semibold text-accent-light leading-tight">{t("betaTitle")}</p>
+              <p className="text-[11px] text-text-dim leading-snug mt-0.5">{t("betaMessage")}</p>
+              <a
+                href="mailto:hello@quotal.app"
+                className="inline-block text-[11px] font-medium text-accent-light hover:text-accent transition-colors mt-1.5"
+              >
+                {t("betaContact")} &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Settings — pinned to bottom */}
       <div className="px-2 py-3 border-t border-border">
         <Link

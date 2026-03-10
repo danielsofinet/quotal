@@ -196,7 +196,10 @@
     "vendors": "Leverantörer",
     "settings": "Settings",
     "signOut": "Logga ut",
-    "copied": "Kopierat!"
+    "copied": "Kopierat!",
+    "betaTitle": "Vi är i beta",
+    "betaMessage": "Har du idéer eller feedback? Vi vill gärna höra från dig.",
+    "betaContact": "Hör av dig"
   },
   "Comparison": {
     "cheapestOverall": "Billigast totalt",

@@ -196,7 +196,10 @@
     "vendors": "Fournisseurs",
     "settings": "Paramètres",
     "signOut": "Se déconnecter",
-    "copied": "Copié !"
+    "copied": "Copié !",
+    "betaTitle": "Version bêta",
+    "betaMessage": "Des idées ou des retours ? On aimerait vous entendre.",
+    "betaContact": "Contactez-nous"
   },
   "Comparison": {
     "cheapestOverall": "Le moins cher au total",
