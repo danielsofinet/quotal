@@ -194,7 +194,7 @@ export default async function BlogPage({ params }: Props) {
               href={`/blog/${posts[0].slug}`}
               className="group block mb-8 rounded-2xl border border-border bg-surface overflow-hidden hover:shadow-xl hover:shadow-black/5 hover:-translate-y-0.5 transition-all duration-200"
             >
-              <div className="grid md:grid-cols-2">
+              <div className="grid md:grid-cols-2 md:h-[400px]">
                 {posts[0].image ? (
                   <img
                     src={posts[0].image}
