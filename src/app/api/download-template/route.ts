@@ -16,7 +16,7 @@ export async function GET() {
     return NextResponse.json({ error: "File not found" }, { status: 404 });
   }
 
-  return new NextResponse(templateBuffer, {
+  return new NextResponse(new Uint8Array(templateBuffer), {
     headers: {
       "Content-Type":
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
