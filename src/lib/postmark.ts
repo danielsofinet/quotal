@@ -115,7 +115,7 @@ function buildMagicLinkHtml(t: MagicLinkStrings, signInLink: string, locale: str
 <tr><td style="background-color:#FAFAFA;padding:24px 40px;border-top:1px solid #EDEDF0;">
 <p style="margin:0 0 6px;color:#8888A0;font-size:13px;line-height:1.5;text-align:center;">${t.footer}</p>
 <p style="margin:0 0 12px;color:#8888A0;font-size:13px;line-height:1.5;text-align:center;"><a href="https://quotal.app" style="color:#635BFF;text-decoration:none;">quotal.app</a></p>
-<p style="margin:0;color:#B0B0C0;font-size:11px;line-height:1.5;text-align:center;">Quotal &middot; Stockholm, Sweden<br><a href="https://quotal.app/settings" style="color:#B0B0C0;text-decoration:underline;">${t.prefs}</a></p>
+<p style="margin:0;color:#B0B0C0;font-size:11px;line-height:1.5;text-align:center;">Quotal &middot; France<br><a href="https://quotal.app/settings" style="color:#B0B0C0;text-decoration:underline;">${t.prefs}</a></p>
 </td></tr>
 
 </table>
@@ -327,7 +327,7 @@ ${step(3, t.s3, t.s3Desc, true)}
 <tr><td style="background-color:#FAFAFA;padding:24px 40px;border-top:1px solid #EDEDF0;">
 <p style="margin:0 0 6px;color:#8888A0;font-size:13px;line-height:1.5;text-align:center;">${t.footer}</p>
 <p style="margin:0 0 12px;color:#8888A0;font-size:13px;line-height:1.5;text-align:center;"><a href="https://quotal.app" style="color:#635BFF;text-decoration:none;">quotal.app</a></p>
-<p style="margin:0;color:#B0B0C0;font-size:11px;line-height:1.5;text-align:center;">Quotal &middot; Stockholm, Sweden<br><a href="https://quotal.app/settings" style="color:#B0B0C0;text-decoration:underline;">${t.prefs}</a></p>
+<p style="margin:0;color:#B0B0C0;font-size:11px;line-height:1.5;text-align:center;">Quotal &middot; France<br><a href="https://quotal.app/settings" style="color:#B0B0C0;text-decoration:underline;">${t.prefs}</a></p>
 </td></tr>
 
 </table>
@@ -358,7 +358,7 @@ ${t.cta}: https://quotal.app/dashboard
 
 ${t.footer}
 
-Quotal · Stockholm, Sweden`;
+Quotal · France`;
 }
 
 export async function sendWelcomeEmail(to: string, name?: string | null, locale: string = "en") {
