@@ -103,8 +103,8 @@ export default function TemplateDownloadGate({ locale = "en" }: { locale?: strin
 
       setStatus("done");
 
-      // Trigger download via window.open as fallback for programmatic click
-      window.open("/templates/vendor-quote-comparison-template.xlsx", "_blank");
+      // Trigger download via API route (static file 404s on Vercel)
+      window.open("/api/download-template", "_blank");
     } catch {
       setStatus("error");
     }
@@ -117,7 +117,7 @@ export default function TemplateDownloadGate({ locale = "en" }: { locale?: strin
         <p className="text-[#00C48C] font-semibold text-lg mb-1">{t.downloading}</p>
         <p className="text-[#8BB8A8] text-sm">
           <a
-            href="/templates/vendor-quote-comparison-template.xlsx"
+            href="/api/download-template"
             download
             className="text-[#00C48C] underline"
           >
