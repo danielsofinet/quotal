@@ -93,6 +93,13 @@ model LineItem {
   quote         Quote   @relation(fields: [quoteId], references: [id], onDelete: Cascade)
 }
 
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  source    String   @default("template-download")
+  createdAt DateTime @default(now())
+}
+
 model Fee {
   id       String  @id @default(cuid())
   quoteId  String

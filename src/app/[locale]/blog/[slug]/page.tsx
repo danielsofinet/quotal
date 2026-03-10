@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import QuotalLogo from "@/components/QuotalLogo";
+import TemplateDownloadGate from "@/components/TemplateDownloadGate";
 import {
   getAllPostsAsync,
   getPostBySlugAsync,
@@ -149,6 +150,10 @@ export default async function BlogPostPage({ params }: Props) {
           className="blog-content"
           dangerouslySetInnerHTML={{ __html: html }}
         />
+
+        {slug === "vendor-quote-comparison-template" && (
+          <TemplateDownloadGate />
+        )}
 
         {/* CTA */}
         <div className="mt-16 p-8 rounded-2xl border border-border bg-surface text-center">
