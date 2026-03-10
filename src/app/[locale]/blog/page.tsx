@@ -192,17 +192,17 @@ export default async function BlogPage({ params }: Props) {
             {/* Featured post — image left, text right */}
             <Link
               href={`/blog/${posts[0].slug}`}
-              className="group block mb-8 rounded-2xl border border-border bg-surface overflow-hidden hover:shadow-xl hover:shadow-black/5 hover:-translate-y-0.5 transition-all duration-200"
+              className="group block mb-8 rounded-2xl border border-border bg-surface hover:shadow-xl hover:shadow-black/5 hover:-translate-y-0.5 transition-all duration-200"
             >
-              <div className="grid md:grid-cols-2 md:max-h-[280px]">
+              <div className="grid md:grid-cols-2">
                 {posts[0].image ? (
                   <img
                     src={posts[0].image}
                     alt=""
-                    className="w-full h-48 md:h-full object-cover"
+                    className="w-full h-48 md:h-[280px] object-cover rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none"
                   />
                 ) : (
-                  <div className={`w-full h-48 md:h-full ${
+                  <div className={`w-full h-48 md:h-[280px] rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none ${
                     categoryGradients[posts[0].category] || "bg-gradient-to-br from-accent/20 via-accent/10 to-transparent"
                   }`} />
                 )}
