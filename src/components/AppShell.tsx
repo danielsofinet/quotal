@@ -82,28 +82,22 @@ export default function AppShell({
         />
       )}
 
-      {/* Sidebar — hidden on mobile, shown as drawer when open */}
-      <div className={`
-        fixed top-0 left-0 h-screen z-50
-        transition-transform duration-200 ease-out
-        md:translate-x-0
-        ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
-      `}>
-        <Sidebar
-          projects={projects}
-          userEmail={userEmail}
-          inboxAddress={inboxAddress}
-          userPlan={userPlan}
-          inboxCount={inboxCount}
-          collapsed={collapsed}
-          onToggleCollapsed={() => {
-            const next = !collapsed;
-            setCollapsed(next);
-            localStorage.setItem("sidebar-collapsed", String(next));
-          }}
-          onMobileClose={() => setMobileOpen(false)}
-        />
-      </div>
+      {/* Sidebar */}
+      <Sidebar
+        projects={projects}
+        userEmail={userEmail}
+        inboxAddress={inboxAddress}
+        userPlan={userPlan}
+        inboxCount={inboxCount}
+        collapsed={collapsed}
+        mobileOpen={mobileOpen}
+        onToggleCollapsed={() => {
+          const next = !collapsed;
+          setCollapsed(next);
+          localStorage.setItem("sidebar-collapsed", String(next));
+        }}
+        onMobileClose={() => setMobileOpen(false)}
+      />
 
       <main className={`min-h-screen transition-all duration-150 pt-14 md:pt-0 ${collapsed ? "md:ml-16" : "md:ml-64"}`}>
         {showGrid && mounted ? (

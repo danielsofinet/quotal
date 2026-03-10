@@ -24,6 +24,7 @@ interface SidebarProps {
   userPlan?: string;
   inboxCount?: number;
   collapsed: boolean;
+  mobileOpen?: boolean;
   onToggleCollapsed: () => void;
   onMobileClose?: () => void;
 }
@@ -35,6 +36,7 @@ export default function Sidebar({
   userPlan = "free",
   inboxCount: initialInboxCount = 0,
   collapsed,
+  mobileOpen = false,
   onToggleCollapsed,
   onMobileClose,
 }: SidebarProps) {
@@ -131,9 +133,9 @@ export default function Sidebar({
   return (
   <>
     <aside
-      className={`fixed left-0 top-0 h-screen bg-surface border-r border-border flex flex-col transition-all duration-150 z-40 w-64 ${
+      className={`fixed left-0 top-0 h-screen bg-surface border-r border-border flex flex-col transition-all duration-200 z-50 w-64 ${
         collapsed ? "md:w-16" : "md:w-64"
-      }`}
+      } ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
     >
       {/* Logo */}
       <div className="h-14 flex items-center px-4 border-b border-border justify-between">
