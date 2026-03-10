@@ -134,7 +134,8 @@ async function findOrCreateUser(
         inboxAddress,
       },
     });
-    sendWelcomeEmail(user.email, user.name, "en").catch((err) =>
+    const locale = await getLocale().catch(() => "en");
+    sendWelcomeEmail(user.email, user.name, locale).catch((err) =>
       console.error("[auth] Welcome email failed:", err instanceof Error ? err.message : String(err))
     );
     notifyNewUser(user.email, user.name);
