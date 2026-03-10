@@ -195,9 +195,17 @@ export default async function BlogPage({ params }: Props) {
               className="group block mb-8 rounded-2xl border border-border bg-surface overflow-hidden hover:shadow-xl hover:shadow-black/5 hover:-translate-y-0.5 transition-all duration-200"
             >
               <div className="grid md:grid-cols-2">
-                <div className={`aspect-[4/3] md:aspect-auto ${
-                  categoryGradients[posts[0].category] || "bg-gradient-to-br from-accent/20 via-accent/10 to-transparent"
-                }`} />
+                {posts[0].image ? (
+                  <img
+                    src={posts[0].image}
+                    alt=""
+                    className="aspect-[4/3] md:aspect-auto w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className={`aspect-[4/3] md:aspect-auto ${
+                    categoryGradients[posts[0].category] || "bg-gradient-to-br from-accent/20 via-accent/10 to-transparent"
+                  }`} />
+                )}
                 <div className="p-8 flex flex-col justify-center">
                   <span
                     className={`self-start text-xs font-medium px-2.5 py-1 rounded-full mb-4 ${
@@ -230,9 +238,17 @@ export default async function BlogPage({ params }: Props) {
                     href={`/blog/${post.slug}`}
                     className="group block rounded-2xl border border-border bg-surface overflow-hidden hover:shadow-xl hover:shadow-black/5 hover:-translate-y-0.5 transition-all duration-200"
                   >
-                    <div className={`h-48 ${
-                      categoryGradients[post.category] || "bg-gradient-to-br from-accent/20 via-accent/10 to-transparent"
-                    }`} />
+                    {post.image ? (
+                      <img
+                        src={post.image}
+                        alt=""
+                        className="h-48 w-full object-cover"
+                      />
+                    ) : (
+                      <div className={`h-48 ${
+                        categoryGradients[post.category] || "bg-gradient-to-br from-accent/20 via-accent/10 to-transparent"
+                      }`} />
+                    )}
                     <div className="p-6">
                       <span
                         className={`inline-block text-xs font-medium px-2.5 py-1 rounded-full mb-3 ${

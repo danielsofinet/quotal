@@ -8,6 +8,7 @@ export const blogPostsDe: BlogPost[] = [
     readingTime: "9 Min. Lesezeit",
     date: "2026-03-09",
     category: "Einkaufsratgeber",
+    image: "https://images.pexels.com/photos/6177572/pexels-photo-6177572.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Lieferantenangebote vergleichen: Der vollständige Leitfaden für 2026
 
 Sie haben Ihre Angebotsanfrage verschickt, und die Antworten trudeln ein. Drei Angebote. Vielleicht fünf. Sie sehen alle unterschiedlich aus — verschiedene Formate, verschiedene Positionen, verschiedene Bedingungen im Kleingedruckten. Wenn Sie sich schon mal gefragt haben, **wie Sie Lieferantenangebote vergleichen** können, ohne den Überblick (oder Ihr Budget) zu verlieren, sind Sie hier genau richtig.
@@ -201,6 +202,7 @@ Ob Sie eine Tabelle, ein spezialisiertes Tool oder eine Kombination nutzen — d
     readingTime: "8 Min. Lesezeit",
     date: "2026-03-09",
     category: "Kostenmanagement",
+    image: "https://images.pexels.com/photos/53621/calculator-calculation-insurance-finance-53621.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# 7 versteckte Gebühren in Lieferantenangeboten (und wie Sie sie erkennen)
 
 Sie haben das Angebot geprüft. Die Summe sah gut aus. Sie haben den Vertrag unterschrieben, die Arbeit begann — und dann kamen die Rechnungen: 20 %, 30 %, manchmal 40 % höher als vereinbart. Wenn Ihnen das bekannt vorkommt, sind Sie auf **versteckte Kosten in Lieferantenangeboten** gestoßen — und Sie sind damit alles andere als allein.
@@ -388,6 +390,7 @@ Ihr Budget wird es Ihnen danken.
     readingTime: "9 Min. Lesezeit",
     date: "2026-03-09",
     category: "Tools & Vorlagen",
+    image: "https://images.pexels.com/photos/7533372/pexels-photo-7533372.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Kostenlose Vorlage für den Angebotsvergleich (Excel & Google Sheets)
 
 Sie brauchen eine **Vorlage für den Angebotsvergleich**. Sie haben Angebote von drei, vier, vielleicht sechs Lieferanten, und Sie brauchen eine strukturierte Möglichkeit, diese Seite an Seite aufzustellen. Wahrscheinlich haben Sie bereits versucht, eine solche Vorlage von Grund auf zu erstellen — und festgestellt, dass der Aufbau der Tabelle länger dauert als die eigentliche Bewertung der Angebote.
@@ -644,6 +647,7 @@ Die Vorlage ist nicht das Ziel — die Entscheidung, die sie unterstützt, ist e
     readingTime: "10 Min. Lesezeit",
     date: "2026-03-09",
     category: "Branchenratgeber",
+    image: "https://images.pexels.com/photos/4491459/pexels-photo-4491459.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Bauausschreibungen vergleichen: So bewerten Sie Nachunternehmerangebote
 
 Sie haben gerade fünf Nachunternehmerangebote für das Gewerk Haustechnik Ihres nächsten Projekts erhalten. Die Zahlen reichen von 340.000 € bis 520.000 €. Das niedrigste Angebot sieht verlockend aus, aber Sie haben genug Erfahrung, um zu wissen, dass die niedrigste Zahl auf Seite eins nicht immer die niedrigsten Kosten bei Projektabschluss bedeutet. Ein fundierter **Vergleich von Bauausschreibungen** trennt Projekte, die im Budget bleiben, von solchen, die durch Nachträge Geld verbrennen.
@@ -876,6 +880,7 @@ Dokumentieren Sie Ihre Begründung. Bei einem Projekt, das geprüft oder angefoc
     readingTime: "9 Min. Lesezeit",
     date: "2026-03-09",
     category: "Verhandlungsstrategie",
+    image: "https://images.pexels.com/photos/6173666/pexels-photo-6173666.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Preishistorie nutzen: So verhandeln Sie bessere Lieferantenkonditionen
 
 Die meisten verhandeln Lieferantenkonditionen immer gleich: das diesjährige Angebot anschauen, mit ein oder zwei Alternativen vergleichen, 5 % Nachlass versuchen, fertig. Das funktioniert — irgendwie. Aber es verschenkt enormes Potenzial, weil Sie aus einer Momentaufnahme verhandeln, statt aus einer **Preishistorie**.

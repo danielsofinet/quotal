@@ -8,6 +8,7 @@ export const blogPostsEs: BlogPost[] = [
     readingTime: "9 min de lectura",
     date: "2026-03-09",
     category: "Guías de Compras",
+    image: "https://images.pexels.com/photos/6177572/pexels-photo-6177572.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Cómo comparar presupuestos de proveedores: La guía completa para 2026
 
 Has enviado tu solicitud de cotización (RFQ) y las respuestas empiezan a llegar. Tres presupuestos. Quizá cinco. Todos tienen un aspecto diferente — distintos formatos, distintas partidas, distintas condiciones enterradas en las notas al pie. Si alguna vez te has preguntado **cómo comparar presupuestos de proveedores** sin perder la cabeza (ni el presupuesto), estás en el lugar correcto.
@@ -201,6 +202,7 @@ Ya uses una hoja de cálculo, una herramienta específica o una combinación, lo
     readingTime: "8 min de lectura",
     date: "2026-03-09",
     category: "Gestión de Costes",
+    image: "https://images.pexels.com/photos/53621/calculator-calculation-insurance-finance-53621.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# 7 costes ocultos en los presupuestos de tus proveedores (y cómo detectarlos)
 
 Revisaste el presupuesto. El número parecía bueno. Firmaste el contrato, el trabajo comenzó, y entonces llegaron las facturas — un 20%, 30%, a veces un 40% más de lo acordado. Si te resulta familiar, te has topado con **costes ocultos en cotizaciones de proveedores**, y estás lejos de ser el único.
@@ -388,6 +390,7 @@ Tu presupuesto te lo agradecerá.
     readingTime: "9 min de lectura",
     date: "2026-03-09",
     category: "Herramientas y Plantillas",
+    image: "https://images.pexels.com/photos/7533372/pexels-photo-7533372.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Plantilla gratuita para comparar cotizaciones de proveedores (Excel y Google Sheets)
 
 Necesitas una **plantilla de comparación de cotizaciones**. Tienes presupuestos de tres, cuatro, quizá seis proveedores, y necesitas una forma estructurada de compararlos lado a lado. Probablemente ya has intentado crear una desde cero — y descubriste que lleva más tiempo construir la hoja de cálculo que evaluar las cotizaciones.
@@ -644,6 +647,7 @@ La plantilla no es el objetivo — la decisión que respalda sí lo es.
     readingTime: "10 min de lectura",
     date: "2026-03-09",
     category: "Guías Sectoriales",
+    image: "https://images.pexels.com/photos/4491459/pexels-photo-4491459.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Comparación de ofertas en construcción: Cómo evaluar presupuestos de subcontratistas
 
 Acabas de recibir cinco ofertas de subcontratistas para el alcance de instalaciones mecánicas de tu próximo proyecto. Las cifras van de 340.000 € a 520.000 €. La oferta más baja es tentadora, pero llevas suficiente tiempo en el sector como para saber que el número más bajo en la primera página no siempre significa el coste más bajo al cierre del proyecto. Una **comparación de ofertas en construcción** eficaz es lo que separa los proyectos que terminan dentro del presupuesto de los que pierden dinero por cambios de alcance.
@@ -876,6 +880,7 @@ Documenta tu justificación. En un proyecto que se audite o dispute, tu hoja de 
     readingTime: "9 min de lectura",
     date: "2026-03-09",
     category: "Estrategia de Negociación",
+    image: "https://images.pexels.com/photos/6173666/pexels-photo-6173666.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Cómo usar el historial de precios para negociar mejores acuerdos con proveedores
 
 La mayoría de la gente negocia con proveedores de la misma forma: mira el presupuesto de este año, lo compara con una o dos alternativas, intenta conseguir un 5% de descuento, y listo. Funciona — más o menos. Pero deja un valor enorme sobre la mesa porque estás negociando desde una foto fija cuando deberías negociar desde una línea de tendencia de **datos históricos de precios**.

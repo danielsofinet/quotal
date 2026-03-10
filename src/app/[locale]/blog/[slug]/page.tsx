@@ -51,11 +51,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       publishedTime: post.date,
       locale: locale,
+      ...(post.image && { images: [{ url: post.image, width: 800, height: 400 }] }),
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      ...(post.image && { images: [post.image] }),
     },
   };
 }
@@ -145,6 +147,14 @@ export default async function BlogPostPage({ params }: Props) {
             {post.title}
           </h1>
         </div>
+
+        {post.image && (
+          <img
+            src={post.image}
+            alt=""
+            className="w-full aspect-[2/1] object-cover rounded-xl mb-10"
+          />
+        )}
 
         {slug === "vendor-quote-comparison-template" && (
           <TemplateScrollButton locale={locale} />

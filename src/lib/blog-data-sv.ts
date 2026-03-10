@@ -8,6 +8,7 @@ export const blogPostsSv: BlogPost[] = [
     readingTime: "9 min läsning",
     date: "2026-03-09",
     category: "Inköpsguider",
+    image: "https://images.pexels.com/photos/6177572/pexels-photo-6177572.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Så jämför du leverantörsofferter: Den kompletta guiden för 2026
 
 Du har skickat ut din offertförfrågan och svaren börjar trilla in. Tre offerter. Kanske fem. Alla ser olika ut — olika format, olika poster, olika villkor gömda i fotnoter. Om du någonsin undrat **hur man jämför leverantörsofferter** utan att tappa greppet (eller budgeten), har du kommit rätt.
@@ -201,6 +202,7 @@ Oavsett om du använder ett kalkylark, ett dedikerat verktyg eller en kombinatio
     readingTime: "8 min läsning",
     date: "2026-03-09",
     category: "Kostnadshantering",
+    image: "https://images.pexels.com/photos/53621/calculator-calculation-insurance-finance-53621.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# 7 dolda avgifter i dina leverantörsofferter (och hur du upptäcker dem)
 
 Du granskade offerten. Siffran såg bra ut. Du signerade avtalet, arbetet startade, och sedan kom fakturorna — 20 %, 30 %, ibland 40 % högre än vad ni kommit överens om. Låter det bekant? Då har du stött på **dolda avgifter i leverantörsofferter**, och du är långt ifrån ensam.
@@ -388,6 +390,7 @@ Din budget kommer att tacka dig.
     readingTime: "9 min läsning",
     date: "2026-03-09",
     category: "Verktyg & Mallar",
+    image: "https://images.pexels.com/photos/7533372/pexels-photo-7533372.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Gratis mall för offertjämförelse (Excel och Google Sheets)
 
 Du behöver en **mall för offertjämförelse**. Du har offerter från tre, fyra, kanske sex leverantörer, och du behöver ett strukturerat sätt att ställa dem sida vid sida. Du har förmodligen redan försökt skapa en från grunden — och upptäckt att det tar längre tid att bygga kalkylarket än att faktiskt utvärdera offerterna.
@@ -644,6 +647,7 @@ Mallen är inte målet — det är beslutet den stödjer.
     readingTime: "10 min läsning",
     date: "2026-03-09",
     category: "Branschguider",
+    image: "https://images.pexels.com/photos/4491459/pexels-photo-4491459.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Anbudsjämförelse i byggsektorn: Så utvärderar du underentreprenörsofferter
 
 Du har precis fått fem underentreprenörsanbud för VVS-entreprenaden på ditt nästa projekt. Siffrorna spänner från 3 400 000 till 5 200 000 kr. Det lägsta anbudet ser lockande ut, men du har tillräckligt med erfarenhet för att veta att den lägsta siffran på första sidan inte alltid innebär den lägsta kostnaden vid projektavslut. Effektiv **anbudsjämförelse i byggsektorn** är det som skiljer projekt som håller budget från dem som blöder pengar genom ändringsorder.
@@ -876,6 +880,7 @@ Dokumentera din motivering. Vid ett projekt som granskas eller tvistas är din a
     readingTime: "9 min läsning",
     date: "2026-03-09",
     category: "Förhandlingsstrategi",
+    image: "https://images.pexels.com/photos/6173666/pexels-photo-6173666.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Så använder du prishistorik för att förhandla bättre leverantörsavtal
 
 De flesta förhandlar leverantörsavtal på samma sätt: titta på årets offert, jämför med ett eller två alternativ, försök få 5 % rabatt och kalla det klart. Det fungerar — typ. Men det lämnar enormt värde på bordet eftersom du förhandlar utifrån en ögonblicksbild när du borde förhandla utifrån en **prishistorisk** trendlinje.

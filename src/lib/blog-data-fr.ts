@@ -8,6 +8,7 @@ export const blogPostsFr: BlogPost[] = [
     readingTime: "9 min de lecture",
     date: "2026-03-09",
     category: "Guides Achats",
+    image: "https://images.pexels.com/photos/6177572/pexels-photo-6177572.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Comment comparer les devis fournisseurs : le guide complet pour 2026
 
 Vous avez envoyé votre appel d'offres, et les réponses commencent à arriver. Trois devis. Peut-être cinq. Ils sont tous différents — formats différents, postes de dépenses différents, conditions enfouies dans les notes de bas de page. Si vous vous êtes déjà demandé **comment comparer les devis fournisseurs** sans y perdre la tête (ni votre budget), vous êtes au bon endroit.
@@ -201,6 +202,7 @@ Que vous utilisiez un tableur, un outil dédié ou une combinaison des deux, l'e
     readingTime: "8 min de lecture",
     date: "2026-03-09",
     category: "Gestion des Coûts",
+    image: "https://images.pexels.com/photos/53621/calculator-calculation-insurance-finance-53621.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# 7 frais cachés dans vos devis fournisseurs (et comment les détecter)
 
 Vous avez examiné le devis. Le montant semblait correct. Vous avez signé le contrat, les travaux ont commencé, puis les factures sont arrivées — 20 %, 30 %, parfois 40 % de plus que ce qui avait été convenu. Si cela vous parle, vous avez été confronté aux **frais cachés dans les devis fournisseurs**, et vous êtes loin d'être seul.
@@ -388,6 +390,7 @@ Votre budget vous remerciera.
     readingTime: "9 min de lecture",
     date: "2026-03-09",
     category: "Outils & Modèles",
+    image: "https://images.pexels.com/photos/7533372/pexels-photo-7533372.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Modèle gratuit de comparaison de devis fournisseurs (Excel & Google Sheets)
 
 Vous avez besoin d'un **modèle de comparaison de devis fournisseurs**. Vous avez des devis de trois, quatre, peut-être six fournisseurs, et il vous faut un moyen structuré de les mettre côte à côte. Vous avez probablement déjà essayé d'en créer un de zéro — et découvert qu'il faut plus de temps pour construire le tableur que pour évaluer les devis eux-mêmes.
@@ -644,6 +647,7 @@ Le modèle n'est pas l'objectif — c'est la décision qu'il soutient qui compte
     readingTime: "10 min de lecture",
     date: "2026-03-09",
     category: "Guides Sectoriels",
+    image: "https://images.pexels.com/photos/4491459/pexels-photo-4491459.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Comparaison d'offres BTP : comment évaluer les devis des sous-traitants
 
 Vous venez de recevoir cinq offres de sous-traitants pour le lot CVC de votre prochain chantier. Les montants vont de 340 000 € à 520 000 €. L'offre la plus basse est tentante, mais vous avez assez d'expérience pour savoir que le chiffre le plus bas en page 1 ne signifie pas toujours le coût le plus bas à la réception définitive. Une **comparaison d'offres** rigoureuse est ce qui distingue les chantiers qui respectent le budget de ceux qui hémorragient sur les avenants.
@@ -876,6 +880,7 @@ Documentez votre argumentaire. Sur un chantier audité ou contesté, votre table
     readingTime: "9 min de lecture",
     date: "2026-03-09",
     category: "Stratégie de Négociation",
+    image: "https://images.pexels.com/photos/6173666/pexels-photo-6173666.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Comment utiliser l'historique des prix pour mieux négocier avec vos fournisseurs
 
 La plupart des gens négocient avec leurs fournisseurs de la même façon : regarder le devis de cette année, le comparer à une ou deux alternatives, essayer d'obtenir 5 % de remise, et passer à autre chose. Ça fonctionne — plus ou moins. Mais cela laisse énormément de valeur sur la table, car vous négociez à partir d'un instantané quand vous devriez négocier à partir d'une **courbe de tendance des prix historiques**.

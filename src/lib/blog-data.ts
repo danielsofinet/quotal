@@ -5,6 +5,7 @@ export interface BlogPost {
   readingTime: string;
   date: string;
   category: string;
+  image?: string;
   content: string;
 }
 
@@ -16,6 +17,7 @@ export const blogPosts: BlogPost[] = [
     readingTime: "9 min read",
     date: "2026-03-09",
     category: "Procurement Guides",
+    image: "https://images.pexels.com/photos/6177572/pexels-photo-6177572.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# How to Compare Supplier Quotes: The Complete Guide for 2026
 
 You've sent out your RFQ, and the responses are rolling in. Three quotes. Maybe five. They all look different — different formats, different line items, different terms buried in footnotes. If you've ever wondered **how to compare supplier quotes** without losing your mind (or your budget), you're in the right place.
@@ -209,6 +211,7 @@ Whether you use a spreadsheet, a purpose-built tool, or a combination, the key i
     readingTime: "8 min read",
     date: "2026-03-09",
     category: "Cost Management",
+    image: "https://images.pexels.com/photos/53621/calculator-calculation-insurance-finance-53621.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# 7 Hidden Fees Lurking in Your Vendor Quotes (And How to Catch Them)
 
 You reviewed the quote. The number looked good. You signed the contract, the work started, and then the invoices arrived — 20%, 30%, sometimes 40% higher than what you agreed to. If this sounds familiar, you've run into **hidden fees in vendor quotes**, and you're far from alone.
@@ -396,6 +399,7 @@ Your budget will thank you.
     readingTime: "9 min read",
     date: "2026-03-09",
     category: "Tools & Templates",
+    image: "https://images.pexels.com/photos/7533372/pexels-photo-7533372.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Free Vendor Quote Comparison Template (Excel & Google Sheets)
 
 You need a **vendor quote comparison template**. You've got quotes from three, four, maybe six suppliers, and you need a structured way to stack them up side by side. You've probably already tried creating one from scratch — and discovered it takes longer to build the spreadsheet than to actually evaluate the quotes.
@@ -652,6 +656,7 @@ The template isn't the goal — the decision it supports is.
     readingTime: "10 min read",
     date: "2026-03-09",
     category: "Industry Guides",
+    image: "https://images.pexels.com/photos/4491459/pexels-photo-4491459.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# Construction Bid Comparison: How to Evaluate Subcontractor Quotes
 
 You just received five subcontractor bids for the mechanical scope on your next project. The numbers range from $340,000 to $520,000. The low bid looks tempting, but you've been around long enough to know that the lowest number on page one doesn't always mean the lowest cost at project close-out. Effective **construction bid comparison** is what separates projects that finish on budget from ones that hemorrhage money through change orders.
@@ -884,6 +889,7 @@ Document your rationale. On a project that's audited or disputed, your bid tab a
     readingTime: "9 min read",
     date: "2026-03-09",
     category: "Negotiation Strategy",
+    image: "https://images.pexels.com/photos/6173666/pexels-photo-6173666.jpeg?auto=compress&cs=tinysrgb&w=800",
     content: `# How to Use Pricing History to Negotiate Better Supplier Deals
 
 Most people negotiate supplier deals the same way: look at this year's quote, compare it to one or two alternatives, try to get 5% off, and call it a day. It works — sort of. But it leaves enormous value on the table because you're negotiating from a snapshot when you should be negotiating from a **historical pricing data** trend line.
