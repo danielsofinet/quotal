@@ -78,15 +78,21 @@ export async function sendMagicLink(email: string, locale?: string) {
   window.localStorage.setItem("emailForSignIn", email);
 }
 
-export async function completeMagicLink(): Promise<User | null> {
+export function isMagicLinkCallback(): boolean {
+  const auth = getFirebaseAuth();
+  return isSignInWithEmailLink(auth, window.location.href);
+}
+
+export function getSavedEmail(): string | null {
+  return window.localStorage.getItem("emailForSignIn");
+}
+
+export async function completeMagicLink(emailOverride?: string): Promise<User | null> {
   const auth = getFirebaseAuth();
   if (!isSignInWithEmailLink(auth, window.location.href)) return null;
 
-  let email = window.localStorage.getItem("emailForSignIn");
-  if (!email) {
-    email = window.prompt("Please provide your email for confirmation");
-    if (!email) return null;
-  }
+  const email = emailOverride || window.localStorage.getItem("emailForSignIn");
+  if (!email) return null;
 
   const result = await signInWithEmailLink(auth, email, window.location.href);
   window.localStorage.removeItem("emailForSignIn");

@@ -8,6 +8,8 @@ import {
   handleRedirectResult,
   sendMagicLink,
   completeMagicLink,
+  isMagicLinkCallback,
+  getSavedEmail,
 } from "@/lib/firebase";
 import { Button } from "@/components/ui/Button";
 import QuotalLogo from "@/components/QuotalLogo";
@@ -42,6 +44,7 @@ export default function SignInClient() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [magicLinkSent, setMagicLinkSent] = useState(false);
+  const [needsEmail, setNeedsEmail] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -53,6 +56,11 @@ export default function SignInClient() {
 
     const params = new URLSearchParams(window.location.search);
     if (params.get("finishSignIn") === "true") {
+      if (isMagicLinkCallback() && !getSavedEmail()) {
+        // User opened the link in a different browser — ask for email via UI
+        setNeedsEmail(true);
+        return;
+      }
       completeMagicLink()
         .then((user) => {
           if (user) router.push("/dashboard");
@@ -60,6 +68,21 @@ export default function SignInClient() {
         .catch((err) => setError(t(`errors.${getErrorKey(err)}`)));
     }
   }, [router]);
+
+  async function handleConfirmEmail(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const user = await completeMagicLink(email.trim());
+      if (user) router.push("/dashboard");
+    } catch (err) {
+      setError(t(`errors.${getErrorKey(err)}`));
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function handleGoogle() {
     setLoading(true);
@@ -115,6 +138,30 @@ export default function SignInClient() {
           </div>
         )}
 
+        {needsEmail ? (
+          <form onSubmit={handleConfirmEmail} className="space-y-3">
+            <p className="text-sm text-text-muted text-center">
+              {t("confirmEmail")}
+            </p>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={t("emailPlaceholder")}
+              autoFocus
+              className="w-full bg-bg border border-border rounded-lg px-3 py-2.5 text-sm text-text-primary placeholder:text-text-dim focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30"
+            />
+            <Button
+              type="submit"
+              loading={loading}
+              disabled={!email.trim()}
+              className="w-full justify-center"
+            >
+              {t("signIn")}
+            </Button>
+          </form>
+        ) : (
+        <>
         <Button
           onClick={handleGoogle}
           variant="secondary"
@@ -175,6 +222,8 @@ export default function SignInClient() {
               {t("sendLink")}
             </Button>
           </form>
+        )}
+        </>
         )}
 
         <p className="text-[11px] text-text-dim text-center leading-relaxed">

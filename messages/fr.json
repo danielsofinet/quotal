@@ -174,7 +174,8 @@
     "termsPrefix": "En vous connectant, vous acceptez nos",
     "termsLink": "Conditions d’utilisation",
     "termsAnd": "et notre",
-    "privacyLink": "Politique de confidentialité"
+    "privacyLink": "Politique de confidentialité",
+    "confirmEmail": "Entrez l’e-mail que vous avez utilisé pour vous connecter"
   },
   "Dashboard": {
     "title": "Projets",

@@ -174,7 +174,8 @@
     "termsPrefix": "Al iniciar sesión, aceptas nuestros",
     "termsLink": "Términos de servicio",
     "termsAnd": "y la",
-    "privacyLink": "Política de privacidad"
+    "privacyLink": "Política de privacidad",
+    "confirmEmail": "Ingresa el correo con el que iniciaste sesión"
   },
   "Dashboard": {
     "title": "Projects",

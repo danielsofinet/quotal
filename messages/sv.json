@@ -174,7 +174,8 @@
     "termsPrefix": "Genom att logga in godkänner du våra",
     "termsLink": "Användarvillkor",
     "termsAnd": "och",
-    "privacyLink": "Integritetspolicy"
+    "privacyLink": "Integritetspolicy",
+    "confirmEmail": "Ange e-postadressen du använde för att logga in"
   },
   "Dashboard": {
     "title": "Projekt",

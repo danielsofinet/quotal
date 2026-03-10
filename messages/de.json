@@ -174,7 +174,8 @@
     "termsPrefix": "Mit der Anmeldung stimmen Sie unseren",
     "termsLink": "Nutzungsbedingungen",
     "termsAnd": "und der",
-    "privacyLink": "Datenschutzerklärung"
+    "privacyLink": "Datenschutzerklärung",
+    "confirmEmail": "Geben Sie die E-Mail ein, mit der Sie sich angemeldet haben"
   },
   "Dashboard": {
     "title": "Projects",
