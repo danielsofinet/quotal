@@ -76,7 +76,7 @@ export default function NewProjectButton({
           height="14"
           viewBox="0 0 16 16"
           fill="none"
-          className="mr-1.5"
+          className="md:mr-1.5"
         >
           <path
             d="M8 3V13M3 8H13"
@@ -85,7 +85,7 @@ export default function NewProjectButton({
             strokeLinecap="round"
           />
         </svg>
-        {t("newProject")}
+        <span className="hidden md:inline">{t("newProject")}</span>
       </Button>
 
       <Modal open={open} onClose={() => setOpen(false)} title={t("newProject")}>

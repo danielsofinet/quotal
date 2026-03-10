@@ -424,7 +424,7 @@ export default function Sidebar({
       )}
 
       {/* Settings — pinned to bottom */}
-      <div className="px-2 py-3 border-t border-border">
+      <div className="px-2 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] border-t border-border">
         <Link
           href="/settings"
           className={`flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm transition-colors ${

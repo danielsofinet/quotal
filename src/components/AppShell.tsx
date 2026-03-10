@@ -70,7 +70,7 @@ export default function AppShell({
             <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         </button>
-        <QuotalLogo className="h-4 text-text-primary" />
+        <QuotalLogo className="h-[22px] text-text-primary" />
         <div className="w-9" /> {/* Spacer for centering */}
       </div>
 
