@@ -190,7 +190,10 @@
     "processing": "{count} bearbetar...",
     "uploadSection": "Ladda upp offerter",
     "comparisonSection": "Jämförelse",
-    "breadcrumb": "Projekt"
+    "breadcrumb": "Projekt",
+    "confirmDelete": "Ta bort denna offert?",
+    "removeQuote": "Ta bort offert",
+    "unknownSource": "Okänd källa"
   },
   "Sidebar": {
     "dashboard": "Översikt",

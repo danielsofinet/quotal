@@ -190,7 +190,10 @@
     "processing": "{count} processing...",
     "uploadSection": "Upload Quotes",
     "comparisonSection": "Comparison",
-    "breadcrumb": "Projects"
+    "breadcrumb": "Projects",
+    "confirmDelete": "Remove this quote?",
+    "removeQuote": "Remove quote",
+    "unknownSource": "Unknown source"
   },
   "Sidebar": {
     "dashboard": "Dashboard",

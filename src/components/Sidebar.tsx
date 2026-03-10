@@ -281,14 +281,14 @@ export default function Sidebar({
           {!collapsed && (
             <>
               <span className="flex-1">{t("inbox")}</span>
-              {liveInboxCount > 0 && (
+              {pathname === "/inbox" && liveInboxCount > 0 && (
                 <span className="text-[11px] text-text-dim">
                   {liveInboxCount}
                 </span>
               )}
             </>
           )}
-          {collapsed && liveInboxCount > 0 && (
+          {collapsed && pathname === "/inbox" && liveInboxCount > 0 && (
             <span className="absolute top-0 right-1 text-[9px] font-semibold text-accent-light">
               {liveInboxCount}
             </span>

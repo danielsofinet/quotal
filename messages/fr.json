@@ -190,7 +190,10 @@
     "processing": "{count} en cours de traitement...",
     "uploadSection": "Importer des devis",
     "comparisonSection": "Comparaison",
-    "breadcrumb": "Projets"
+    "breadcrumb": "Projets",
+    "confirmDelete": "Supprimer ce devis ?",
+    "removeQuote": "Supprimer le devis",
+    "unknownSource": "Source inconnue"
   },
   "Sidebar": {
     "dashboard": "Tableau de bord",

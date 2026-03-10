@@ -8,6 +8,8 @@ import DropZone from "@/components/DropZone";
 import ComparisonTable from "@/components/ComparisonTable";
 import QuoteDetail from "@/components/QuoteDetail";
 import ProjectActions from "@/components/ProjectActions";
+import ProjectPoller from "@/components/ProjectPoller";
+import QuoteSources from "@/components/QuoteSources";
 
 export const dynamic = "force-dynamic";
 
@@ -92,6 +94,7 @@ export default async function ProjectDetailPage({
       userPlan={user.plan}
       inboxCount={user._count.inboxItems}
     >
+      <ProjectPoller projectId={id} currentQuoteCount={project.quotes.length} />
       <div className="mb-6">
         <div className="flex items-center gap-2 text-sm text-text-dim mb-1">
           <a
@@ -141,6 +144,15 @@ export default async function ProjectDetailPage({
                   ? `${user.inboxAddress.split("@")[0]}+${project.emailSlug}@in.quotal.app`
                   : undefined
               }
+            />
+            <QuoteSources
+              quotes={project.quotes.map((q) => ({
+                id: q.id,
+                vendorName: q.vendorName,
+                fileName: q.fileName,
+                processingStatus: q.processingStatus,
+              }))}
+              projectId={id}
             />
           </div>
 
