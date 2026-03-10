@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import QuotalLogo from "@/components/QuotalLogo";
-import TemplateDownloadGate from "@/components/TemplateDownloadGate";
+import TemplateDownloadGate, { TemplateScrollButton } from "@/components/TemplateDownloadGate";
 import {
   getAllPostsAsync,
   getPostBySlugAsync,
@@ -146,13 +146,17 @@ export default async function BlogPostPage({ params }: Props) {
           </h1>
         </div>
 
+        {slug === "vendor-quote-comparison-template" && (
+          <TemplateScrollButton locale={locale} />
+        )}
+
         <article
           className="blog-content"
           dangerouslySetInnerHTML={{ __html: html }}
         />
 
         {slug === "vendor-quote-comparison-template" && (
-          <TemplateDownloadGate />
+          <TemplateDownloadGate locale={locale} />
         )}
 
         {/* CTA */}
