@@ -189,42 +189,45 @@ export default async function BlogPage({ params }: Props) {
 
         {posts.length > 0 && (
           <>
-            {/* Featured post — large hero card */}
+            {/* Featured post — full-width card, image on top */}
             <Link
               href={`/blog/${posts[0].slug}`}
               className="group block mb-8 rounded-2xl border border-border bg-surface overflow-hidden hover:shadow-xl hover:shadow-black/5 hover:-translate-y-0.5 transition-all duration-200"
             >
-              <div className="grid md:grid-cols-[3fr_2fr] md:h-[400px]">
-                {posts[0].image ? (
-                  <img
-                    src={posts[0].image}
-                    alt=""
-                    className="aspect-[4/3] md:aspect-auto w-full h-full object-cover object-center"
-                  />
-                ) : (
-                  <div className={`aspect-[4/3] md:aspect-auto ${
-                    categoryGradients[posts[0].category] || "bg-gradient-to-br from-accent/20 via-accent/10 to-transparent"
-                  }`} />
-                )}
-                <div className="p-6 md:p-8 flex flex-col justify-center overflow-hidden">
-                  <span
-                    className={`self-start text-xs font-medium px-2.5 py-1 rounded-full mb-3 ${
-                      categoryColors[posts[0].category] || "bg-accent/15 text-accent-light"
-                    }`}
-                  >
-                    {posts[0].category}
-                  </span>
-                  <h2 className="text-xl md:text-2xl font-bold mb-2 group-hover:text-accent-light transition-colors duration-150 leading-tight">
-                    {posts[0].title}
-                  </h2>
-                  <p className="text-sm text-text-muted leading-relaxed mb-3 line-clamp-2">
-                    {posts[0].description}
-                  </p>
+              {posts[0].image ? (
+                <img
+                  src={posts[0].image}
+                  alt=""
+                  className="w-full h-64 object-cover"
+                />
+              ) : (
+                <div className={`w-full h-64 ${
+                  categoryGradients[posts[0].category] || "bg-gradient-to-br from-accent/20 via-accent/10 to-transparent"
+                }`} />
+              )}
+              <div className="p-6">
+                <span
+                  className={`inline-block text-xs font-medium px-2.5 py-1 rounded-full mb-3 ${
+                    categoryColors[posts[0].category] || "bg-accent/15 text-accent-light"
+                  }`}
+                >
+                  {posts[0].category}
+                </span>
+                <h2 className="text-2xl font-bold mb-2 group-hover:text-accent-light transition-colors duration-150 leading-tight">
+                  {posts[0].title}
+                </h2>
+                <p className="text-sm text-text-muted leading-relaxed mb-4 line-clamp-2">
+                  {posts[0].description}
+                </p>
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 text-xs text-text-dim">
                     <span>{new Date(posts[0].date).toLocaleDateString(locale, { month: "short", day: "numeric", year: "numeric" })}</span>
                     <span className="w-1 h-1 rounded-full bg-text-dim" />
                     <span>{posts[0].readingTime}</span>
                   </div>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-text-dim group-hover:text-accent-light transition-colors">
+                    <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </div>
               </div>
             </Link>
