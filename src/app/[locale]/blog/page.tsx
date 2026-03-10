@@ -206,18 +206,18 @@ export default async function BlogPage({ params }: Props) {
                     categoryGradients[posts[0].category] || "bg-gradient-to-br from-accent/20 via-accent/10 to-transparent"
                   }`} />
                 )}
-                <div className="p-8 flex flex-col justify-center">
+                <div className="p-6 md:p-8 flex flex-col justify-center overflow-hidden">
                   <span
-                    className={`self-start text-xs font-medium px-2.5 py-1 rounded-full mb-4 ${
+                    className={`self-start text-xs font-medium px-2.5 py-1 rounded-full mb-3 ${
                       categoryColors[posts[0].category] || "bg-accent/15 text-accent-light"
                     }`}
                   >
                     {posts[0].category}
                   </span>
-                  <h2 className="text-2xl font-bold mb-3 group-hover:text-accent-light transition-colors duration-150 leading-tight">
+                  <h2 className="text-xl md:text-2xl font-bold mb-2 group-hover:text-accent-light transition-colors duration-150 leading-tight">
                     {posts[0].title}
                   </h2>
-                  <p className="text-sm text-text-muted leading-relaxed mb-4 line-clamp-3">
+                  <p className="text-sm text-text-muted leading-relaxed mb-3 line-clamp-2">
                     {posts[0].description}
                   </p>
                   <div className="flex items-center gap-3 text-xs text-text-dim">
