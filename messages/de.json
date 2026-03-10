@@ -170,7 +170,11 @@
       "googleFailed": "Anmeldung mit Google fehlgeschlagen. Bitte erneut versuchen.",
       "linkFailed": "Anmeldelink konnte nicht gesendet werden. Bitte erneut versuchen.",
       "default": "Etwas ist schiefgelaufen. Bitte erneut versuchen."
-    }
+    },
+    "termsPrefix": "Mit der Anmeldung stimmen Sie unseren",
+    "termsLink": "Nutzungsbedingungen",
+    "termsAnd": "und der",
+    "privacyLink": "Datenschutzerklärung"
   },
   "Dashboard": {
     "title": "Projects",

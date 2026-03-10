@@ -170,7 +170,11 @@
       "googleFailed": "Couldn't sign in with Google. Please try again.",
       "linkFailed": "Couldn't send the sign-in link. Please try again.",
       "default": "Something went wrong. Please try again."
-    }
+    },
+    "termsPrefix": "By signing in, you agree to our",
+    "termsLink": "Terms of Service",
+    "termsAnd": "and",
+    "privacyLink": "Privacy Policy"
   },
   "Dashboard": {
     "title": "Projects",

@@ -170,7 +170,11 @@
       "googleFailed": "Kunde inte logga in med Google. Försök igen.",
       "linkFailed": "Kunde inte skicka inloggningslänken. Försök igen.",
       "default": "Något gick fel. Försök igen."
-    }
+    },
+    "termsPrefix": "Genom att logga in godkänner du våra",
+    "termsLink": "Användarvillkor",
+    "termsAnd": "och",
+    "privacyLink": "Integritetspolicy"
   },
   "Dashboard": {
     "title": "Projekt",

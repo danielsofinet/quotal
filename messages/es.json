@@ -170,7 +170,11 @@
       "googleFailed": "No se pudo iniciar sesión con Google. Inténtalo de nuevo.",
       "linkFailed": "No se pudo enviar el enlace. Inténtalo de nuevo.",
       "default": "Algo salió mal. Inténtalo de nuevo."
-    }
+    },
+    "termsPrefix": "Al iniciar sesión, aceptas nuestros",
+    "termsLink": "Términos de servicio",
+    "termsAnd": "y la",
+    "privacyLink": "Política de privacidad"
   },
   "Dashboard": {
     "title": "Projects",

@@ -170,7 +170,11 @@
       "googleFailed": "Impossible de se connecter avec Google. Veuillez réessayer.",
       "linkFailed": "Impossible d'envoyer le lien de connexion. Veuillez réessayer.",
       "default": "Une erreur est survenue. Veuillez réessayer."
-    }
+    },
+    "termsPrefix": "En vous connectant, vous acceptez nos",
+    "termsLink": "Conditions d’utilisation",
+    "termsAnd": "et notre",
+    "privacyLink": "Politique de confidentialité"
   },
   "Dashboard": {
     "title": "Projets",

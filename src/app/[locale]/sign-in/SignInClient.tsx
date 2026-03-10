@@ -176,6 +176,17 @@ export default function SignInClient() {
             </Button>
           </form>
         )}
+
+        <p className="text-[11px] text-text-dim text-center leading-relaxed">
+          {t("termsPrefix")}{" "}
+          <a href="/terms" className="text-text-muted hover:text-text-primary underline underline-offset-2 transition-colors">
+            {t("termsLink")}
+          </a>{" "}
+          {t("termsAnd")}{" "}
+          <a href="/privacy" className="text-text-muted hover:text-text-primary underline underline-offset-2 transition-colors">
+            {t("privacyLink")}
+          </a>
+        </p>
       </div>
     </InfiniteGrid>
     </div>
